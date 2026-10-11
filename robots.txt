@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://medeiros08.github.io/sitemap.xml
+
+# 🚩 CTF 2/3 (hex): 6d617463685f

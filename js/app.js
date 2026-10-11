@@ -32,15 +32,33 @@
       tema: "Alternar tema claro/escuro", idioma: "Read in English", menu: "Menu",
       paleta: "Trocar a cor do site", voltarTopo: "Voltar ao topo",
       dica: "Experimente:", placeholder: "digite help",
-      atalhos: ["help", "whoami", "agora", "projetos", "p4", "contato"],
+      atalhos: ["help", "whoami", "agora", "projetos", "p4", "contato", "ctf"],
+      hackerLigado: "MODO HACKER ATIVADO", hackerDesligado: "modo hacker desligado",
       t: {
         boasVindas: 'Olá! 👋 Este é o terminal do portfólio. Digite <span class="t-cmd">help</span> para ver o que dá pra fazer.',
         ajuda: [
           ["help", "mostra esta lista"], ["whoami", "quem sou eu"], ["agora", "no que estou trabalhando"],
           ["pesquisa", "meus interesses de pesquisa"], ["projetos", "lista os projetos"], ["p4", "afinal, o que é P4?"],
           ["contato", "como falar comigo"], ["git log", "meus últimos commits no GitHub"], ["ls", "lista as seções do site"],
-          ["cd <seção>", "vai até uma seção (ex.: cd projetos)"], ["clear", "limpa a tela"],
+          ["cd <seção>", "vai até uma seção (ex.: cd projetos)"], ["ctf", "🚩 desafio: ache a flag escondida no site"], ["clear", "limpa a tela"],
         ],
+        ctf: [
+          '<span class="t-destaque">🚩 Desafio CTF</span>: a flag está dividida em 3 pedaços escondidos neste site.',
+          "",
+          "Pista 1: todo site tem um código-fonte. Já deu uma olhada no deste? (Ctrl+U)",
+          "Pista 2: os robôs de busca recebem instruções que você não vê, num arquivo .txt bem conhecido.",
+          "Pista 3: nem todo caminho existe... mas até o que não existe tem algo a dizer.",
+          "",
+          'Cada pedaço está codificado de um jeito. Ferramentas: <span class="t-cmd">base64 -d &lt;texto&gt;</span> · <span class="t-cmd">hex &lt;texto&gt;</span> · <span class="t-cmd">rot13 &lt;texto&gt;</span>',
+          'Juntou os 3? <span class="t-cmd">submit flag{...}</span>',
+        ].join("\n"),
+        ctfJaResolvido: "(você já resolveu este desafio 🏁)",
+        ctfCerto: "🏁 Flag correta! Mandou bem. Me manda um print no LinkedIn que eu vou adorar 😄",
+        ctfErrado: "❌ Flag incorreta. Confira os 3 pedaços e tente de novo.",
+        ctfUso: "uso: submit flag{...}",
+        decodUso: (c) => `uso: ${c} <texto>`,
+        decodErro: "não consegui decodificar esse texto.",
+        semCripto: "este navegador não consegue conferir a flag aqui. Tente pelo site publicado.",
         gitUso: "uso: git log",
         gitAguarde: "ainda buscando os commits no GitHub, tente de novo em instantes.",
         naoEncontrado: (c) => `comando não encontrado: ${c}. Digite help.`,
@@ -69,15 +87,33 @@
       tema: "Toggle light/dark theme", idioma: "Ler em português", menu: "Menu",
       paleta: "Change the site color", voltarTopo: "Back to top",
       dica: "Try:", placeholder: "type help",
-      atalhos: ["help", "whoami", "now", "projects", "p4", "contact"],
+      atalhos: ["help", "whoami", "now", "projects", "p4", "contact", "ctf"],
+      hackerLigado: "HACKER MODE ON", hackerDesligado: "hacker mode off",
       t: {
         boasVindas: 'Hi! 👋 This is the portfolio terminal. Type <span class="t-cmd">help</span> to see what you can do.',
         ajuda: [
           ["help", "shows this list"], ["whoami", "who I am"], ["now", "what I'm working on"],
           ["research", "my research interests"], ["projects", "lists my projects"], ["p4", "so, what is P4?"],
           ["contact", "how to reach me"], ["git log", "my latest commits on GitHub"], ["ls", "lists the site sections"],
-          ["cd <section>", "jumps to a section (e.g. cd projects)"], ["clear", "clears the screen"],
+          ["cd <section>", "jumps to a section (e.g. cd projects)"], ["ctf", "🚩 challenge: find the flag hidden on the site"], ["clear", "clears the screen"],
         ],
+        ctf: [
+          '<span class="t-destaque">🚩 CTF challenge</span>: the flag is split into 3 pieces hidden on this site.',
+          "",
+          "Clue 1: every website has source code. Have you looked at this one's? (Ctrl+U)",
+          "Clue 2: search robots get instructions you don't see, in a well-known .txt file.",
+          "Clue 3: not every path exists... but even what doesn't exist has something to say.",
+          "",
+          'Each piece is encoded differently. Tools: <span class="t-cmd">base64 -d &lt;text&gt;</span> · <span class="t-cmd">hex &lt;text&gt;</span> · <span class="t-cmd">rot13 &lt;text&gt;</span>',
+          'Got all 3? <span class="t-cmd">submit flag{...}</span>',
+        ].join("\n"),
+        ctfJaResolvido: "(you've already solved this challenge 🏁)",
+        ctfCerto: "🏁 Correct flag! Nicely done. Send me a screenshot on LinkedIn, I'd love that 😄",
+        ctfErrado: "❌ Wrong flag. Check the 3 pieces and try again.",
+        ctfUso: "usage: submit flag{...}",
+        decodUso: (c) => `usage: ${c} <text>`,
+        decodErro: "couldn't decode that text.",
+        semCripto: "this browser can't check the flag here. Try it on the published site.",
         gitUso: "usage: git log",
         gitAguarde: "still fetching commits from GitHub, try again in a moment.",
         naoEncontrado: (c) => `command not found: ${c}. Type help.`,
@@ -622,10 +658,69 @@
     p4: "p4",
     contato: "contato", contact: "contato",
     ls: "ls", cd: "cd", git: "git",
+    ctf: "ctf", submit: "submit",
+    base64: "base64", hex: "hex", rot13: "rot13",
+    hacker: "hacker", matrix: "hacker",
     clear: "limpar", limpar: "limpar", cls: "limpar",
     sudo: "sudo",
     lattes: "link", github: "link", linkedin: "link", instagram: "link", orcid: "link", scholar: "link",
   };
+
+  /* ---------- CTF e brincadeiras ---------- */
+
+  // Só o hash da flag fica no código: ler o JavaScript não entrega a resposta
+  const HASH_FLAG = "e92ed6dfda04e7ad9629e4037b45fafa29b30743e8f5c9e14c22255ccd2b1e1f";
+
+  async function flagCorreta(texto) {
+    const resumo = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(texto.trim()));
+    const hex = [...new Uint8Array(resumo)].map((b) => b.toString(16).padStart(2, "0")).join("");
+    return hex === HASH_FLAG;
+  }
+
+  const decodificar = {
+    base64: (s) => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\s/g, "")), (c) => c.charCodeAt(0))),
+    hex: (s) => {
+      const limpo = s.replace(/0x|\s/gi, "");
+      if (!/^([0-9a-f]{2})+$/i.test(limpo)) throw new Error("hex inválido");
+      return new TextDecoder().decode(Uint8Array.from(limpo.match(/../g), (h) => parseInt(h, 16)));
+    },
+    rot13: (s) => s.replace(/[a-z]/gi, (c) => {
+      const base = c <= "Z" ? 65 : 97;
+      return String.fromCharCode(((c.charCodeAt(0) - base + 13) % 26) + base);
+    }),
+  };
+
+  // Chuva de "pacotes" coloridos quando alguém acerta a flag
+  function comemorar() {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const cores = ["var(--acento)", "var(--lima)", "var(--coral)", "var(--amarelo)"];
+    for (let i = 0; i < 40; i++) {
+      const p = document.createElement("i");
+      p.className = "confete";
+      p.style.cssText = `left:${Math.random() * 100}vw; background:${cores[i % cores.length]}; animation-duration:${1.8 + Math.random() * 1.6}s; animation-delay:${Math.random() * .4}s; rotate:${Math.random() * 90}deg`;
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 4000);
+    }
+  }
+
+  function avisar(texto) {
+    document.querySelector(".aviso-flutuante")?.remove();
+    const aviso = document.createElement("div");
+    aviso.className = "aviso-flutuante";
+    aviso.setAttribute("role", "status");
+    aviso.textContent = texto;
+    document.body.appendChild(aviso);
+    setTimeout(() => aviso.remove(), 2600);
+  }
+
+  function alternarHacker() {
+    const ligado = raiz.classList.toggle("modo-hacker");
+    avisar(ligado ? UI[idioma].hackerLigado : UI[idioma].hackerDesligado);
+  }
+
+  // ↑ ↑ ↓ ↓ ← → ← → B A
+  const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+  let posKonami = 0;
 
   function imprimir(html, classe = "") {
     const saida = $("#terminalSaida");
@@ -721,6 +816,30 @@
         ).join("\n") || esc(UI[idioma].githubErro), commits.length ? "" : "t-erro");
         break;
       }
+      case "ctf":
+        imprimir(T.ctf);
+        if (memoria.ler("ctf") === "ok") imprimir(esc(T.ctfJaResolvido), "t-cmd");
+        break;
+      case "submit": {
+        const tentativa = args.join(" ");
+        if (!tentativa) { imprimir(esc(T.ctfUso), "t-erro"); break; }
+        if (!window.crypto?.subtle) { imprimir(esc(T.semCripto), "t-erro"); break; }
+        flagCorreta(tentativa).then((certa) => {
+          imprimir(esc(certa ? T.ctfCerto : T.ctfErrado), certa ? "t-destaque" : "t-erro");
+          if (certa) { memoria.gravar("ctf", "ok"); comemorar(); }
+        });
+        break;
+      }
+      case "base64": case "hex": case "rot13": {
+        const nome = cmd.toLowerCase();
+        const entrada = (nome === "base64" && args[0] === "-d" ? args.slice(1) : args).join(" ");
+        if (!entrada) { imprimir(esc(T.decodUso(nome === "base64" ? "base64 -d" : nome)), "t-erro"); break; }
+        try { imprimir(esc(decodificar[nome](entrada))); } catch (e) { imprimir(esc(T.decodErro), "t-erro"); }
+        break;
+      }
+      case "hacker":
+        alternarHacker();
+        break;
       case "limpar":
         $("#terminalSaida").innerHTML = "";
         break;
@@ -899,6 +1018,17 @@
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") fecharMenu();
+
+    // Código secreto, ignorado enquanto a pessoa digita em algum campo
+    if (!/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) {
+      const tecla = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      posKonami = tecla === KONAMI[posKonami] ? posKonami + 1 : (tecla === KONAMI[0] ? 1 : 0);
+      if (posKonami === KONAMI.length) {
+        posKonami = 0;
+        alternarHacker();
+      }
+    }
+
     if (e.target.id !== "terminalEntrada" || !historico.length) return;
     if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault();
@@ -914,4 +1044,10 @@
   atualizarNav();
   carregarAtividade();
   ativarContador();
+
+  // Recado para quem abre o console do navegador
+  console.log("%cOi, dev! 👋", "font: 800 22px sans-serif; color: #9d9bff");
+  console.log(idioma === "en"
+    ? "Curious? Type ctf in the site's terminal. And psst: ↑ ↑ ↓ ↓ ← → ← → B A"
+    : "Curioso? Digite ctf no terminal do site. E psiu: ↑ ↑ ↓ ↓ ← → ← → B A");
 })();

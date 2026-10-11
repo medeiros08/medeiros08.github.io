@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 · Pacote descartado · Arthur Medeiros</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400..700&display=swap">
+  <!-- Caminhos absolutos: o GitHub Pages mostra esta página em qualquer endereço que não existe -->
+  <link rel="stylesheet" href="/css/estilo.css">
+  <script>
+    try {
+      var tema = localStorage.getItem("tema");
+      if (tema) document.documentElement.dataset.theme = tema;
+    } catch (e) {}
+  </script>
+  <style>
+    .erro { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; padding: 64px 0; }
+    .erro-codigo { font-size: clamp(6rem, 22vw, 14rem); font-weight: 800; line-height: .8; letter-spacing: -.06em; color: var(--acento); }
+    .erro h1 { margin: 22px 0 14px; font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; line-height: 1; letter-spacing: -.04em; }
+    .erro-texto { max-width: 46ch; margin-bottom: 34px; font-size: 1.15rem; color: var(--suave); }
+    .erro .terminal { max-width: 720px; }
+    .erro .terminal-corpo { height: auto; }
+    .queda { position: relative; max-width: 560px; height: 64px; margin-bottom: 30px; border-top: 2px dashed var(--linha); }
+    .queda .pacote { position: absolute; top: -8px; left: 0; animation: descartar 3.4s ease-in infinite; }
+    .queda span { position: absolute; top: 12px; left: 52%; font-family: var(--fonte-mono); font-size: 13px; color: var(--suave); }
+    @keyframes descartar {
+      0% { transform: translate(0, 0); opacity: 1; }
+      55% { transform: translate(280px, 0); opacity: 1; }
+      100% { transform: translate(330px, 90px) rotate(170deg); opacity: 0; }
+    }
+    .erro-acoes { margin-top: 34px; }
+  </style>
+</head>
+<body>
+  <main class="erro">
+    <div class="container">
+      <p class="erro-codigo" aria-hidden="true">404</p>
+      <h1 id="titulo">Pacote descartado</h1>
+      <p class="erro-texto" id="texto">A tabela de match-action não encontrou nenhuma regra para este endereço, então o pacote foi descartado.</p>
+
+      <div class="queda" aria-hidden="true"><b class="pacote"></b><span>drop()</span></div>
+
+      <div class="terminal">
+        <div class="terminal-barra" aria-hidden="true"><i></i><i></i><i></i><span>arthur@portfolio:~</span></div>
+        <div class="terminal-corpo">
+          <div class="t-linha t-eco"><span class="t-prompt">arthur@portfolio:~$</span> curl <span id="caminho"></span></div>
+          <div class="t-linha t-erro">match-action: <span id="semRegra">nenhuma regra para</span> <span id="caminho2"></span></div>
+          <div class="t-linha"><span id="acao">ação</span>: <span class="t-cmd">drop()</span></div>
+          <!-- 🚩 CTF 3/3 (rot13) -->
+          <div class="t-linha"><span id="payload">payload descartado</span>: <span class="t-destaque">qrcnefre}</span></div>
+        </div>
+      </div>
+
+      <p class="erro-acoes"><a class="botao principal" href="/" id="voltar">← Voltar para o início</a></p>
+    </div>
+  </main>
+
+  <script>
+    var caminho = location.pathname + location.search;
+    document.getElementById("caminho").textContent = location.origin + caminho;
+    document.getElementById("caminho2").textContent = '"' + caminho + '"';
+
+    var idioma = null;
+    try { idioma = localStorage.getItem("idioma"); } catch (e) {}
+    if (idioma === "en") {
+      document.documentElement.lang = "en";
+      document.title = "404 · Packet dropped · Arthur Medeiros";
+      document.getElementById("titulo").textContent = "Packet dropped";
+      document.getElementById("texto").textContent = "The match-action table found no rule for this address, so the packet was dropped.";
+      document.getElementById("semRegra").textContent = "no rule for";
+      document.getElementById("acao").textContent = "action";
+      document.getElementById("payload").textContent = "dropped payload";
+      document.getElementById("voltar").textContent = "← Back to home";
+    }
+  </script>
+</body>
+</html>
