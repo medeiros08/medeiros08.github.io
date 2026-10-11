@@ -9,7 +9,8 @@ Todo o conteúdo fica em **`js/dados.js`**. Os outros arquivos não precisam ser
 - Troque tudo que está marcado com ✏️.
 - Textos aceitam só português (`"Olá"`) ou os dois idiomas (`{ pt: "Olá", en: "Hello" }`).
 - Lista vazia (`[]`) esconde a seção inteira.
-- A foto do topo fica em `img/foto.jpg`. No computador ela aparece à direita do texto; no celular, em cima. Ajuste o enquadramento com `fotoPosicao`.
+- A foto do topo fica em `img/foto.jpg`, num quadro estilo polaroide. Ajuste o enquadramento com `fotoPosicao`.
+- O terminal da página lê os mesmos dados: não precisa editar nada nele.
 
 ## Como ver no computador
 
