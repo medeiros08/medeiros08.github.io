@@ -15,30 +15,66 @@
 
   const UI = {
     pt: {
-      agora: "Agora", pesquisa: "Pesquisa", publicacoes: "Publicações", projetos: "Projetos",
-      trajetoria: "Trajetória", contato: "Contato", sobre: "Sobre",
-      linhas: "Linhas de pesquisa", interesses: "Outras áreas de interesse",
+      agora: "Agora", sobre: "Sobre", terminal: "Terminal", pesquisa: "Pesquisa", publicacoes: "Publicações",
+      projetos: "Projetos", trajetoria: "Trajetória", reconhecimentos: "Reconhecimentos", contato: "Contato",
+      tituloSobre: "Sobre mim", tituloTerminal: "Prefere o terminal?", tituloContato: "Vamos conversar?",
+      emResumo: "Em resumo", linhas: "Linhas de pesquisa", interesses: "Outras áreas de interesse",
       pubsDestaque: "Publicações em destaque",
       verTodas: (n) => `Ver todas as ${n} publicações`, verMenos: "Mostrar menos",
       meuPapel: "Meu papel:", maisProjetos: "Mais projetos no GitHub",
-      formacao: "Formação", experiencia: "Experiência",
-      reconhecimentos: "Reconhecimentos e atuação",
-      emAndamento: "em andamento", hoje: "hoje", ou: "ou", role: "Role",
+      formacao: "Formação", experiencia: "Experiência", tituloReconhecimentos: "Reconhecimentos e atuação",
+      emAndamento: "em andamento", hoje: "hoje",
+      chat: ["Oi! 👋", "Respondo por e-mail ou pelas redes aqui embaixo."],
       tema: "Alternar tema claro/escuro", idioma: "Read in English", menu: "Menu",
-      voltarTopo: "Voltar ao topo",
+      paleta: "Trocar a cor do site", voltarTopo: "Voltar ao topo",
+      dica: "Experimente:", placeholder: "digite help",
+      atalhos: ["help", "whoami", "agora", "projetos", "p4", "contato"],
+      t: {
+        boasVindas: 'Olá! 👋 Este é o terminal do portfólio. Digite <span class="t-cmd">help</span> para ver o que dá pra fazer.',
+        ajuda: [
+          ["help", "mostra esta lista"], ["whoami", "quem sou eu"], ["agora", "no que estou trabalhando"],
+          ["pesquisa", "meus interesses de pesquisa"], ["projetos", "lista os projetos"], ["p4", "afinal, o que é P4?"],
+          ["contato", "como falar comigo"], ["ls", "lista as seções do site"],
+          ["cd <seção>", "vai até uma seção (ex.: cd projetos)"], ["clear", "limpa a tela"],
+        ],
+        naoEncontrado: (c) => `comando não encontrado: ${c}. Digite help.`,
+        sudo: (u) => `${u} não está no arquivo sudoers. Este incidente será reportado. 😄`,
+        p4: "P4 é uma linguagem para programar como os equipamentos de rede tratam cada pacote: o parser lê os cabeçalhos, as tabelas de match-action decidem o que fazer e o deparser monta o pacote de volta. Eu pesquiso como usar isso para deixar a comunicação mais segura.",
+        semSecao: (s) => `seção não encontrada: ${s}. Use ls para ver as seções.`,
+        indo: (s) => `indo para ${s}/ ...`,
+        nada: "nada por aqui ainda.",
+      },
     },
     en: {
-      agora: "Now", pesquisa: "Research", publicacoes: "Publications", projetos: "Projects",
-      trajetoria: "Background", contato: "Contact", sobre: "About",
-      linhas: "Research lines", interesses: "Other interests",
+      agora: "Now", sobre: "About", terminal: "Terminal", pesquisa: "Research", publicacoes: "Publications",
+      projetos: "Projects", trajetoria: "Background", reconhecimentos: "Awards", contato: "Contact",
+      tituloSobre: "About me", tituloTerminal: "Prefer the terminal?", tituloContato: "Let's talk",
+      emResumo: "At a glance", linhas: "Research lines", interesses: "Other interests",
       pubsDestaque: "Selected publications",
       verTodas: (n) => `See all ${n} publications`, verMenos: "Show less",
       meuPapel: "My role:", maisProjetos: "More projects on GitHub",
-      formacao: "Education", experiencia: "Experience",
-      reconhecimentos: "Awards and service",
-      emAndamento: "in progress", hoje: "present", ou: "or", role: "Scroll",
+      formacao: "Education", experiencia: "Experience", tituloReconhecimentos: "Awards and service",
+      emAndamento: "in progress", hoje: "present",
+      chat: ["Hi! 👋", "I reply by e-mail or on the networks below."],
       tema: "Toggle light/dark theme", idioma: "Ler em português", menu: "Menu",
-      voltarTopo: "Back to top",
+      paleta: "Change the site color", voltarTopo: "Back to top",
+      dica: "Try:", placeholder: "type help",
+      atalhos: ["help", "whoami", "now", "projects", "p4", "contact"],
+      t: {
+        boasVindas: 'Hi! 👋 This is the portfolio terminal. Type <span class="t-cmd">help</span> to see what you can do.',
+        ajuda: [
+          ["help", "shows this list"], ["whoami", "who I am"], ["now", "what I'm working on"],
+          ["research", "my research interests"], ["projects", "lists my projects"], ["p4", "so, what is P4?"],
+          ["contact", "how to reach me"], ["ls", "lists the site sections"],
+          ["cd <section>", "jumps to a section (e.g. cd projects)"], ["clear", "clears the screen"],
+        ],
+        naoEncontrado: (c) => `command not found: ${c}. Type help.`,
+        sudo: (u) => `${u} is not in the sudoers file. This incident will be reported. 😄`,
+        p4: "P4 is a language for programming how network devices handle each packet: the parser reads the headers, match-action tables decide what to do and the deparser puts the packet back together. I research how to use it to make communication more secure.",
+        semSecao: (s) => `section not found: ${s}. Use ls to see the sections.`,
+        indo: (s) => `going to ${s}/ ...`,
+        nada: "nothing here yet.",
+      },
     },
   };
 
@@ -48,11 +84,11 @@
     scholar: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.9V17h2V9zM5 13.2v4L12 21l7-3.8v-4L12 17z"/></svg>',
     github: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>',
     linkedin: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13M7.12 20.45H3.56V9h3.56zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0"/></svg>',
-    email: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>',
-    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>',
-    site: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.6 3.7 5.6 3.7 9s-1.3 6.4-3.7 9c-2.4-2.6-3.7-5.6-3.7-9S9.6 5.6 12 3z"/></svg>',
-    tema: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.6a8.4 8.4 0 0 1 0 16.8z" fill="currentColor"/></svg>',
-    menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+    email: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>',
+    site: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.6 3.7 5.6 3.7 9s-1.3 6.4-3.7 9c-2.4-2.6-3.7-5.6-3.7-9S9.6 5.6 12 3z"/></svg>',
+    tema: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.6a8.4 8.4 0 0 1 0 16.8z" fill="currentColor"/></svg>',
+    menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
   };
   ICONES.cv = ICONES.lattes;
 
@@ -68,16 +104,24 @@
     site: "Site",
   };
 
-  const CAPAS = {
-    indigo: "linear-gradient(135deg, #0b1026, #4338ca 55%, #818cf8)",
-    violeta: "linear-gradient(135deg, #1a0b2e, #7c3aed 55%, #c4b5fd)",
-    azul: "linear-gradient(135deg, #061a2e, #1d4ed8 55%, #60a5fa)",
-    ciano: "linear-gradient(135deg, #04202a, #0e7490 55%, #67e8f9)",
-    verde: "linear-gradient(135deg, #04201a, #047857 55%, #6ee7b7)",
-    laranja: "linear-gradient(135deg, #2a1204, #c2410c 55%, #fdba74)",
-    vermelho: "linear-gradient(135deg, #2a0a0f, #b91c1c 55%, #fb7185)",
-    rosa: "linear-gradient(135deg, #2a0820, #be185d 55%, #f9a8d4)",
+  const CORES_CAPA = {
+    indigo: "#4338ff",
+    violeta: "#8b5cf6",
+    azul: "#2f80ff",
+    ciano: "#06b6d4",
+    verde: "#22a35a",
+    laranja: "#ff7a1a",
+    vermelho: "#ef4444",
+    rosa: "#ec4899",
   };
+
+  // Cores que o visitante pode escolher no botão de paleta. A primeira vem de dados.js.
+  const PALETAS = [
+    { claro: D.cores?.claro || "#4338ff", escuro: D.cores?.escuro || "#9d9bff" },
+    { claro: "#e0452b", escuro: "#ff8a70" },
+    { claro: "#0f8a5f", escuro: "#4ade9b" },
+    { claro: "#9333ea", escuro: "#c99bff" },
+  ];
 
   /* ---------- Utilitários ---------- */
 
@@ -88,8 +132,12 @@
 
   const idiomas = Array.isArray(D.idiomas) && D.idiomas.length ? D.idiomas : ["pt"];
   let idioma = idiomas.includes(memoria.ler("idioma")) ? memoria.ler("idioma") : idiomas[0];
+  let paleta = Number(memoria.ler("paleta")) % PALETAS.length || 0;
   let pubsAbertas = false;
   let jaRenderizou = false;
+  let secoesAtuais = [];
+  const historico = [];
+  let posHistorico = 0;
 
   // Escolhe o texto no idioma atual; aceita string simples ou { pt, en }
   function t(valor) {
@@ -109,69 +157,140 @@
       .replace(/\[([^\]]+)\]\(((?:https?:|mailto:|#|\/|\.)[^)\s]*)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
   }
 
+  // Tira a marcação de negrito/links, para o terminal
+  const simples = (texto) => t(texto).replace(/\*\*(.+?)\*\*/g, "$1").replace(/\[([^\]]+)\]\([^)]*\)/g, "$1");
+  const normalizar = (s) => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/^#|\/$/g, "").trim().replace(/\s+/g, "-");
+
   const temItens = (lista) => Array.isArray(lista) && lista.length > 0;
   const linkExterno = (url) => /^https?:/.test(url) ? ' target="_blank" rel="noopener"' : "";
+  const nomeCompleto = () => `${D.nome?.primeiro || ""} ${D.nome?.sobrenome || ""}`.trim();
+  const usuario = () => normalizar(D.nome?.primeiro || "eu") || "eu";
+  const prompt = () => `${usuario()}@portfolio:~`;
+
+  // Cada letra vira um <span> para reagir ao mouse
+  function letras(texto) {
+    return [...String(texto || "")].map((ch) => (ch === " " ? " " : `<span class="letra">${esc(ch)}</span>`)).join("");
+  }
+
+  function botoesLinks({ destacarPrimeiro = true, semEmail = false } = {}) {
+    const primeiroEmail = D.contato?.emails?.[0];
+    return (D.links || [])
+      .filter((link) => !(semEmail && link.tipo === "email"))
+      .map((link, i) => {
+        const url = link.url || (link.tipo === "email" && primeiroEmail ? `mailto:${primeiroEmail}` : "#");
+        const rotulo = t(link.rotulo) || t(ROTULOS_LINK[link.tipo]) || link.tipo;
+        const principal = destacarPrimeiro && (link.principal ?? i === 0) ? " principal" : "";
+        return `<a class="botao${principal}" href="${esc(url)}"${linkExterno(url)}>${ICONES[link.tipo] || ICONES.site}<span>${esc(rotulo)}</span></a>`;
+      })
+      .join("");
+  }
 
   /* ---------- Seções ---------- */
 
   function topo() {
     const nome = D.nome || {};
+    const detalhes = (D.topo?.detalhes || []).map(t).filter(Boolean);
+    const selo = detalhes[detalhes.length - 1];
     const foto = D.foto
-      ? `<img src="${esc(D.foto)}" alt="" onerror="this.closest('.hero').classList.remove('com-foto'); this.remove()">`
+      ? `<figure class="hero-foto" style="--foto-posicao:${esc(D.fotoPosicao || "50% 22%")}">
+          <img src="${esc(D.foto)}" alt="${esc(nomeCompleto())}" onerror="this.closest('figure').remove()">
+          <figcaption>${esc(t(D.contato?.cidade) || "")}</figcaption>
+          ${selo ? `<span class="hero-selo">${esc(selo)}</span>` : ""}
+        </figure>`
       : "";
-    const detalhes = (D.topo?.detalhes || []).map(t).filter(Boolean).map(esc).join(" · ");
-    const primeiroEmail = D.contato?.emails?.[0];
-
-    const links = (D.links || []).map((link, i) => {
-      const url = link.url || (link.tipo === "email" && primeiroEmail ? `mailto:${primeiroEmail}` : "#");
-      const rotulo = t(link.rotulo) || t(ROTULOS_LINK[link.tipo]) || link.tipo;
-      const icone = ICONES[link.tipo] || ICONES.site;
-      const principal = (link.principal ?? i === 0) ? " principal" : "";
-      return `<a class="link-botao${principal}" href="${esc(url)}"${linkExterno(url)}>${icone}<span>${esc(rotulo)}</span></a>`;
-    }).join("");
 
     return `
-      <section class="hero${foto ? " com-foto" : ""}" id="inicio">
-        <div class="hero-fundo" style="--foto-posicao:${esc(D.fotoPosicao || "50% 20%")}">${foto}</div>
-        <div class="hero-conteudo container">
-          ${D.topo?.chamada ? `<p class="eyebrow">${esc(t(D.topo.chamada))}</p>` : ""}
-          <h1 class="hero-nome"><span>${esc(nome.primeiro || "")}</span><span>${esc(nome.sobrenome || "")}</span></h1>
-          ${D.topo?.frase ? `<p class="hero-frase texto-rico">${rico(t(D.topo.frase))}</p>` : ""}
-          ${detalhes ? `<p class="hero-detalhes">${detalhes}</p>` : ""}
-          ${links ? `<div class="hero-links">${links}</div>` : ""}
+      <section class="hero" id="inicio">
+        <div class="container hero-grade">
+          <div class="hero-texto">
+            ${D.topo?.chamada ? `<p class="hero-pill"><i></i>${esc(t(D.topo.chamada))}</p>` : ""}
+            <h1 class="hero-nome" aria-label="${esc(nomeCompleto())}">
+              <span aria-hidden="true">${letras(nome.primeiro)}</span><span aria-hidden="true">${letras(nome.sobrenome)}</span>
+            </h1>
+            ${D.topo?.frase ? `<p class="hero-frase texto-rico">${rico(t(D.topo.frase))}</p>` : ""}
+            ${detalhes.length ? `<ul class="hero-chips">${detalhes.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>` : ""}
+            <div class="hero-links">${botoesLinks()}</div>
+          </div>
+          ${foto}
         </div>
-        <a class="hero-role" href="#conteudo-inicio">${UI[idioma].role} <span>↓</span></a>
-      </section>
-      <div id="conteudo-inicio"></div>`;
+        <div class="container">
+          <div class="pacotes" aria-hidden="true">
+            <span>parser</span><span>match-action</span><span>deparser</span>
+            <i class="pacote-trilho"><b class="pacote"></b></i><i class="pacote-trilho"><b class="pacote"></b></i><i class="pacote-trilho"><b class="pacote"></b></i>
+          </div>
+        </div>
+        ${faixa()}
+      </section>`;
+  }
+
+  function faixa() {
+    const itens = [...(D.pesquisa?.linhas || []), ...(D.pesquisa?.interesses || [])].map(t).filter(Boolean);
+    if (!itens.length) return "";
+    const grupo = itens.map((x) => `${esc(x)}<b>✦</b>`).join("");
+    return `<div class="faixa" aria-hidden="true"><div class="faixa-trilho"><span>${grupo}</span><span>${grupo}</span></div></div>`;
   }
 
   function secaoAgora() {
     if (!temItens(D.agora)) return "";
-    const colunas = D.agora.slice(0, 3);
-    const classe = colunas.length < 3 ? ` colunas-${colunas.length}` : "";
     return `
       <section class="secao" id="agora">
-        <div class="container agora-grade${classe}">
-          ${colunas.map((col) => `
-            <div class="agora-col revelar">
-              <h2 class="rotulo">${esc(t(col.rotulo))}</h2>
-              ${(col.itens || []).map((item) => `
-                <div class="agora-item">
-                  <h3>${esc(t(item.titulo))}${item.selo ? `<span class="selo">${esc(t(item.selo))}</span>` : ""}</h3>
-                  ${item.texto ? `<p class="texto-rico">${rico(t(item.texto))}</p>` : ""}
-                </div>`).join("")}
-            </div>`).join("")}
+        <div class="container">
+          <h2 class="titulo-secao revelar">${UI[idioma].agora}</h2>
+          <div class="agora-grade">
+            ${D.agora.slice(0, 3).map((col, i) => `
+              <article class="agora-cartao revelar cor-${i % 3}">
+                <h3 class="aba">${esc(t(col.rotulo))}</h3>
+                ${(col.itens || []).map((item) => `
+                  <div class="agora-item">
+                    <h4>${esc(t(item.titulo))}${item.selo ? `<span class="selo">${esc(t(item.selo))}</span>` : ""}</h4>
+                    ${item.texto ? `<p class="texto-rico">${rico(t(item.texto))}</p>` : ""}
+                  </div>`).join("")}
+              </article>`).join("")}
+          </div>
         </div>
       </section>`;
   }
 
   function secaoSobre() {
     if (!temItens(D.sobre)) return "";
+    const u = UI[idioma];
+    const resumo = [...(D.topo?.detalhes || []), D.contato?.cidade].map(t).filter(Boolean);
     return `
       <section class="secao" id="sobre">
-        <div class="container revelar">
-          <h2 class="rotulo">${UI[idioma].sobre}</h2>
-          <div class="sobre-texto texto-rico">${D.sobre.map((p) => `<p>${rico(t(p))}</p>`).join("")}</div>
+        <div class="container sobre-grade">
+          <div class="revelar">
+            <h2 class="titulo-secao">${u.tituloSobre}</h2>
+            <div class="sobre-texto texto-rico">${D.sobre.map((p) => `<p>${rico(t(p))}</p>`).join("")}</div>
+          </div>
+          ${resumo.length ? `
+            <aside class="ficha revelar">
+              <h3>${u.emResumo}</h3>
+              <ul>${resumo.map((x) => `<li><span aria-hidden="true">→</span>${esc(x)}</li>`).join("")}</ul>
+            </aside>` : ""}
+        </div>
+      </section>`;
+  }
+
+  function secaoTerminal() {
+    const u = UI[idioma];
+    return `
+      <section class="secao" id="terminal">
+        <div class="container">
+          <h2 class="titulo-secao revelar">${u.tituloTerminal}</h2>
+          <div class="terminal revelar">
+            <div class="terminal-barra" aria-hidden="true"><i></i><i></i><i></i><span>${esc(prompt())}</span></div>
+            <div class="terminal-corpo" id="terminalCorpo">
+              <div id="terminalSaida" aria-live="polite"></div>
+              <form class="terminal-linha" id="terminalForm" autocomplete="off">
+                <label class="terminal-prompt" for="terminalEntrada">${esc(prompt())}$</label>
+                <input id="terminalEntrada" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${u.placeholder}">
+              </form>
+            </div>
+          </div>
+          <div class="terminal-atalhos">
+            <span>${u.dica}</span>
+            ${u.atalhos.map((c) => `<button type="button" class="atalho" data-comando="${c}">${c}</button>`).join("")}
+          </div>
         </div>
       </section>`;
   }
@@ -183,14 +302,16 @@
     const u = UI[idioma];
     return `
       <section class="secao" id="pesquisa">
-        <div class="container revelar">
-          <h2 class="rotulo">${esc(t(D.pesquisa.rotulo)) || u.linhas}</h2>
-          <ol class="linhas">
+        <div class="container">
+          <h2 class="titulo-secao revelar">${esc(t(D.pesquisa.rotulo)) || u.linhas}</h2>
+          <ol class="linhas revelar">
             ${linhas.map((l, i) => `<li><span class="num">${String(i + 1).padStart(2, "0")}</span><span>${esc(t(l))}</span></li>`).join("")}
           </ol>
           ${interesses.length ? `
-            <h3 class="subrotulo">${u.interesses}</h3>
-            <ul class="chips">${interesses.map((x) => `<li>${esc(t(x))}</li>`).join("")}</ul>` : ""}
+            <div class="revelar">
+              <h3 class="subrotulo">${u.interesses}</h3>
+              <ul class="chips">${interesses.map((x) => `<li>${esc(t(x))}</li>`).join("")}</ul>
+            </div>` : ""}
         </div>
       </section>`;
   }
@@ -218,6 +339,11 @@
       </li>`;
   }
 
+  function rotuloAlternarPubs(total) {
+    const u = UI[idioma];
+    return pubsAbertas ? `${u.verMenos} −` : `${u.verTodas(total)} +`;
+  }
+
   function secaoPublicacoes() {
     if (!temItens(D.publicacoes)) return "";
     const u = UI[idioma];
@@ -229,28 +355,21 @@
     return `
       <section class="secao" id="publicacoes">
         <div class="container revelar">
-          <h2 class="rotulo">${extras.length ? u.pubsDestaque : u.publicacoes}</h2>
+          <h2 class="titulo-secao">${extras.length ? u.pubsDestaque : u.publicacoes}</h2>
           <ol class="pubs-lista">${visiveis.map(itemPublicacao).join("")}</ol>
           ${extras.length ? `
             <ol class="pubs-lista pubs-extra" id="pubsExtra"${pubsAbertas ? "" : " hidden"}>${extras.map(itemPublicacao).join("")}</ol>
-            <button class="pubs-alternar" type="button" aria-expanded="${pubsAbertas}" aria-controls="pubsExtra" data-total="${todas.length}">
+            <button class="botao pubs-alternar" type="button" aria-expanded="${pubsAbertas}" aria-controls="pubsExtra" data-total="${todas.length}">
               ${rotuloAlternarPubs(todas.length)}
             </button>` : ""}
         </div>
       </section>`;
   }
 
-  function rotuloAlternarPubs(total) {
-    const u = UI[idioma];
-    return pubsAbertas ? `${u.verMenos} <span>−</span>` : `${u.verTodas(total)} <span>+</span>`;
-  }
-
-  function capaProjeto(p) {
-    const fundo = CAPAS[p.cor] || (p.cor && /gradient|^#|^rgb/.test(p.cor) ? p.cor : CAPAS.indigo);
-    if (p.imagem) {
-      return `background-image: linear-gradient(0deg, #0009, #0000 70%), url('${esc(p.imagem).replace(/'/g, "%27")}')`;
-    }
-    return `background: ${esc(fundo)}`;
+  function estiloCapa(p) {
+    if (p.imagem) return `background-image: url('${esc(p.imagem).replace(/'/g, "%27")}')`;
+    const cor = CORES_CAPA[p.cor] || (/^(#|rgb|hsl)/.test(p.cor || "") ? p.cor : CORES_CAPA.indigo);
+    return `--capa: ${esc(cor)}`;
   }
 
   function secaoProjetos() {
@@ -259,15 +378,16 @@
     return `
       <section class="secao" id="projetos">
         <div class="container">
-          <h2 class="rotulo revelar">${u.projetos}</h2>
+          <h2 class="titulo-secao revelar">${u.projetos}</h2>
           <div class="projetos-grade">
-            ${D.projetos.map((p) => {
+            ${D.projetos.map((p, i) => {
               const titulo = esc(t(p.titulo));
               return `
                 <article class="projeto revelar">
-                  <div class="projeto-capa" style="${capaProjeto(p)}">
-                    ${p.categoria ? `<span class="projeto-tag">${esc(t(p.categoria))}</span>` : ""}
+                  <div class="projeto-capa${p.imagem ? " com-imagem" : ""}" style="${estiloCapa(p)}">
+                    <span class="projeto-num" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
                     ${p.status ? `<span class="projeto-status">${esc(t(p.status))}</span>` : ""}
+                    ${p.categoria ? `<span class="projeto-tag">${esc(t(p.categoria))}</span>` : ""}
                   </div>
                   <div class="projeto-corpo">
                     <h3>${p.url ? `<a href="${esc(p.url)}"${linkExterno(p.url)}>${titulo}<span aria-hidden="true">↗</span></a>` : titulo}</h3>
@@ -278,7 +398,7 @@
                 </article>`;
             }).join("")}
           </div>
-          ${D.maisProjetos ? `<a class="link-seta revelar" href="${esc(D.maisProjetos)}"${linkExterno(D.maisProjetos)}>${u.maisProjetos} <span aria-hidden="true">↗</span></a>` : ""}
+          ${D.maisProjetos ? `<a class="botao mais-projetos revelar" href="${esc(D.maisProjetos)}"${linkExterno(D.maisProjetos)}>${ICONES.github}<span>${u.maisProjetos}</span> ↗</a>` : ""}
         </div>
       </section>`;
   }
@@ -300,11 +420,9 @@
           ${itens.map((i) => `
             <li>
               <span class="traj-periodo">${esc(periodo(i))}</span>
-              <div>
-                <h4>${esc(t(i.titulo))}</h4>
-                ${i.instituicao ? `<p class="traj-inst">${esc(t(i.instituicao))}</p>` : ""}
-                ${i.detalhe ? `<p class="traj-det texto-rico">${rico(t(i.detalhe))}</p>` : ""}
-              </div>
+              <h4>${esc(t(i.titulo))}</h4>
+              ${i.instituicao ? `<p class="traj-inst">${esc(t(i.instituicao))}</p>` : ""}
+              ${i.detalhe ? `<p class="traj-det texto-rico">${rico(t(i.detalhe))}</p>` : ""}
             </li>`).join("")}
         </ol>
       </div>`;
@@ -316,10 +434,10 @@
     return `
       <section class="secao" id="trajetoria">
         <div class="container">
-          <h2 class="rotulo revelar">${u.trajetoria}</h2>
+          <h2 class="titulo-secao revelar">${u.trajetoria}</h2>
           <div class="traj-grade">
-            ${colunaTrajetoria(u.formacao, D.formacao)}
             ${colunaTrajetoria(u.experiencia, D.experiencia)}
+            ${colunaTrajetoria(u.formacao, D.formacao)}
           </div>
         </div>
       </section>`;
@@ -330,7 +448,7 @@
     return `
       <section class="secao" id="reconhecimentos">
         <div class="container revelar">
-          <h2 class="rotulo">${UI[idioma].reconhecimentos}</h2>
+          <h2 class="titulo-secao">${UI[idioma].tituloReconhecimentos}</h2>
           <ul class="reconhecimentos">
             ${D.reconhecimentos.map((r) => `
               <li><span class="ano">${esc(r.ano ?? "")}</span><span class="texto-rico">${rico(t(r.texto))}</span></li>`).join("")}
@@ -341,64 +459,191 @@
 
   function secaoContato() {
     const emails = D.contato?.emails || [];
-    if (!emails.length && !D.contato?.cidade) return "";
+    if (!emails.length && !temItens(D.links)) return "";
     const u = UI[idioma];
     return `
       <section class="secao" id="contato">
-        <div class="container revelar">
-          <h2 class="rotulo">${u.contato}</h2>
-          <div class="contato-emails">
-            ${emails.map((e) => `<a class="contato-email" href="mailto:${esc(e)}">${esc(e)}</a>`).join(`<span class="contato-ou">${u.ou}</span>`)}
+        <div class="container">
+          <div class="contato-bloco revelar">
+            <p class="contato-pre">${u.contato}</p>
+            <h2 class="contato-titulo">${u.tituloContato}</h2>
+            <div class="chat">
+              ${u.chat.map((msg) => `<p class="bolha">${esc(msg)}</p>`).join("")}
+              ${emails.map((e) => `<a class="bolha bolha-eu" href="mailto:${esc(e)}">${esc(e)}</a>`).join("")}
+            </div>
+            <div class="contato-links">${botoesLinks({ destacarPrimeiro: false, semEmail: true })}</div>
+            ${D.contato?.cidade ? `<p class="contato-local">📍 ${esc(t(D.contato.cidade))}</p>` : ""}
           </div>
-          ${D.contato?.cidade ? `<p class="contato-local">${esc(t(D.contato.cidade))}</p>` : ""}
         </div>
       </section>`;
+  }
+
+  /* ---------- Terminal ---------- */
+
+  const COMANDOS = {
+    help: "ajuda", ajuda: "ajuda", "?": "ajuda",
+    whoami: "quem", sobre: "quem", about: "quem",
+    agora: "agora", now: "agora",
+    pesquisa: "pesquisa", research: "pesquisa",
+    projetos: "projetos", projects: "projetos",
+    p4: "p4",
+    contato: "contato", contact: "contato",
+    ls: "ls", cd: "cd",
+    clear: "limpar", limpar: "limpar", cls: "limpar",
+    sudo: "sudo",
+    lattes: "link", github: "link", linkedin: "link", instagram: "link", orcid: "link", scholar: "link",
+  };
+
+  function imprimir(html, classe = "") {
+    const saida = $("#terminalSaida");
+    if (!saida) return;
+    saida.insertAdjacentHTML("beforeend", `<div class="t-linha ${classe}">${html}</div>`);
+    const corpo = $("#terminalCorpo");
+    corpo.scrollTop = corpo.scrollHeight;
+  }
+
+  // Nome curto de cada seção no idioma atual (usado por ls e cd)
+  const nomeSecao = (id) => normalizar(UI[idioma][id] || id);
+
+  function acharSecao(nome) {
+    const alvo = normalizar(nome || "");
+    return secoesAtuais.find((s) => [s.id, normalizar(UI.pt[s.id] || ""), normalizar(UI.en[s.id] || "")].includes(alvo));
+  }
+
+  function linkHtml(url, texto) {
+    return `<a href="${esc(url)}"${linkExterno(url)}>${esc(texto)}</a>`;
+  }
+
+  function executar(entrada) {
+    const texto = entrada.trim();
+    imprimir(`<span class="t-prompt">${esc(prompt())}$</span> ${esc(texto)}`, "t-eco");
+    if (!texto) return;
+    historico.push(texto);
+    posHistorico = historico.length;
+
+    const [cmd, ...args] = texto.split(/\s+/);
+    const T = UI[idioma].t;
+
+    switch (COMANDOS[cmd.toLowerCase()]) {
+      case "ajuda":
+        imprimir(T.ajuda.map(([c, d]) => `<span class="t-cmd">${esc(c.padEnd(14))}</span>${esc(d)}`).join("\n"));
+        break;
+      case "quem":
+        imprimir([
+          `<span class="t-destaque">${esc(nomeCompleto())}</span>`,
+          esc(simples(D.topo?.chamada)),
+          esc(simples(D.topo?.frase)),
+        ].filter(Boolean).join("\n"));
+        break;
+      case "agora":
+        imprimir((D.agora || []).map((col) =>
+          `<span class="t-destaque">[${esc(simples(col.rotulo))}]</span>\n` +
+          (col.itens || []).map((i) => `  • ${esc(simples(i.titulo))}${i.texto ? `\n    ${esc(simples(i.texto))}` : ""}`).join("\n")
+        ).join("\n") || T.nada);
+        break;
+      case "pesquisa": {
+        const linhas = (D.pesquisa?.linhas || []).map((l, i) => `  ${String(i + 1).padStart(2, "0")}  ${esc(simples(l))}`);
+        const outros = (D.pesquisa?.interesses || []).map(simples);
+        imprimir([...linhas, outros.length ? `\n  + ${esc(outros.join(", "))}` : ""].join("\n") || T.nada);
+        break;
+      }
+      case "projetos":
+        imprimir((D.projetos || []).map((p) => {
+          const extra = [simples(p.categoria), simples(p.status)].filter(Boolean).join(" · ");
+          const titulo = p.url ? linkHtml(p.url, simples(p.titulo)) : esc(simples(p.titulo));
+          return `  • ${titulo}${extra ? `  <span class="t-cmd">${esc(extra)}</span>` : ""}`;
+        }).join("\n") || T.nada);
+        break;
+      case "p4":
+        imprimir(esc(T.p4));
+        break;
+      case "contato": {
+        const emails = (D.contato?.emails || []).map((e) => `  ${"e-mail".padEnd(10)}${linkHtml(`mailto:${e}`, e)}`);
+        const redes = (D.links || []).filter((l) => l.url && l.tipo !== "email")
+          .map((l) => `  ${esc(l.tipo.padEnd(10))}${linkHtml(l.url, l.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))}`);
+        imprimir([...emails, ...redes].join("\n") || T.nada);
+        break;
+      }
+      case "ls":
+        imprimir(secoesAtuais.map((s) => `<span class="t-cmd">${esc(nomeSecao(s.id))}/</span>`).join("   "));
+        break;
+      case "cd": {
+        if (!args[0] || args[0] === "~" || args[0] === "..") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          break;
+        }
+        const secao = acharSecao(args[0]);
+        if (!secao) { imprimir(esc(T.semSecao(args[0])), "t-erro"); break; }
+        imprimir(esc(T.indo(nomeSecao(secao.id))));
+        setTimeout(() => document.getElementById(secao.id)?.scrollIntoView({ behavior: "smooth" }), 350);
+        break;
+      }
+      case "limpar":
+        $("#terminalSaida").innerHTML = "";
+        break;
+      case "sudo":
+        imprimir(esc(T.sudo(usuario())), "t-erro");
+        break;
+      case "link": {
+        const link = (D.links || []).find((l) => l.tipo === cmd.toLowerCase() && l.url);
+        imprimir(link ? linkHtml(link.url, link.url) : esc(T.naoEncontrado(cmd)), link ? "" : "t-erro");
+        break;
+      }
+      default:
+        imprimir(esc(T.naoEncontrado(cmd)), "t-erro");
+    }
   }
 
   /* ---------- Montagem ---------- */
 
   function render() {
     const u = UI[idioma];
-    const nomeCompleto = `${D.nome?.primeiro || ""} ${D.nome?.sobrenome || ""}`.trim();
 
     raiz.lang = idioma === "pt" ? "pt-BR" : "en";
-    document.title = [nomeCompleto, t(D.topo?.chamada)].filter(Boolean).join(" · ");
-    $("#metaDescricao").setAttribute("content", t(D.topo?.frase).replace(/\*\*|\[|\]\([^)]*\)/g, ""));
+    document.title = [nomeCompleto(), t(D.topo?.chamada)].filter(Boolean).join(" · ");
+    $("#metaDescricao").setAttribute("content", simples(D.topo?.frase));
 
-    const secoes = [
-      { id: "agora", menu: u.agora, html: secaoAgora() },
-      { id: "sobre", html: secaoSobre() },
-      { id: "pesquisa", menu: u.pesquisa, html: secaoPesquisa() },
-      { id: "publicacoes", menu: u.publicacoes, html: secaoPublicacoes() },
-      { id: "projetos", menu: u.projetos, html: secaoProjetos() },
-      { id: "trajetoria", menu: u.trajetoria, html: secaoTrajetoria() },
+    secoesAtuais = [
+      { id: "agora", menu: true, html: secaoAgora() },
+      { id: "sobre", menu: true, html: secaoSobre() },
+      { id: "terminal", html: secaoTerminal() },
+      { id: "pesquisa", menu: true, html: secaoPesquisa() },
+      { id: "publicacoes", menu: true, html: secaoPublicacoes() },
+      { id: "projetos", menu: true, html: secaoProjetos() },
+      { id: "trajetoria", menu: true, html: secaoTrajetoria() },
       { id: "reconhecimentos", html: secaoReconhecimentos() },
-      { id: "contato", menu: u.contato, html: secaoContato() },
+      { id: "contato", menu: true, html: secaoContato() },
     ].filter((s) => s.html);
 
     const outroIdioma = idiomas.find((i) => i !== idioma);
+    // Os mesmos botões aparecem na barra e, em telas pequenas, dentro do menu
+    const acoes = `
+      <button class="botao-icone botao-paleta" data-acao="paleta" type="button" title="${u.paleta}" aria-label="${u.paleta}"><span></span></button>
+      ${outroIdioma ? `<button class="botao-icone" data-acao="idioma" type="button" title="${u.idioma}" aria-label="${u.idioma}">${outroIdioma.toUpperCase()}</button>` : ""}
+      <button class="botao-icone" data-acao="tema" type="button" title="${u.tema}" aria-label="${u.tema}">${ICONES.tema}</button>`;
 
     $("#nav").innerHTML = `
       <div class="container nav-dentro">
-        <a class="nav-nome" href="#inicio">${esc(nomeCompleto)}</a>
+        <a class="nav-nome" href="#inicio">${esc(nomeCompleto())}</a>
         <nav class="nav-links" id="navLinks" aria-label="Seções">
-          ${secoes.filter((s) => s.menu).map((s) => `<a href="#${s.id}" data-secao="${s.id}">${s.menu}</a>`).join("")}
+          ${secoesAtuais.filter((s) => s.menu).map((s) => `<a href="#${s.id}" data-secao="${s.id}">${u[s.id]}</a>`).join("")}
+          <div class="acoes-no-menu">${acoes}</div>
         </nav>
         <div class="nav-acoes">
-          ${outroIdioma ? `<button class="botao-icone" id="btnIdioma" type="button" title="${u.idioma}" aria-label="${u.idioma}">${outroIdioma.toUpperCase()}</button>` : ""}
-          <button class="botao-icone" id="btnTema" type="button" title="${u.tema}" aria-label="${u.tema}">${ICONES.tema}</button>
+          <span class="acoes-na-barra">${acoes}</span>
           <button class="botao-icone nav-menu" id="btnMenu" type="button" aria-label="${u.menu}" aria-expanded="false" aria-controls="navLinks">${ICONES.menu}</button>
         </div>
       </div>`;
 
-    $("#conteudo").innerHTML = topo() + secoes.map((s) => s.html).join("");
+    $("#conteudo").innerHTML = topo() + secoesAtuais.map((s) => s.html).join("");
 
     $("#rodape").innerHTML = `
       <div class="container">
-        <span>© ${new Date().getFullYear()} ${esc(nomeCompleto)}</span>
+        <span>© ${new Date().getFullYear()} ${esc(nomeCompleto())}</span>
         <a href="#inicio">${u.voltarTopo} ↑</a>
       </div>`;
 
+    imprimir(u.t.boasVindas);
     fecharMenu();
     observarRevelacoes();
     observarSecaoAtiva();
@@ -437,12 +682,12 @@
         links.get(e.target.id)?.classList.add("ativo");
       }
     }, { rootMargin: "-45% 0px -50% 0px" });
-    // O topo não tem link; observá-lo limpa o destaque ao voltar para cima
-    ["inicio", ...links.keys()].forEach((id) => { const s = document.getElementById(id); if (s) obsSecao.observe(s); });
+    // Seções sem link (topo, terminal...) também são observadas para limpar o destaque
+    ["inicio", ...secoesAtuais.map((s) => s.id)].forEach((id) => { const s = document.getElementById(id); if (s) obsSecao.observe(s); });
   }
 
   function atualizarNav() {
-    $("#nav").classList.toggle("no-topo", window.scrollY < 40);
+    $("#nav").classList.toggle("rolou", window.scrollY > 40);
   }
 
   function fecharMenu() {
@@ -451,32 +696,41 @@
   }
 
   function aplicarCores() {
-    if (D.cores?.escuro) raiz.style.setProperty("--acento-escuro", D.cores.escuro);
-    if (D.cores?.claro) raiz.style.setProperty("--acento-claro", D.cores.claro);
+    const cores = PALETAS[paleta];
+    raiz.style.setProperty("--acento-claro", cores.claro);
+    raiz.style.setProperty("--acento-escuro", cores.escuro);
   }
 
   function aplicarFavicon() {
     const iniciais = ((D.nome?.primeiro || "")[0] || "") + ((D.nome?.sobrenome || "")[0] || "");
-    const cor = D.cores?.escuro || "#a594ff";
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#06060f"/><text x="32" y="41" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="26" fill="${cor}">${esc(iniciais)}</text></svg>`;
+    const cor = PALETAS[0].claro;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="3" y="3" width="58" height="58" rx="14" fill="${cor}" stroke="#141414" stroke-width="4"/><text x="32" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="26" fill="#fff">${esc(iniciais)}</text></svg>`;
     $("#favicon").href = "data:image/svg+xml," + encodeURIComponent(svg);
   }
 
   document.addEventListener("click", (evento) => {
-    const alvo = evento.target.closest("button, a");
+    const alvo = evento.target.closest("button, a, #terminalCorpo");
     if (!alvo) return;
 
-    if (alvo.id === "btnTema") {
-      const novo = raiz.dataset.theme === "light" ? "dark" : "light";
+    if (alvo.id === "terminalCorpo") {
+      if (!window.getSelection()?.toString()) $("#terminalEntrada")?.focus();
+    } else if (alvo.dataset.acao === "tema") {
+      const novo = raiz.dataset.theme === "dark" ? "light" : "dark";
       raiz.dataset.theme = novo;
       memoria.gravar("tema", novo);
-    } else if (alvo.id === "btnIdioma") {
+    } else if (alvo.dataset.acao === "paleta") {
+      paleta = (paleta + 1) % PALETAS.length;
+      memoria.gravar("paleta", String(paleta));
+      aplicarCores();
+    } else if (alvo.dataset.acao === "idioma") {
       idioma = idiomas.find((i) => i !== idioma) || idioma;
       memoria.gravar("idioma", idioma);
       render();
     } else if (alvo.id === "btnMenu") {
       const aberto = $("#nav").classList.toggle("menu-aberto");
       alvo.setAttribute("aria-expanded", String(aberto));
+    } else if (alvo.classList.contains("atalho")) {
+      executar(alvo.dataset.comando);
     } else if (alvo.classList.contains("pubs-alternar")) {
       pubsAbertas = !pubsAbertas;
       $("#pubsExtra").hidden = !pubsAbertas;
@@ -487,7 +741,24 @@
     }
   });
 
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") fecharMenu(); });
+  document.addEventListener("submit", (evento) => {
+    if (evento.target.id !== "terminalForm") return;
+    evento.preventDefault();
+    const entrada = $("#terminalEntrada");
+    executar(entrada.value);
+    entrada.value = "";
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") fecharMenu();
+    if (e.target.id !== "terminalEntrada" || !historico.length) return;
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      e.preventDefault();
+      posHistorico = Math.max(0, Math.min(historico.length, posHistorico + (e.key === "ArrowUp" ? -1 : 1)));
+      e.target.value = historico[posHistorico] || "";
+    }
+  });
+
   window.addEventListener("scroll", atualizarNav, { passive: true });
 
   aplicarCores();

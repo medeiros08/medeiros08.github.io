@@ -14,13 +14,13 @@ window.DADOS = {
 
   nome: { primeiro: "Arthur", sobrenome: "Medeiros" },
 
-  // Foto do topo (na pasta img/). No computador ela fica à direita do texto;
-  // no celular, em cima. Sem foto, o topo usa um fundo em degradê.
+  // Foto do topo (na pasta img/), mostrada num quadro estilo polaroide.
   foto: "img/foto.jpg",
   fotoPosicao: "50% 22%", // enquadramento da foto: "horizontal vertical"
 
-  // Cor de destaque. Apague a linha para usar o roxo padrão.
-  cores: { escuro: "#a594ff", claro: "#5a43df" },
+  // Cor de destaque inicial (o visitante pode trocar no botão de paleta).
+  // "claro" é usada no tema claro e "escuro" no tema escuro.
+  cores: { claro: "#4338ff", escuro: "#9d9bff" },
 
   topo: {
     chamada: { pt: "Pesquisa em cibersegurança e P4", en: "Cybersecurity and P4 research" },
@@ -222,6 +222,16 @@ window.DADOS = {
       detalhe: {
         pt: "Design e código de sites, do rascunho ao site no ar.",
         en: "Website design and code, from sketch to launch.",
+      },
+    },
+    {
+      de: 2025,
+      ate: 2025,
+      titulo: { pt: "Aprendiz", en: "Apprentice" },
+      instituicao: { pt: "Rede de farmácias", en: "Pharmacy chain" },
+      detalhe: {
+        pt: "Cuidei do sistema da empresa, do controle de entradas e saídas de mercadorias e do apoio ao comercial e à publicidade.",
+        en: "Handled the company system, stock in and out control, and support for sales and advertising.",
       },
     },
   ],
