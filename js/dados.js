@@ -172,7 +172,7 @@ window.DADOS = {
       },
       tecnologias: ["HTML", "CSS", "JavaScript"],
       cor: "verde",
-      url: "https://medeiros08.github.io/Jogo-ES/",
+      url: "https://medeiros08.github.io/Codigo-Mirim/",
     },
     {
       categoria: { pt: "Web · Design", en: "Web · Design" },
