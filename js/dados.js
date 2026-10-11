@@ -13,6 +13,8 @@ window.DADOS = {
   idiomas: ["pt", "en"],
 
   nome: { primeiro: "Arthur", sobrenome: "Medeiros" },
+  // Nome completo, mostrado no rodapé: ajuda quem procura pelo nome do Lattes
+  nomeCompleto: "Arthur De Freitas Medeiros",
 
   // Foto do topo (na pasta img/), mostrada num quadro estilo polaroide.
   foto: "img/foto.jpg",

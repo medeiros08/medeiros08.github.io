@@ -873,7 +873,7 @@
         break;
       case "quem":
         imprimir([
-          `<span class="t-destaque">${esc(nomeCompleto())}</span>`,
+          `<span class="t-destaque">${esc(nomeCompleto())}</span>${D.nomeCompleto && D.nomeCompleto !== nomeCompleto() ? ` (${esc(D.nomeCompleto)})` : ""}`,
           esc(simples(D.topo?.chamada)),
           esc(simples(D.topo?.frase)),
         ].filter(Boolean).join("\n"));
@@ -1022,7 +1022,7 @@
 
     $("#rodape").innerHTML = `
       <div class="container">
-        <span>© ${new Date().getFullYear()} ${esc(nomeCompleto())}</span>
+        <span>© ${new Date().getFullYear()} ${esc(D.nomeCompleto || nomeCompleto())}</span>
         <a href="#inicio">${u.voltarTopo} ↑</a>
       </div>`;
 
