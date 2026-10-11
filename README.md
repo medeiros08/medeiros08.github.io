@@ -1,0 +1,29 @@
+# Portfólio
+
+Site pessoal estático (HTML, CSS e JavaScript, sem build), inspirado em [tucelos.github.io](https://tucelos.github.io/).
+
+## Como editar
+
+Todo o conteúdo fica em **`js/dados.js`**. Os outros arquivos não precisam ser mexidos.
+
+- Troque tudo que está marcado com ✏️.
+- Textos aceitam só português (`"Olá"`) ou os dois idiomas (`{ pt: "Olá", en: "Hello" }`).
+- Lista vazia (`[]`) esconde a seção inteira.
+- A foto do topo fica em `img/foto.jpg`. No computador ela aparece à direita do texto; no celular, em cima. Ajuste o enquadramento com `fotoPosicao`.
+
+## Como ver no computador
+
+Abrir o `index.html` direto funciona na maioria dos navegadores. Se algo não carregar, rode na pasta do projeto:
+
+```bash
+python -m http.server 8080
+```
+
+e acesse http://localhost:8080.
+
+## Como publicar no GitHub Pages
+
+1. Crie um repositório chamado `SEU-USUARIO.github.io`.
+2. Envie todos os arquivos desta pasta para ele.
+3. Em **Settings → Pages**, escolha a branch `main` e a pasta `/ (root)`.
+4. Em alguns minutos o site fica no ar em `https://SEU-USUARIO.github.io`.
