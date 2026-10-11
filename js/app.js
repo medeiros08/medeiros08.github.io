@@ -172,14 +172,14 @@
     return [...String(texto || "")].map((ch) => (ch === " " ? " " : `<span class="letra">${esc(ch)}</span>`)).join("");
   }
 
-  function botoesLinks({ destacarPrimeiro = true, semEmail = false } = {}) {
+  function botoesLinks({ destacar = true, semEmail = false } = {}) {
     const primeiroEmail = D.contato?.emails?.[0];
     return (D.links || [])
       .filter((link) => !(semEmail && link.tipo === "email"))
-      .map((link, i) => {
+      .map((link) => {
         const url = link.url || (link.tipo === "email" && primeiroEmail ? `mailto:${primeiroEmail}` : "#");
         const rotulo = t(link.rotulo) || t(ROTULOS_LINK[link.tipo]) || link.tipo;
-        const principal = destacarPrimeiro && (link.principal ?? i === 0) ? " principal" : "";
+        const principal = destacar && link.principal ? " principal" : "";
         return `<a class="botao${principal}" href="${esc(url)}"${linkExterno(url)}>${ICONES[link.tipo] || ICONES.site}<span>${esc(rotulo)}</span></a>`;
       })
       .join("");
@@ -471,7 +471,7 @@
               ${u.chat.map((msg) => `<p class="bolha">${esc(msg)}</p>`).join("")}
               ${emails.map((e) => `<a class="bolha bolha-eu" href="mailto:${esc(e)}">${esc(e)}</a>`).join("")}
             </div>
-            <div class="contato-links">${botoesLinks({ destacarPrimeiro: false, semEmail: true })}</div>
+            <div class="contato-links">${botoesLinks({ destacar: false, semEmail: true })}</div>
             ${D.contato?.cidade ? `<p class="contato-local">📍 ${esc(t(D.contato.cidade))}</p>` : ""}
           </div>
         </div>

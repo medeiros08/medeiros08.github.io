@@ -33,13 +33,13 @@ window.DADOS = {
 
   // Botões do topo. Tipos com ícone: lattes, orcid, scholar, github, linkedin,
   // email, instagram, cv, site. Use "rotulo" para trocar o texto do botão.
-  // O primeiro botão fica em destaque (branco).
+  // Para destacar um botão (com a cor do site), adicione principal: true.
   links: [
-    { tipo: "lattes", url: "http://lattes.cnpq.br/3699255553076395" },
     { tipo: "github", url: "https://github.com/medeiros08" },
     { tipo: "linkedin", url: "https://www.linkedin.com/in/arthur-medeiros-34a344356/" },
     { tipo: "instagram", url: "https://www.instagram.com/medeiros__08/" },
     { tipo: "email" }, // usa o primeiro e-mail de "contato"
+    { tipo: "lattes", url: "http://lattes.cnpq.br/3699255553076395" },
   ],
 
   // "Agora": o que você está fazendo no momento (até 3 colunas).
