@@ -248,5 +248,5 @@ window.DADOS = {
   // Contador de visitas (GoatCounter, gratuito e sem cookies).
   // Crie a conta em https://www.goatcounter.com e coloque aqui o código escolhido,
   // por exemplo "medeiros08" para https://medeiros08.goatcounter.com. Vazio = desligado.
-  contador: "",
+  contador: "medeiros08",
 };
