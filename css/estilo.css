@@ -76,6 +76,7 @@ svg { flex-shrink: 0; }
 
 .texto-rico a { color: var(--acento); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .texto-rico strong { font-weight: 700; background: linear-gradient(transparent 62%, color-mix(in srgb, var(--lima) 75%, transparent) 62%); }
+[data-theme="dark"] .texto-rico strong { background: none; color: var(--lima); }
 
 /* ---------- Botões ---------- */
 

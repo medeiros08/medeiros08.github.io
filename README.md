@@ -11,6 +11,7 @@ Todo o conteúdo fica em **`js/dados.js`**. Os outros arquivos não precisam ser
 - Lista vazia (`[]`) esconde a seção inteira.
 - A foto do topo fica em `img/foto.jpg`, num quadro estilo polaroide. Ajuste o enquadramento com `fotoPosicao`.
 - O terminal da página lê os mesmos dados: não precisa editar nada nele.
+- O site abre no tema escuro. Para abrir no claro, troque `data-theme="dark"` por `data-theme="light"` na primeira linha do `index.html`.
 
 ## Como ver no computador
 
