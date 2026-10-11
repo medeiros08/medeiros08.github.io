@@ -252,9 +252,9 @@ window.DADOS = {
 
   // Trilha sonora: cole o link de uma playlist (ou álbum/música) do Spotify.
   // Ex.: "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M". Vazio = escondido.
-  trilhaSonora: "",
+  trilhaSonora: "https://open.spotify.com/playlist/0Gmc8e5YDNIrZNovs6iUEq",
 
   // Formulário de contato (Formspree, gratuito): crie um formulário em https://formspree.io
   // e cole aqui o código dele (a parte depois de /f/ no endereço). Vazio = escondido.
-  formulario: "",
+  formulario: "https://formspree.io/f/xaeqbdok",
 };
