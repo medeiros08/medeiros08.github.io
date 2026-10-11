@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>404 · Pacote descartado · Arthur Medeiros</title>
+  <title>404 · Página não encontrada · Arthur Medeiros</title>
   <meta name="robots" content="noindex">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,19 +39,19 @@
   <main class="erro">
     <div class="container">
       <p class="erro-codigo" aria-hidden="true">404</p>
-      <h1 id="titulo">Pacote descartado</h1>
-      <p class="erro-texto" id="texto">A tabela de match-action não encontrou nenhuma regra para este endereço, então o pacote foi descartado.</p>
+      <h1 id="titulo">Página não encontrada</h1>
+      <p class="erro-texto" id="texto">O endereço que você tentou abrir não existe. Na internet, tudo viaja em pequenos pacotes de dados, e este aqui se perdeu no caminho.</p>
 
-      <div class="queda" aria-hidden="true"><b class="pacote"></b><span>drop()</span></div>
+      <div class="queda" aria-hidden="true"><b class="pacote"></b><span id="perdido">perdido!</span></div>
 
       <div class="terminal">
         <div class="terminal-barra" aria-hidden="true"><i></i><i></i><i></i><span>arthur@portfolio:~</span></div>
         <div class="terminal-corpo">
-          <div class="t-linha t-eco"><span class="t-prompt">arthur@portfolio:~$</span> curl <span id="caminho"></span></div>
-          <div class="t-linha t-erro">match-action: <span id="semRegra">nenhuma regra para</span> <span id="caminho2"></span></div>
-          <div class="t-linha"><span id="acao">ação</span>: <span class="t-cmd">drop()</span></div>
+          <div class="t-linha t-eco"><span class="t-prompt">arthur@portfolio:~$</span> <span id="abrir">abrir</span> <span id="caminho"></span></div>
+          <div class="t-linha t-erro"><span id="erro">erro 404: esta página não existe</span></div>
+          <div class="t-linha"><span id="oQue">o que aconteceu: o pacote não achou um destino e foi descartado</span></div>
           <!-- 🚩 CTF 3/3 (rot13) -->
-          <div class="t-linha"><span id="payload">payload descartado</span>: <span class="t-destaque">qrcnefre}</span></div>
+          <div class="t-linha"><span id="resto">conteúdo perdido</span>: <span class="t-destaque">iraprh}</span></div>
         </div>
       </div>
 
@@ -60,21 +60,24 @@
   </main>
 
   <script>
-    var caminho = location.pathname + location.search;
-    document.getElementById("caminho").textContent = location.origin + caminho;
-    document.getElementById("caminho2").textContent = '"' + caminho + '"';
+    document.getElementById("caminho").textContent = location.origin + location.pathname + location.search;
 
     var idioma = null;
     try { idioma = localStorage.getItem("idioma"); } catch (e) {}
     if (idioma === "en") {
+      var textos = {
+        titulo: "Page not found",
+        texto: "The address you tried to open doesn't exist. On the internet everything travels in small packets of data, and this one got lost on the way.",
+        perdido: "lost!",
+        abrir: "open",
+        erro: "error 404: this page doesn't exist",
+        oQue: "what happened: the packet found no destination and was dropped",
+        resto: "lost content",
+        voltar: "← Back to home",
+      };
       document.documentElement.lang = "en";
-      document.title = "404 · Packet dropped · Arthur Medeiros";
-      document.getElementById("titulo").textContent = "Packet dropped";
-      document.getElementById("texto").textContent = "The match-action table found no rule for this address, so the packet was dropped.";
-      document.getElementById("semRegra").textContent = "no rule for";
-      document.getElementById("acao").textContent = "action";
-      document.getElementById("payload").textContent = "dropped payload";
-      document.getElementById("voltar").textContent = "← Back to home";
+      document.title = "404 · Page not found · Arthur Medeiros";
+      for (var id in textos) document.getElementById(id).textContent = textos[id];
     }
   </script>
 </body>

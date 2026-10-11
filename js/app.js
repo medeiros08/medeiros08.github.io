@@ -34,6 +34,7 @@
       dica: "Experimente:", placeholder: "digite help",
       atalhos: ["help", "whoami", "agora", "projetos", "p4", "contato", "ctf"],
       hackerLigado: "MODO HACKER ATIVADO", hackerDesligado: "modo hacker desligado",
+      etapas: ["enviado", "verificado", "entregue"],
       t: {
         boasVindas: 'Olá! 👋 Este é o terminal do portfólio. Digite <span class="t-cmd">help</span> para ver o que dá pra fazer.',
         ajuda: [
@@ -63,7 +64,7 @@
         gitAguarde: "ainda buscando os commits no GitHub, tente de novo em instantes.",
         naoEncontrado: (c) => `comando não encontrado: ${c}. Digite help.`,
         sudo: (u) => `${u} não está no arquivo sudoers. Este incidente será reportado. 😄`,
-        p4: "P4 é uma linguagem para programar como os equipamentos de rede tratam cada pacote: o parser lê os cabeçalhos, as tabelas de match-action decidem o que fazer e o deparser monta o pacote de volta. Eu pesquiso como usar isso para deixar a comunicação mais segura.",
+        p4: "Tudo o que circula na internet viaja em pequenos pedaços chamados pacotes, passando por equipamentos como roteadores. Normalmente, esses equipamentos já vêm de fábrica sabendo o que fazer. P4 é uma linguagem de programação que permite ensinar a eles regras novas: deixar o pacote seguir, mudar o caminho ou bloquear.\n\nÉ como um carteiro que pode ser treinado para conferir cada carta antes de entregar. Eu pesquiso como usar isso para deixar a comunicação mais segura.",
         semSecao: (s) => `seção não encontrada: ${s}. Use ls para ver as seções.`,
         indo: (s) => `indo para ${s}/ ...`,
         nada: "nada por aqui ainda.",
@@ -89,6 +90,7 @@
       dica: "Try:", placeholder: "type help",
       atalhos: ["help", "whoami", "now", "projects", "p4", "contact", "ctf"],
       hackerLigado: "HACKER MODE ON", hackerDesligado: "hacker mode off",
+      etapas: ["sent", "checked", "delivered"],
       t: {
         boasVindas: 'Hi! 👋 This is the portfolio terminal. Type <span class="t-cmd">help</span> to see what you can do.',
         ajuda: [
@@ -118,7 +120,7 @@
         gitAguarde: "still fetching commits from GitHub, try again in a moment.",
         naoEncontrado: (c) => `command not found: ${c}. Type help.`,
         sudo: (u) => `${u} is not in the sudoers file. This incident will be reported. 😄`,
-        p4: "P4 is a language for programming how network devices handle each packet: the parser reads the headers, match-action tables decide what to do and the deparser puts the packet back together. I research how to use it to make communication more secure.",
+        p4: "Everything on the internet travels in small pieces called packets, passing through devices such as routers. Normally these devices come from the factory already knowing what to do. P4 is a programming language that lets you teach them new rules: let a packet through, change its route or block it.\n\nIt's like a mail carrier who can be trained to check every letter before delivering it. I research how to use this to make communication more secure.",
         semSecao: (s) => `section not found: ${s}. Use ls to see the sections.`,
         indo: (s) => `going to ${s}/ ...`,
         nada: "nothing here yet.",
@@ -263,7 +265,7 @@
         </div>
         <div class="container">
           <div class="pacotes" aria-hidden="true">
-            <span>parser</span><span>match-action</span><span>deparser</span>
+            ${UI[idioma].etapas.map((etapa) => `<span>${etapa}</span>`).join("")}
             <i class="pacote-trilho"><b class="pacote"></b></i><i class="pacote-trilho"><b class="pacote"></b></i><i class="pacote-trilho"><b class="pacote"></b></i>
           </div>
         </div>
@@ -669,7 +671,7 @@
   /* ---------- CTF e brincadeiras ---------- */
 
   // Só o hash da flag fica no código: ler o JavaScript não entrega a resposta
-  const HASH_FLAG = "e92ed6dfda04e7ad9629e4037b45fafa29b30743e8f5c9e14c22255ccd2b1e1f";
+  const HASH_FLAG = "cff206e2e31d4792d7e41e3c25bd53ce209f416b128b6a8b4c5d7a0e2e57e374";
 
   async function flagCorreta(texto) {
     const resumo = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(texto.trim()));

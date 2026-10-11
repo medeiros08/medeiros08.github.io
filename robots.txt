@@ -3,4 +3,4 @@ Allow: /
 
 Sitemap: https://medeiros08.github.io/sitemap.xml
 
-# 🚩 CTF 2/3 (hex): 6d617463685f
+# 🚩 CTF 2/3 (hex): 6f7369646164655f
