@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>404 · Página não encontrada · Arthur Medeiros</title>
   <meta name="robots" content="noindex">
+  <script>
+    // Endereços que mudaram de nome: o caminho antigo leva para o novo, mantendo o resto
+    // (ex.: /Jogo-ES/escola/robo/ vai para /Codigo-Mirim/escola/robo/). Serve para links e QR codes antigos.
+    var REDIRECIONAMENTOS = { "/jogo-es": "/Codigo-Mirim" };
+    (function () {
+      var caminho = location.pathname;
+      for (var antigo in REDIRECIONAMENTOS) {
+        var minusculo = caminho.toLowerCase();
+        if (minusculo === antigo || minusculo.indexOf(antigo + "/") === 0) {
+          location.replace(REDIRECIONAMENTOS[antigo] + caminho.slice(antigo.length) + location.search + location.hash);
+          return;
+        }
+      }
+    })();
+  </script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
