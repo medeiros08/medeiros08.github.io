@@ -244,4 +244,9 @@ window.DADOS = {
     emails: ["arthurfreitas.aluno@unipampa.edu.br"], // pode pôr mais de um
     cidade: "Alegrete, RS",
   },
+
+  // Contador de visitas (GoatCounter, gratuito e sem cookies).
+  // Crie a conta em https://www.goatcounter.com e coloque aqui o código escolhido,
+  // por exemplo "medeiros08" para https://medeiros08.goatcounter.com. Vazio = desligado.
+  contador: "",
 };

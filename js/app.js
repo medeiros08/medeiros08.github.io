@@ -16,8 +16,12 @@
   const UI = {
     pt: {
       agora: "Agora", sobre: "Sobre", terminal: "Terminal", pesquisa: "Pesquisa", publicacoes: "Publicações",
-      projetos: "Projetos", trajetoria: "Trajetória", reconhecimentos: "Reconhecimentos", contato: "Contato",
+      projetos: "Projetos", github: "GitHub", trajetoria: "Trajetória", reconhecimentos: "Reconhecimentos", contato: "Contato",
       tituloSobre: "Sobre mim", tituloTerminal: "Prefere o terminal?", tituloContato: "Vamos conversar?",
+      tituloGithub: "No GitHub agora",
+      githubSub: (link) => `Meus repositórios públicos, atualizados sozinhos a partir do ${link}.`,
+      githubCarregando: "Buscando os repositórios…", githubErro: "Não consegui carregar a atividade agora.",
+      verGithub: "Ver no GitHub", ultimoCommit: "último commit",
       emResumo: "Em resumo", linhas: "Linhas de pesquisa", interesses: "Outras áreas de interesse",
       pubsDestaque: "Publicações em destaque",
       verTodas: (n) => `Ver todas as ${n} publicações`, verMenos: "Mostrar menos",
@@ -34,9 +38,11 @@
         ajuda: [
           ["help", "mostra esta lista"], ["whoami", "quem sou eu"], ["agora", "no que estou trabalhando"],
           ["pesquisa", "meus interesses de pesquisa"], ["projetos", "lista os projetos"], ["p4", "afinal, o que é P4?"],
-          ["contato", "como falar comigo"], ["ls", "lista as seções do site"],
+          ["contato", "como falar comigo"], ["git log", "meus últimos commits no GitHub"], ["ls", "lista as seções do site"],
           ["cd <seção>", "vai até uma seção (ex.: cd projetos)"], ["clear", "limpa a tela"],
         ],
+        gitUso: "uso: git log",
+        gitAguarde: "ainda buscando os commits no GitHub, tente de novo em instantes.",
         naoEncontrado: (c) => `comando não encontrado: ${c}. Digite help.`,
         sudo: (u) => `${u} não está no arquivo sudoers. Este incidente será reportado. 😄`,
         p4: "P4 é uma linguagem para programar como os equipamentos de rede tratam cada pacote: o parser lê os cabeçalhos, as tabelas de match-action decidem o que fazer e o deparser monta o pacote de volta. Eu pesquiso como usar isso para deixar a comunicação mais segura.",
@@ -47,8 +53,12 @@
     },
     en: {
       agora: "Now", sobre: "About", terminal: "Terminal", pesquisa: "Research", publicacoes: "Publications",
-      projetos: "Projects", trajetoria: "Background", reconhecimentos: "Awards", contato: "Contact",
+      projetos: "Projects", github: "GitHub", trajetoria: "Background", reconhecimentos: "Awards", contato: "Contact",
       tituloSobre: "About me", tituloTerminal: "Prefer the terminal?", tituloContato: "Let's talk",
+      tituloGithub: "Lately on GitHub",
+      githubSub: (link) => `My public repositories, updated automatically from ${link}.`,
+      githubCarregando: "Fetching repositories…", githubErro: "Couldn't load the activity right now.",
+      verGithub: "View on GitHub", ultimoCommit: "last commit",
       emResumo: "At a glance", linhas: "Research lines", interesses: "Other interests",
       pubsDestaque: "Selected publications",
       verTodas: (n) => `See all ${n} publications`, verMenos: "Show less",
@@ -65,9 +75,11 @@
         ajuda: [
           ["help", "shows this list"], ["whoami", "who I am"], ["now", "what I'm working on"],
           ["research", "my research interests"], ["projects", "lists my projects"], ["p4", "so, what is P4?"],
-          ["contact", "how to reach me"], ["ls", "lists the site sections"],
+          ["contact", "how to reach me"], ["git log", "my latest commits on GitHub"], ["ls", "lists the site sections"],
           ["cd <section>", "jumps to a section (e.g. cd projects)"], ["clear", "clears the screen"],
         ],
+        gitUso: "usage: git log",
+        gitAguarde: "still fetching commits from GitHub, try again in a moment.",
         naoEncontrado: (c) => `command not found: ${c}. Type help.`,
         sudo: (u) => `${u} is not in the sudoers file. This incident will be reported. 😄`,
         p4: "P4 is a language for programming how network devices handle each packet: the parser reads the headers, match-action tables decide what to do and the deparser puts the packet back together. I research how to use it to make communication more secure.",
@@ -193,7 +205,7 @@
     const selo = detalhes[detalhes.length - 1];
     const foto = D.foto
       ? `<figure class="hero-foto" style="--foto-posicao:${esc(D.fotoPosicao || "50% 22%")}">
-          <img src="${esc(D.foto)}" alt="${esc(nomeCompleto())}" onerror="this.closest('figure').remove()">
+          <img src="${esc(D.foto)}" alt="${esc(nomeCompleto())}" width="900" height="1400" fetchpriority="high" decoding="async" onerror="this.closest('figure').remove()">
           <figcaption>${esc(t(D.contato?.cidade) || "")}</figcaption>
           ${selo ? `<span class="hero-selo">${esc(selo)}</span>` : ""}
         </figure>`
@@ -403,6 +415,127 @@
       </section>`;
   }
 
+  /* ---------- Atividade no GitHub (carregada ao vivo) ---------- */
+
+  const CORES_LINGUAGEM = {
+    JavaScript: "#f1e05a", TypeScript: "#3178c6", HTML: "#e34c26", CSS: "#563d7c", Python: "#3572a5",
+    C: "#555555", "C++": "#f34b7d", Java: "#b07219", Shell: "#89e051", P4: "#7055b5", Go: "#00add8",
+  };
+
+  let atividade = null;              // { em, repos: [...] }
+  let estadoAtividade = "carregando"; // "carregando" | "ok" | "erro"
+
+  const usuarioGithub = () =>
+    D.github || (D.links || []).find((l) => l.tipo === "github")?.url?.match(/github\.com\/([^/?#]+)/)?.[1] || "";
+
+  function tempoRelativo(iso) {
+    const seg = Math.round((new Date(iso).getTime() - Date.now()) / 1000);
+    const abs = Math.abs(seg);
+    const [valor, unidade] =
+      abs < 60 ? [seg, "second"] :
+      abs < 3600 ? [seg / 60, "minute"] :
+      abs < 86400 ? [seg / 3600, "hour"] :
+      abs < 2592000 ? [seg / 86400, "day"] :
+      abs < 31536000 ? [seg / 2592000, "month"] : [seg / 31536000, "year"];
+    return new Intl.RelativeTimeFormat(idioma === "pt" ? "pt-BR" : "en", { numeric: "auto" }).format(Math.round(valor), unidade);
+  }
+
+  async function carregarAtividade() {
+    const usuario = usuarioGithub();
+    if (!usuario) return;
+    const chave = `github:${usuario}`;
+
+    // Guarda por 30 minutos para não gastar o limite de 60 consultas por hora da API
+    try {
+      const salvo = JSON.parse(memoria.ler(chave));
+      if (salvo && Date.now() - salvo.em < 30 * 60 * 1000) {
+        atividade = salvo;
+        estadoAtividade = "ok";
+        desenharAtividade();
+        return;
+      }
+    } catch (e) { /* cache inválido: busca de novo */ }
+
+    try {
+      const resposta = await fetch(`https://api.github.com/users/${usuario}/repos?sort=pushed&per_page=12`);
+      if (!resposta.ok) throw new Error(`GitHub respondeu ${resposta.status}`);
+      // Ignora forks e o repositório do README do perfil (mesmo nome do usuário)
+      const repos = (await resposta.json())
+        .filter((r) => !r.fork && r.name.toLowerCase() !== usuario.toLowerCase())
+        .slice(0, 4);
+      const commits = await Promise.all(repos.map((r) =>
+        fetch(`https://api.github.com/repos/${usuario}/${r.name}/commits?per_page=1`)
+          .then((c) => (c.ok ? c.json() : []))
+          .catch(() => [])));
+
+      atividade = {
+        em: Date.now(),
+        repos: repos.map((r, i) => {
+          const c = commits[i]?.[0];
+          return {
+            nome: r.name,
+            url: r.html_url,
+            descricao: r.description || "",
+            linguagem: r.language || "",
+            estrelas: r.stargazers_count || 0,
+            atualizado: r.pushed_at,
+            commit: c ? { mensagem: c.commit.message.split("\n")[0], url: c.html_url, data: c.commit.author?.date || r.pushed_at } : null,
+          };
+        }),
+      };
+      memoria.gravar(chave, JSON.stringify(atividade));
+      estadoAtividade = "ok";
+    } catch (e) {
+      estadoAtividade = atividade ? "ok" : "erro";
+    }
+    desenharAtividade();
+  }
+
+  function conteudoAtividade() {
+    const u = UI[idioma];
+    const perfil = `https://github.com/${usuarioGithub()}`;
+    if (estadoAtividade === "carregando") return `<p class="repos-aviso"><span class="carregando"></span>${u.githubCarregando}</p>`;
+    if (estadoAtividade === "erro" || !atividade?.repos?.length) {
+      return `<p class="repos-aviso">${u.githubErro} <a href="${esc(perfil)}" target="_blank" rel="noopener">${u.verGithub} ↗</a></p>`;
+    }
+    return `
+      <div class="repos">
+        ${atividade.repos.map((r) => `
+          <a class="repo" href="${esc(r.url)}" target="_blank" rel="noopener">
+            <div class="repo-topo">
+              <span class="repo-nome">${ICONES.github}${esc(r.nome)}</span>
+              <span class="repo-tempo">${esc(tempoRelativo(r.atualizado))}</span>
+            </div>
+            ${r.descricao ? `<p class="repo-desc">${esc(r.descricao)}</p>` : ""}
+            ${r.commit ? `<p class="repo-commit" title="${esc(r.commit.mensagem)}"><b>${u.ultimoCommit}</b>${esc(r.commit.mensagem)}</p>` : ""}
+            <div class="repo-meta">
+              ${r.linguagem ? `<span><i style="--cor-linguagem:${CORES_LINGUAGEM[r.linguagem] || "#8b8b8b"}"></i>${esc(r.linguagem)}</span>` : ""}
+              <span>★ ${r.estrelas}</span>
+            </div>
+          </a>`).join("")}
+      </div>`;
+  }
+
+  function desenharAtividade() {
+    const alvo = $("#githubAtividade");
+    if (alvo) alvo.innerHTML = conteudoAtividade();
+  }
+
+  function secaoGithub() {
+    const usuario = usuarioGithub();
+    if (!usuario) return "";
+    const u = UI[idioma];
+    const link = `<a href="https://github.com/${esc(usuario)}" target="_blank" rel="noopener">github.com/${esc(usuario)}</a>`;
+    return `
+      <section class="secao" id="github">
+        <div class="container revelar">
+          <h2 class="titulo-secao">${u.tituloGithub}</h2>
+          <p class="github-sub texto-rico">${u.githubSub(link)}</p>
+          <div id="githubAtividade" aria-live="polite">${conteudoAtividade()}</div>
+        </div>
+      </section>`;
+  }
+
   function periodo(item) {
     const u = UI[idioma];
     if (item.ate === "andamento") return `${item.de} — ${u.emAndamento}`;
@@ -488,7 +621,7 @@
     projetos: "projetos", projects: "projetos",
     p4: "p4",
     contato: "contato", contact: "contato",
-    ls: "ls", cd: "cd",
+    ls: "ls", cd: "cd", git: "git",
     clear: "limpar", limpar: "limpar", cls: "limpar",
     sudo: "sudo",
     lattes: "link", github: "link", linkedin: "link", instagram: "link", orcid: "link", scholar: "link",
@@ -578,6 +711,16 @@
         setTimeout(() => document.getElementById(secao.id)?.scrollIntoView({ behavior: "smooth" }), 350);
         break;
       }
+      case "git": {
+        if ((args[0] || "").toLowerCase() !== "log") { imprimir(esc(T.gitUso), "t-erro"); break; }
+        if (estadoAtividade === "carregando") { imprimir(esc(T.gitAguarde)); break; }
+        const commits = (atividade?.repos || []).filter((r) => r.commit)
+          .sort((a, b) => new Date(b.commit.data) - new Date(a.commit.data));
+        imprimir(commits.map((r) =>
+          `<span class="t-destaque">${esc(r.commit.url.split("/").pop().slice(0, 7))}</span> ${linkHtml(r.url, r.nome)}  <span class="t-cmd">${esc(tempoRelativo(r.commit.data))}</span>\n    ${esc(r.commit.mensagem)}`
+        ).join("\n") || esc(UI[idioma].githubErro), commits.length ? "" : "t-erro");
+        break;
+      }
       case "limpar":
         $("#terminalSaida").innerHTML = "";
         break;
@@ -610,6 +753,7 @@
       { id: "pesquisa", menu: true, html: secaoPesquisa() },
       { id: "publicacoes", menu: true, html: secaoPublicacoes() },
       { id: "projetos", menu: true, html: secaoProjetos() },
+      { id: "github", html: secaoGithub() },
       { id: "trajetoria", menu: true, html: secaoTrajetoria() },
       { id: "reconhecimentos", html: secaoReconhecimentos() },
       { id: "contato", menu: true, html: secaoContato() },
@@ -701,11 +845,15 @@
     raiz.style.setProperty("--acento-escuro", cores.escuro);
   }
 
-  function aplicarFavicon() {
-    const iniciais = ((D.nome?.primeiro || "")[0] || "") + ((D.nome?.sobrenome || "")[0] || "");
-    const cor = PALETAS[0].claro;
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="3" y="3" width="58" height="58" rx="14" fill="${cor}" stroke="#141414" stroke-width="4"/><text x="32" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="26" fill="#fff">${esc(iniciais)}</text></svg>`;
-    $("#favicon").href = "data:image/svg+xml," + encodeURIComponent(svg);
+  // Contador de visitas do GoatCounter (sem cookies). Só liga se "contador" estiver preenchido em dados.js.
+  function ativarContador() {
+    const codigo = String(D.contador || "").trim();
+    if (!/^[a-z0-9-]+$/i.test(codigo)) return;
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://gc.zgo.at/count.js";
+    script.dataset.goatcounter = `https://${codigo}.goatcounter.com/count`;
+    document.head.appendChild(script);
   }
 
   document.addEventListener("click", (evento) => {
@@ -762,7 +910,8 @@
   window.addEventListener("scroll", atualizarNav, { passive: true });
 
   aplicarCores();
-  aplicarFavicon();
   render();
   atualizarNav();
+  carregarAtividade();
+  ativarContador();
 })();
