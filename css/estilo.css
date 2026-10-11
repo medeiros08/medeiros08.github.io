@@ -721,6 +721,79 @@ svg { flex-shrink: 0; }
 .rodape .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 .rodape a:hover { color: var(--acento); }
 
+/* ---------- Brincadeiras: CTF, aviso e modo hacker ---------- */
+
+.atalho[data-comando="ctf"] { background: var(--coral); color: var(--tinta-fixa); }
+
+.confete {
+  position: fixed;
+  top: -16px;
+  z-index: 300;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--tinta);
+  border-radius: 2px;
+  pointer-events: none;
+  animation: cair-confete 2.5s cubic-bezier(.3, .6, .6, 1) forwards;
+}
+@keyframes cair-confete { to { transform: translateY(110vh) rotate(540deg); } }
+
+.aviso-flutuante {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 300;
+  translate: -50% 0;
+  padding: 12px 20px;
+  background: var(--tinta);
+  color: var(--fundo);
+  border-radius: 12px;
+  box-shadow: 4px 4px 0 var(--acento);
+  font-family: var(--fonte-mono);
+  font-weight: 700;
+  letter-spacing: .08em;
+  animation: aparecer .3s ease both;
+}
+@keyframes aparecer { from { opacity: 0; translate: -50% 12px; } }
+
+/* Modo hacker: ↑ ↑ ↓ ↓ ← → ← → B A, ou o comando "hacker" no terminal */
+html.modo-hacker {
+  color-scheme: dark;
+  --fundo: #000;
+  --cartao: #010d04;
+  --texto: #39ff6a;
+  --suave: #23c45a;
+  --linha: #39ff6a47;
+  --tinta: #39ff6a;
+  --sombra: #39ff6a;
+  --grade: #39ff6a17;
+  --acento: #39ff6a;
+  --sobre-acento: #000;
+  --lima: #39ff6a;
+  --coral: #39ff6a;
+  --amarelo: #39ff6a;
+  --tinta-fixa: #000;
+  --papel-fixo: #010d04;
+  --fonte: var(--fonte-mono);
+}
+html.modo-hacker body { text-shadow: 0 0 5px #39ff6a59; }
+html.modo-hacker body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0 2px, #0000004d 2px 3px);
+}
+html.modo-hacker img { filter: grayscale(1) brightness(.85) sepia(1) hue-rotate(65deg) saturate(3); }
+html.modo-hacker .projeto-capa { background-color: #03200b; }
+html.modo-hacker .faixa-trilho b { color: #000; }
+html.modo-hacker .hero-foto figcaption { color: var(--suave); }
+html.modo-hacker .bolha:not(.bolha-eu),
+html.modo-hacker .projeto-tag,
+html.modo-hacker .projeto-status,
+html.modo-hacker .contato-links .botao { color: var(--texto); border-color: var(--texto); }
+
 /* ---------- Animação ao rolar ---------- */
 
 .js .revelar {
