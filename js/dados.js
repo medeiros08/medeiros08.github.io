@@ -249,4 +249,12 @@ window.DADOS = {
   // Crie a conta em https://www.goatcounter.com e coloque aqui o código escolhido,
   // por exemplo "medeiros08" para https://medeiros08.goatcounter.com. Vazio = desligado.
   contador: "medeiros08",
+
+  // Trilha sonora: cole o link de uma playlist (ou álbum/música) do Spotify.
+  // Ex.: "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M". Vazio = escondido.
+  trilhaSonora: "",
+
+  // Formulário de contato (Formspree, gratuito): crie um formulário em https://formspree.io
+  // e cole aqui o código dele (a parte depois de /f/ no endereço). Vazio = escondido.
+  formulario: "",
 };

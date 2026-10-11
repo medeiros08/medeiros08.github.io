@@ -35,14 +35,21 @@
       atalhos: ["help", "whoami", "agora", "projetos", "p4", "contato", "ctf"],
       hackerLigado: "MODO HACKER ATIVADO", hackerDesligado: "modo hacker desligado",
       etapas: ["enviado", "verificado", "entregue"],
+      trilha: "Trilha sonora", trilhaSub: "O que toca enquanto eu programo.",
+      formIntro: "Ou me manda uma mensagem por aqui:", formNome: "Seu nome", formEmail: "Seu e-mail",
+      formMensagem: "Escreva sua mensagem…", formEnviar: "Enviar", formEnviando: "Enviando…",
+      formOk: "Recebi! Respondo em breve 🙂",
+      formErro: (email) => `Não consegui enviar agora. Tenta pelo e-mail ${email}?`,
       t: {
         boasVindas: 'Olá! 👋 Este é o terminal do portfólio. Digite <span class="t-cmd">help</span> para ver o que dá pra fazer.',
         ajuda: [
           ["help", "mostra esta lista"], ["whoami", "quem sou eu"], ["agora", "no que estou trabalhando"],
           ["pesquisa", "meus interesses de pesquisa"], ["projetos", "lista os projetos"], ["p4", "afinal, o que é P4?"],
           ["contato", "como falar comigo"], ["git log", "meus últimos commits no GitHub"], ["ls", "lista as seções do site"],
-          ["cd <seção>", "vai até uma seção (ex.: cd projetos)"], ["ctf", "🚩 desafio: ache a flag escondida no site"], ["clear", "limpa a tela"],
+          ["cd <seção>", "vai até uma seção (ex.: cd projetos)"], ["ctf", "🚩 desafio: ache a flag escondida no site"],
+          ["musica", "o que toca enquanto eu programo"], ["clear", "limpa a tela"],
         ],
+        musica: "🎵 tocando agora:",
         ctf: [
           '<span class="t-destaque">🚩 Desafio CTF</span>: a flag está dividida em 3 pedaços escondidos neste site.',
           "",
@@ -91,14 +98,21 @@
       atalhos: ["help", "whoami", "now", "projects", "p4", "contact", "ctf"],
       hackerLigado: "HACKER MODE ON", hackerDesligado: "hacker mode off",
       etapas: ["sent", "checked", "delivered"],
+      trilha: "Soundtrack", trilhaSub: "What plays while I code.",
+      formIntro: "Or send me a message right here:", formNome: "Your name", formEmail: "Your e-mail",
+      formMensagem: "Write your message…", formEnviar: "Send", formEnviando: "Sending…",
+      formOk: "Got it! I'll reply soon 🙂",
+      formErro: (email) => `Couldn't send it right now. Try e-mail: ${email}?`,
       t: {
         boasVindas: 'Hi! 👋 This is the portfolio terminal. Type <span class="t-cmd">help</span> to see what you can do.',
         ajuda: [
           ["help", "shows this list"], ["whoami", "who I am"], ["now", "what I'm working on"],
           ["research", "my research interests"], ["projects", "lists my projects"], ["p4", "so, what is P4?"],
           ["contact", "how to reach me"], ["git log", "my latest commits on GitHub"], ["ls", "lists the site sections"],
-          ["cd <section>", "jumps to a section (e.g. cd projects)"], ["ctf", "🚩 challenge: find the flag hidden on the site"], ["clear", "clears the screen"],
+          ["cd <section>", "jumps to a section (e.g. cd projects)"], ["ctf", "🚩 challenge: find the flag hidden on the site"],
+          ["music", "what plays while I code"], ["clear", "clears the screen"],
         ],
+        musica: "🎵 now playing:",
         ctf: [
           '<span class="t-destaque">🚩 CTF challenge</span>: the flag is split into 3 pieces hidden on this site.',
           "",
@@ -180,14 +194,28 @@
     gravar(chave, valor) { try { localStorage.setItem(chave, valor); } catch (e) { /* sem armazenamento */ } },
   };
 
+  // Cada idioma tem o seu endereço: "/" é o primeiro da lista e "/en/" o inglês.
+  // A página diz o idioma em <html data-idioma> e o caminho até a raiz em data-raiz.
   const idiomas = Array.isArray(D.idiomas) && D.idiomas.length ? D.idiomas : ["pt"];
-  let idioma = idiomas.includes(memoria.ler("idioma")) ? memoria.ler("idioma") : idiomas[0];
+  const raizSite = raiz.dataset.raiz || "";
+  const idioma = idiomas.includes(raiz.dataset.idioma) ? raiz.dataset.idioma : idiomas[0];
+  memoria.gravar("idioma", idioma); // a página 404 usa para escolher o idioma
+  const enderecoDoIdioma = (codigo) => (codigo === idiomas[0] ? raizSite || "./" : `${raizSite}${codigo}/`);
+  // Caminhos relativos de dados.js (foto, imagens) partem da raiz do site
+  const caminhoLocal = (url) => (url && !/^(https?:|\/|data:|#)/.test(url) ? raizSite + url : url);
+
   let paleta = Number(memoria.ler("paleta")) % PALETAS.length || 0;
   let pubsAbertas = false;
   let jaRenderizou = false;
   let secoesAtuais = [];
   const historico = [];
   let posHistorico = 0;
+  let terminalUsado = false;
+
+  // Eventos para o GoatCounter (cliques, terminal, CTF...). Não faz nada se o contador estiver desligado.
+  function registrarEvento(caminho, titulo) {
+    try { window.goatcounter?.count?.({ path: caminho, title: titulo || caminho, event: true }); } catch (e) { /* ignora */ }
+  }
 
   // Escolhe o texto no idioma atual; aceita string simples ou { pt, en }
   function t(valor) {
@@ -230,7 +258,7 @@
         const url = link.url || (link.tipo === "email" && primeiroEmail ? `mailto:${primeiroEmail}` : "#");
         const rotulo = t(link.rotulo) || t(ROTULOS_LINK[link.tipo]) || link.tipo;
         const principal = destacar && link.principal ? " principal" : "";
-        return `<a class="botao${principal}" href="${esc(url)}"${linkExterno(url)}>${ICONES[link.tipo] || ICONES.site}<span>${esc(rotulo)}</span></a>`;
+        return `<a class="botao${principal}" href="${esc(url)}"${linkExterno(url)} data-evento="link-${esc(link.tipo)}" data-evento-titulo="Clique: ${esc(rotulo)}">${ICONES[link.tipo] || ICONES.site}<span>${esc(rotulo)}</span></a>`;
       })
       .join("");
   }
@@ -243,7 +271,7 @@
     const selo = detalhes[detalhes.length - 1];
     const foto = D.foto
       ? `<figure class="hero-foto" style="--foto-posicao:${esc(D.fotoPosicao || "50% 22%")}">
-          <img src="${esc(D.foto)}" alt="${esc(nomeCompleto())}" width="900" height="1400" fetchpriority="high" decoding="async" onerror="this.closest('figure').remove()">
+          <img src="${esc(caminhoLocal(D.foto))}" alt="${esc(nomeCompleto())}" width="900" height="1400" fetchpriority="high" decoding="async" onerror="this.closest('figure').remove()">
           <figcaption>${esc(t(D.contato?.cidade) || "")}</figcaption>
           ${selo ? `<span class="hero-selo">${esc(selo)}</span>` : ""}
         </figure>`
@@ -302,10 +330,17 @@
       </section>`;
   }
 
+  // Converte um link do Spotify (playlist, álbum, música...) no endereço do player embutido
+  function embedSpotify(url) {
+    const m = String(url || "").match(/open\.spotify\.com\/(?:intl-[a-z-]+\/)?(playlist|album|track|artist|show|episode)\/([A-Za-z0-9]+)/);
+    return m ? `https://open.spotify.com/embed/${m[1]}/${m[2]}?utm_source=generator&theme=0` : "";
+  }
+
   function secaoSobre() {
     if (!temItens(D.sobre)) return "";
     const u = UI[idioma];
     const resumo = [...(D.topo?.detalhes || []), D.contato?.cidade].map(t).filter(Boolean);
+    const player = embedSpotify(D.trilhaSonora);
     return `
       <section class="secao" id="sobre">
         <div class="container sobre-grade">
@@ -313,11 +348,20 @@
             <h2 class="titulo-secao">${u.tituloSobre}</h2>
             <div class="sobre-texto texto-rico">${D.sobre.map((p) => `<p>${rico(t(p))}</p>`).join("")}</div>
           </div>
-          ${resumo.length ? `
-            <aside class="ficha revelar">
-              <h3>${u.emResumo}</h3>
-              <ul>${resumo.map((x) => `<li><span aria-hidden="true">→</span>${esc(x)}</li>`).join("")}</ul>
-            </aside>` : ""}
+          <div class="sobre-lateral">
+            ${resumo.length ? `
+              <aside class="ficha revelar">
+                <h3>${u.emResumo}</h3>
+                <ul>${resumo.map((x) => `<li><span aria-hidden="true">→</span>${esc(x)}</li>`).join("")}</ul>
+              </aside>` : ""}
+            ${player ? `
+              <aside class="trilha revelar">
+                <h3>🎵 ${u.trilha}</h3>
+                <p>${u.trilhaSub}</p>
+                <iframe src="${esc(player)}" title="${u.trilha} (Spotify)" height="152" loading="lazy"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+              </aside>` : ""}
+          </div>
         </div>
       </section>`;
   }
@@ -418,7 +462,7 @@
   }
 
   function estiloCapa(p) {
-    if (p.imagem) return `background-image: url('${esc(p.imagem).replace(/'/g, "%27")}')`;
+    if (p.imagem) return `background-image: url('${esc(caminhoLocal(p.imagem)).replace(/'/g, "%27")}')`;
     const cor = CORES_CAPA[p.cor] || (/^(#|rgb|hsl)/.test(p.cor || "") ? p.cor : CORES_CAPA.indigo);
     return `--capa: ${esc(cor)}`;
   }
@@ -441,7 +485,7 @@
                     ${p.categoria ? `<span class="projeto-tag">${esc(t(p.categoria))}</span>` : ""}
                   </div>
                   <div class="projeto-corpo">
-                    <h3>${p.url ? `<a href="${esc(p.url)}"${linkExterno(p.url)}>${titulo}<span aria-hidden="true">↗</span></a>` : titulo}</h3>
+                    <h3>${p.url ? `<a href="${esc(p.url)}"${linkExterno(p.url)} data-evento="projeto-${esc(normalizar(p.titulo?.pt || p.titulo))}" data-evento-titulo="Projeto: ${titulo}">${titulo}<span aria-hidden="true">↗</span></a>` : titulo}</h3>
                     ${p.descricao ? `<p class="texto-rico">${rico(t(p.descricao))}</p>` : ""}
                     ${p.papel ? `<p class="texto-rico"><strong>${u.meuPapel}</strong> ${rico(t(p.papel))}</p>` : ""}
                     ${temItens(p.tecnologias) ? `<ul class="techs">${p.tecnologias.map((x) => `<li>${esc(t(x))}</li>`).join("")}</ul>` : ""}
@@ -449,7 +493,7 @@
                 </article>`;
             }).join("")}
           </div>
-          ${D.maisProjetos ? `<a class="botao mais-projetos revelar" href="${esc(D.maisProjetos)}"${linkExterno(D.maisProjetos)}>${ICONES.github}<span>${u.maisProjetos}</span> ↗</a>` : ""}
+          ${D.maisProjetos ? `<a class="botao mais-projetos revelar" href="${esc(D.maisProjetos)}"${linkExterno(D.maisProjetos)} data-evento="mais-projetos" data-evento-titulo="Clique: mais projetos no GitHub">${ICONES.github}<span>${u.maisProjetos}</span> ↗</a>` : ""}
         </div>
       </section>`;
   }
@@ -540,7 +584,7 @@
     return `
       <div class="repos">
         ${atividade.repos.map((r) => `
-          <a class="repo" href="${esc(r.url)}" target="_blank" rel="noopener">
+          <a class="repo" href="${esc(r.url)}" target="_blank" rel="noopener" data-evento="github-${esc(r.nome)}" data-evento-titulo="Repositório: ${esc(r.nome)}">
             <div class="repo-topo">
               <span class="repo-nome">${ICONES.github}${esc(r.nome)}</span>
               <span class="repo-tempo">${esc(tempoRelativo(r.atualizado))}</span>
@@ -629,6 +673,60 @@
       </section>`;
   }
 
+  // Aceita o código do formulário do Formspree ("abcdwxyz") ou o endereço completo
+  function enderecoFormulario() {
+    const valor = String(D.formulario || "").trim();
+    const codigo = valor.match(/^(?:https:\/\/formspree\.io\/f\/)?([A-Za-z0-9]+)$/)?.[1];
+    return codigo ? `https://formspree.io/f/${codigo}` : "";
+  }
+
+  function formularioContato() {
+    if (!enderecoFormulario()) return "";
+    const u = UI[idioma];
+    return `
+      <form class="chat-form" id="formContato">
+        <p class="bolha">${u.formIntro}</p>
+        <!-- Campo invisível contra robôs de spam: pessoas não preenchem -->
+        <input class="pote-de-mel" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="chat-campos">
+          <label><span class="so-leitor">${u.formNome}</span><input name="nome" required maxlength="100" autocomplete="name" placeholder="${u.formNome}"></label>
+          <label><span class="so-leitor">${u.formEmail}</span><input name="email" type="email" required maxlength="200" autocomplete="email" placeholder="${u.formEmail}"></label>
+        </div>
+        <div class="chat-escrever">
+          <label><span class="so-leitor">${u.formMensagem}</span><textarea name="mensagem" required rows="2" maxlength="3000" placeholder="${u.formMensagem}"></textarea></label>
+          <button class="botao" type="submit">${u.formEnviar} ➤</button>
+        </div>
+        <div class="chat-respostas" aria-live="polite"></div>
+      </form>`;
+  }
+
+  async function enviarFormulario(form) {
+    if (!form.reportValidity()) return;
+    const u = UI[idioma];
+    const botao = form.querySelector('button[type="submit"]');
+    const respostas = form.querySelector(".chat-respostas");
+    const mensagem = form.elements.mensagem.value.trim();
+    const dados = new FormData(form);
+    dados.append("_subject", `Mensagem pelo portfólio: ${form.elements.nome.value.trim()}`);
+    dados.append("idioma", idioma);
+
+    botao.disabled = true;
+    botao.textContent = u.formEnviando;
+    try {
+      const resposta = await fetch(enderecoFormulario(), { method: "POST", body: dados, headers: { Accept: "application/json" } });
+      if (!resposta.ok) throw new Error(`Formspree respondeu ${resposta.status}`);
+      respostas.insertAdjacentHTML("beforeend",
+        `<p class="bolha bolha-eu">${esc(mensagem)}</p><p class="bolha">${esc(u.formOk)}</p>`);
+      form.reset();
+      registrarEvento("formulario-enviado", "Enviou mensagem pelo formulário");
+    } catch (e) {
+      respostas.insertAdjacentHTML("beforeend", `<p class="bolha bolha-erro">${esc(u.formErro(D.contato?.emails?.[0] || ""))}</p>`);
+    } finally {
+      botao.disabled = false;
+      botao.textContent = `${u.formEnviar} ➤`;
+    }
+  }
+
   function secaoContato() {
     const emails = D.contato?.emails || [];
     if (!emails.length && !temItens(D.links)) return "";
@@ -641,8 +739,9 @@
             <h2 class="contato-titulo">${u.tituloContato}</h2>
             <div class="chat">
               ${u.chat.map((msg) => `<p class="bolha">${esc(msg)}</p>`).join("")}
-              ${emails.map((e) => `<a class="bolha bolha-eu" href="mailto:${esc(e)}">${esc(e)}</a>`).join("")}
+              ${emails.map((e) => `<a class="bolha bolha-eu" href="mailto:${esc(e)}" data-evento="email-chat" data-evento-titulo="Clique: e-mail no contato">${esc(e)}</a>`).join("")}
             </div>
+            ${formularioContato()}
             <div class="contato-links">${botoesLinks({ destacar: false, semEmail: true })}</div>
             ${D.contato?.cidade ? `<p class="contato-local">📍 ${esc(t(D.contato.cidade))}</p>` : ""}
           </div>
@@ -664,6 +763,7 @@
     ctf: "ctf", submit: "submit",
     base64: "base64", hex: "hex", rot13: "rot13",
     hacker: "hacker", matrix: "hacker",
+    musica: "musica", "música": "musica", music: "musica", spotify: "musica",
     clear: "limpar", limpar: "limpar", cls: "limpar",
     sudo: "sudo",
     lattes: "link", github: "link", linkedin: "link", instagram: "link", orcid: "link", scholar: "link",
@@ -719,6 +819,7 @@
   function alternarHacker() {
     const ligado = raiz.classList.toggle("modo-hacker");
     avisar(ligado ? UI[idioma].hackerLigado : UI[idioma].hackerDesligado);
+    if (ligado) registrarEvento("modo-hacker", "Ativou o modo hacker");
   }
 
   // ↑ ↑ ↓ ↓ ← → ← → B A
@@ -751,13 +852,24 @@
     if (!texto) return;
     historico.push(texto);
     posHistorico = historico.length;
+    if (!terminalUsado) {
+      terminalUsado = true;
+      registrarEvento("terminal-usado", "Usou o terminal");
+    }
 
     const [cmd, ...args] = texto.split(/\s+/);
     const T = UI[idioma].t;
 
     switch (COMANDOS[cmd.toLowerCase()]) {
       case "ajuda":
-        imprimir(T.ajuda.map(([c, d]) => `<span class="t-cmd">${esc(c.padEnd(14))}</span>${esc(d)}`).join("\n"));
+        imprimir(T.ajuda
+          .filter(([c]) => !["musica", "music"].includes(c) || embedSpotify(D.trilhaSonora))
+          .map(([c, d]) => `<span class="t-cmd">${esc(c.padEnd(14))}</span>${esc(d)}`).join("\n"));
+        break;
+      case "musica":
+        imprimir(embedSpotify(D.trilhaSonora)
+          ? `${esc(T.musica)} ${linkHtml(D.trilhaSonora, D.trilhaSonora.replace(/^https?:\/\/|\?.*$/g, ""))}`
+          : esc(T.nada));
         break;
       case "quem":
         imprimir([
@@ -820,6 +932,7 @@
         break;
       }
       case "ctf":
+        registrarEvento("ctf-aberto", "Abriu o desafio CTF");
         imprimir(T.ctf);
         if (memoria.ler("ctf") === "ok") imprimir(esc(T.ctfJaResolvido), "t-cmd");
         break;
@@ -829,7 +942,11 @@
         if (!window.crypto?.subtle) { imprimir(esc(T.semCripto), "t-erro"); break; }
         flagCorreta(tentativa).then((certa) => {
           imprimir(esc(certa ? T.ctfCerto : T.ctfErrado), certa ? "t-destaque" : "t-erro");
-          if (certa) { memoria.gravar("ctf", "ok"); comemorar(); }
+          if (certa) {
+            memoria.gravar("ctf", "ok");
+            comemorar();
+            registrarEvento("ctf-resolvido", "Resolveu o CTF 🏁");
+          }
         });
         break;
       }
@@ -981,6 +1098,7 @@
   document.addEventListener("click", (evento) => {
     const alvo = evento.target.closest("button, a, #terminalCorpo");
     if (!alvo) return;
+    if (alvo.dataset.evento) registrarEvento(alvo.dataset.evento, alvo.dataset.eventoTitulo || alvo.textContent.trim().slice(0, 80));
 
     if (alvo.id === "terminalCorpo") {
       if (!window.getSelection()?.toString()) $("#terminalEntrada")?.focus();
@@ -988,14 +1106,16 @@
       const novo = raiz.dataset.theme === "dark" ? "light" : "dark";
       raiz.dataset.theme = novo;
       memoria.gravar("tema", novo);
+      registrarEvento(`tema-${novo}`, `Trocou para o tema ${novo === "dark" ? "escuro" : "claro"}`);
     } else if (alvo.dataset.acao === "paleta") {
       paleta = (paleta + 1) % PALETAS.length;
       memoria.gravar("paleta", String(paleta));
       aplicarCores();
+      registrarEvento("paleta", "Trocou a cor do site");
     } else if (alvo.dataset.acao === "idioma") {
-      idioma = idiomas.find((i) => i !== idioma) || idioma;
-      memoria.gravar("idioma", idioma);
-      render();
+      const destino = idiomas.find((i) => i !== idioma) || idioma;
+      registrarEvento(`idioma-${destino}`, `Mudou o idioma para ${destino}`);
+      location.href = enderecoDoIdioma(destino) + location.hash;
     } else if (alvo.id === "btnMenu") {
       const aberto = $("#nav").classList.toggle("menu-aberto");
       alvo.setAttribute("aria-expanded", String(aberto));
@@ -1012,6 +1132,11 @@
   });
 
   document.addEventListener("submit", (evento) => {
+    if (evento.target.id === "formContato") {
+      evento.preventDefault();
+      enviarFormulario(evento.target);
+      return;
+    }
     if (evento.target.id !== "terminalForm") return;
     evento.preventDefault();
     const entrada = $("#terminalEntrada");
