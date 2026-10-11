@@ -276,8 +276,9 @@
   function faixa() {
     const itens = [...(D.pesquisa?.linhas || []), ...(D.pesquisa?.interesses || [])].map(t).filter(Boolean);
     if (!itens.length) return "";
-    const grupo = itens.map((x) => `${esc(x)}<b>✦</b>`).join("");
-    return `<div class="faixa" aria-hidden="true"><div class="faixa-trilho"><span>${grupo}</span><span>${grupo}</span></div></div>`;
+    // Dois grupos iguais lado a lado fazem a rolagem parecer infinita
+    const grupo = itens.map((x) => `<span class="faixa-item">${esc(x)}</span><b>✦</b>`).join("");
+    return `<div class="faixa" aria-hidden="true"><div class="faixa-trilho"><div class="faixa-grupo">${grupo}</div><div class="faixa-grupo">${grupo}</div></div></div>`;
   }
 
   function secaoAgora() {

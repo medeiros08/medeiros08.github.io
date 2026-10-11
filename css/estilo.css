@@ -285,20 +285,32 @@ svg { flex-shrink: 0; }
 .pacote-trilho:nth-of-type(2) .pacote { background: var(--lima); }
 .pacote-trilho:nth-of-type(3) .pacote { background: var(--coral); }
 
-/* Faixa rolando */
+/* Faixa rolando com os interesses */
 .faixa {
-  width: 104%;
-  margin: 56px 0 0 -2%;
+  margin-top: 56px;
   overflow: hidden;
-  background: var(--tinta);
-  color: var(--fundo);
-  rotate: -1.6deg;
+  background: var(--cartao);
+  border-block: 2px solid var(--tinta);
 }
-.faixa-trilho { display: flex; width: max-content; animation: rolar 40s linear infinite; }
-.faixa-trilho span { padding: 14px 0; font-size: clamp(1.3rem, 2.8vw, 2.1rem); font-weight: 800; letter-spacing: -.02em; white-space: nowrap; }
-.faixa-trilho b { margin: 0 .7em; color: var(--lima); font-weight: 400; }
-[data-theme="dark"] .faixa-trilho b { color: #4338ff; }
+.faixa-trilho { display: flex; width: max-content; animation: rolar 45s linear infinite; }
+.faixa:hover .faixa-trilho { animation-play-state: paused; }
+.faixa-grupo { display: flex; flex-shrink: 0; align-items: center; padding: 16px 0; }
+.faixa-item { font-size: clamp(1.05rem, 2vw, 1.45rem); font-weight: 700; letter-spacing: -.01em; white-space: nowrap; }
+.faixa-grupo b { margin: 0 1.1em; font-weight: 400; color: var(--acento); }
 @keyframes rolar { to { transform: translateX(-50%); } }
+
+/* Sem animação: mostra os itens inteiros e centralizados, em vez de uma tira parada e cortada,
+   e deixa um pacote parado em cada etapa, em vez dos três empilhados no começo */
+@media (prefers-reduced-motion: reduce) {
+  .pacote-trilho { animation: none !important; }
+  .pacote-trilho:nth-of-type(2) { transform: translateX(50%); }
+  .pacote-trilho:nth-of-type(3) { transform: translateX(100%); }
+  .faixa-trilho { width: auto; animation: none !important; }
+  .faixa-grupo { flex-wrap: wrap; justify-content: center; gap: 8px 1.4em; width: 100%; padding: 16px var(--margem); }
+  .faixa-grupo + .faixa-grupo, .faixa-grupo b { display: none; }
+  /* A estrela vai colada no começo de cada item, para não sobrar solta no fim da linha */
+  .faixa-item::before { content: "✦"; margin-right: .5em; font-weight: 400; color: var(--acento); }
+}
 
 /* ---------- Seções ---------- */
 
@@ -787,7 +799,6 @@ html.modo-hacker body::after {
 }
 html.modo-hacker img { filter: grayscale(1) brightness(.85) sepia(1) hue-rotate(65deg) saturate(3); }
 html.modo-hacker .projeto-capa { background-color: #03200b; }
-html.modo-hacker .faixa-trilho b { color: #000; }
 html.modo-hacker .hero-foto figcaption { color: var(--suave); }
 html.modo-hacker .bolha:not(.bolha-eu),
 html.modo-hacker .projeto-tag,
