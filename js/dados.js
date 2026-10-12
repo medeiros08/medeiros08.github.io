@@ -19,6 +19,9 @@ window.DADOS = {
   // Foto do topo (na pasta img/), mostrada num quadro estilo polaroide.
   foto: "img/foto.jpg",
   fotoPosicao: "50% 22%", // enquadramento da foto: "horizontal vertical"
+  // true quando existem img/foto.avif e img/foto.webp (versões mais leves da mesma foto).
+  // Se trocar a foto e não tiver essas versões, mude para false.
+  fotoLeve: true,
 
   // Cor de destaque inicial (o visitante pode trocar no botão de paleta).
   // "claro" é usada no tema claro e "escuro" no tema escuro.
@@ -173,6 +176,8 @@ window.DADOS = {
       tecnologias: ["HTML", "CSS", "JavaScript"],
       cor: "verde",
       url: "https://medeiros08.github.io/Codigo-Mirim/",
+      // Página com o estudo de caso (o título do cartão leva para ela)
+      estudo: { pt: "projetos/codigo-mirim/", en: "en/projects/codigo-mirim/" },
     },
     {
       categoria: { pt: "Web · Design", en: "Web · Design" },
@@ -188,6 +193,72 @@ window.DADOS = {
     },
   ],
   maisProjetos: "https://github.com/medeiros08", // apague a linha para esconder
+
+  // Habilidades, em grupos. "onde" diz onde você usou; aprendendo: true marca o que está aprendendo.
+  habilidades: [
+    {
+      grupo: { pt: "Linguagens", en: "Programming languages" },
+      itens: [
+        { nome: "Python", onde: { pt: "compilador da pesquisa com P4", en: "compiler in my P4 research" } },
+        { nome: "P4", onde: { pt: "pesquisa no AI Horizon Labs", en: "research at AI Horizon Labs" } },
+        { nome: "JavaScript", onde: { pt: "Código Mirim e este site", en: "Código Mirim and this site" } },
+        { nome: { pt: "HTML e CSS", en: "HTML & CSS" }, onde: { pt: "sites e materiais de aula", en: "websites and class materials" } },
+        { nome: "Shell (Bash)", onde: { pt: "scripts dos experimentos", en: "experiment scripts" } },
+        { nome: "C", onde: { pt: "fundamentos da computação", en: "computing fundamentals" }, aprendendo: true },
+      ],
+    },
+    {
+      grupo: { pt: "Redes e segurança", en: "Networks and security" },
+      itens: [
+        { nome: "Snort 3", onde: { pt: "detecção de intrusos", en: "intrusion detection" } },
+        { nome: "BMv2 e P4Runtime", onde: { pt: "switch P4 para testes", en: "P4 test switch" } },
+        { nome: "Scapy", onde: { pt: "leitura e envio de pacotes", en: "reading and crafting packets" } },
+        { nome: "Linux", onde: { pt: "ambiente dos experimentos", en: "experiment environment" } },
+      ],
+    },
+    {
+      grupo: { pt: "Ferramentas", en: "Tools" },
+      itens: [
+        { nome: { pt: "Git e GitHub", en: "Git & GitHub" }, onde: { pt: "todos os projetos", en: "every project" } },
+        { nome: "LaTeX", onde: { pt: "escrita de artigos", en: "writing papers" } },
+        { nome: { pt: "IA generativa (Gemini)", en: "Generative AI (Gemini)" }, onde: { pt: "Oficina de Prompts", en: "Prompt Workshop" } },
+        { nome: "GitHub Pages", onde: { pt: "publicação dos sites", en: "publishing websites" } },
+      ],
+    },
+    {
+      grupo: { pt: "Idiomas", en: "Spoken languages" },
+      itens: [
+        { nome: { pt: "Português", en: "Portuguese" }, onde: { pt: "nativo", en: "native" } },
+        { nome: { pt: "Espanhol", en: "Spanish" } },
+        { nome: { pt: "Inglês", en: "English" } },
+      ],
+    },
+  ],
+
+  // Notas (mini-blog). Cada nota tem uma página em notas/<slug>/ e, em inglês, em en/notes/<slug>/.
+  // A mais recente fica em primeiro.
+  notas: [
+    {
+      slug: { pt: "p4-explicado", en: "p4-explained" },
+      data: "2026-10-12",
+      minutos: 4,
+      titulo: { pt: "P4 explicado com uma agência dos correios", en: "P4 explained with a post office" },
+      resumo: {
+        pt: "O que é a linguagem que eu pesquiso, sem jargão: pacotes, carteiros e regras novas para os equipamentos da rede.",
+        en: "The language I research, without the jargon: packets, mail carriers and new rules for network devices.",
+      },
+    },
+    {
+      slug: { pt: "o-que-e-ctf", en: "what-is-a-ctf" },
+      data: "2026-10-12",
+      minutos: 4,
+      titulo: { pt: "O que é um CTF (e como começar)", en: "What is a CTF (and how to start)" },
+      resumo: {
+        pt: "As competições de segurança em que você procura bandeiras escondidas, e por onde começar sem se perder.",
+        en: "The security competitions where you hunt for hidden flags, and where to start without getting lost.",
+      },
+    },
+  ],
 
   // Trajetória. "ate" pode ser um ano, "hoje" ou "andamento".
   formacao: [
@@ -259,4 +330,16 @@ window.DADOS = {
   // Formulário de contato (Formspree, gratuito): crie um formulário em https://formspree.io
   // e cole aqui o código dele (a parte depois de /f/ no endereço). Vazio = escondido.
   formulario: "https://formspree.io/f/xaeqbdok",
+
+  // Livro de visitas (giscus): os recados ficam nas Discussions do repositório do site.
+  // Precisa do app giscus instalado no repositório: https://github.com/apps/giscus
+  // Para esconder, troque ligado: true por ligado: false.
+  livroDeVisitas: {
+    ligado: false,
+    repo: "medeiros08/medeiros08.github.io",
+    repoId: "R_kgDOVEVnlQ",
+    categoria: "Announcements",
+    categoriaId: "DIC_kwDOVEVnlc4DH9wG",
+    discussao: 1, // github.com/medeiros08/medeiros08.github.io/discussions/1
+  },
 };

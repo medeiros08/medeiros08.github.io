@@ -1,0 +1,207 @@
+<!doctype html>
+<!-- Estudo de caso do Código Mirim. Menu, rodapé e botões vêm do js/app.js; o texto fica aqui mesmo. -->
+<html lang="pt-BR" data-theme="dark" data-idioma="pt" data-raiz="../../" data-pagina="projeto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Código Mirim · Estudo de caso · Arthur Medeiros</title>
+  <meta name="description" content="Estudo de caso do Código Mirim: jogos que apresentam a programação para crianças de 6 a 14 anos e uma Oficina de Prompts para professores. Por Arthur Medeiros.">
+  <meta name="author" content="Arthur Medeiros">
+  <meta name="theme-color" content="#0f0f13">
+  <link rel="canonical" href="https://medeiros08.github.io/projetos/codigo-mirim/">
+  <link rel="alternate" hreflang="pt-BR" href="https://medeiros08.github.io/projetos/codigo-mirim/">
+  <link rel="alternate" hreflang="en" href="https://medeiros08.github.io/en/projects/codigo-mirim/">
+  <link rel="alternate" hreflang="x-default" href="https://medeiros08.github.io/projetos/codigo-mirim/">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../img/icone-180.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://medeiros08.github.io/projetos/codigo-mirim/">
+  <meta property="og:title" content="Código Mirim · Estudo de caso">
+  <meta property="og:description" content="Jogos que apresentam a programação para crianças de 6 a 14 anos e uma Oficina de Prompts para professores.">
+  <meta property="og:image" content="https://medeiros08.github.io/img/codigo-mirim/compartilhar.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="627">
+  <meta property="og:image:alt" content="Página inicial do Código Mirim, com o robô Bit">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Código Mirim",
+    "url": "https://medeiros08.github.io/Codigo-Mirim/",
+    "description": "Jogos que apresentam a programação para crianças de 6 a 14 anos e uma Oficina de Prompts para professores.",
+    "inLanguage": "pt-BR",
+    "creator": { "@type": "Person", "name": "Arthur Medeiros", "url": "https://medeiros08.github.io/" },
+    "audience": { "@type": "EducationalAudience", "educationalRole": "student" },
+    "isAccessibleForFree": true
+  }
+  </script>
+
+  <link rel="preload" href="../../fontes/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../css/estilo.css">
+  <script>
+    document.documentElement.classList.add("js");
+    try {
+      var tema = localStorage.getItem("tema");
+      if (tema) document.documentElement.dataset.theme = tema;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="nav" id="nav"></header>
+
+  <main id="conteudo" class="pagina">
+    <article class="estudo">
+      <header class="container">
+        <a class="voltar" href="../../#projetos">← Voltar aos projetos</a>
+        <div class="estudo-tags">
+          <span class="projeto-tag">Extensão · Educação</span>
+          <span class="projeto-status">Em desenvolvimento</span>
+        </div>
+        <h1 class="estudo-titulo">Código Mirim</h1>
+        <p class="estudo-lead">Jogos que apresentam a programação para crianças de 6 a 14 anos, e uma oficina que ensina professores a criar os próprios materiais com IA.</p>
+        <div class="hero-links">
+          <a class="botao principal" href="https://medeiros08.github.io/Codigo-Mirim/" target="_blank" rel="noopener" data-evento="estudo-cm-site" data-evento-titulo="Estudo de caso: abrir o Código Mirim">Abrir o Código Mirim ↗</a>
+          <a class="botao" href="https://github.com/medeiros08/Codigo-Mirim" target="_blank" rel="noopener" data-evento="estudo-cm-github" data-evento-titulo="Estudo de caso: código no GitHub">Código no GitHub ↗</a>
+        </div>
+      </header>
+
+      <figure class="container estudo-capa">
+        <div class="janela">
+          <div class="janela-barra" aria-hidden="true"><i></i><i></i><i></i><span>medeiros08.github.io/Codigo-Mirim</span></div>
+          <img src="../../img/codigo-mirim/home.webp" width="1024" height="640" alt="Página inicial do Código Mirim: o robô Bit apresenta os jogos para a turma e os materiais para o professor, com um QR code para abrir no celular." fetchpriority="high">
+        </div>
+      </figure>
+
+      <div class="container">
+        <dl class="estudo-ficha">
+          <div><dt>Para quem</dt><dd>Crianças de 6 a 14 anos e professores</dd></div>
+          <div><dt>Meu papel</dt><dd>Desenvolvimento do site, dos jogos e dos materiais</dd></div>
+          <div><dt>Com quem</dt><dd>Curso de Engenharia de Software da UNIPAMPA, Campus Alegrete</dd></div>
+          <div><dt>Feito com</dt><dd>HTML, CSS e JavaScript, publicado no GitHub Pages</dd></div>
+        </dl>
+
+        <div class="estudo-numeros">
+          <div><b>6</b><span>jogos para a turma</span></div>
+          <div><b>50</b><span>minutos de aula com roteiro</span></div>
+          <div><b>4</b><span>encontros na Oficina de Prompts</span></div>
+          <div><b>0</b><span>cadastros para jogar</span></div>
+        </div>
+      </div>
+
+      <section class="container estudo-bloco">
+        <h2>A ideia</h2>
+        <div class="estudo-texto">
+          <p>Apresentar a programação e a engenharia de software para crianças de um jeito que caiba numa aula: jogos curtos, que funcionam no celular, no tablet ou no projetor, e materiais prontos para o professor conduzir a aula e continuar o assunto depois.</p>
+          <p>Nos jogos, as crianças montam sequências de comandos, caçam bugs, programam em dupla e descobrem como um aplicativo conversa com um servidor e um banco de dados. Para os professores, a Oficina de Prompts mostra como usar o Gemini para criar atividades, histórias e até jogos para as próprias turmas, sem precisar saber programar.</p>
+        </div>
+      </section>
+
+      <section class="container estudo-bloco">
+        <h2>O que tem dentro</h2>
+        <div class="estudo-cartoes">
+          <div class="estudo-cartao">
+            <h3>🎮 Jogos para a turma</h3>
+            <ul>
+              <li>Robô pega a estrela <small>6+</small></li>
+              <li>Ninja dos Bugs <small>6+</small></li>
+              <li>Programação em Dupla <small>7+</small></li>
+              <li>Conecta o Sistema <small>8+</small></li>
+              <li>Arcade do Código, com três jogos rápidos</li>
+              <li>Caça aos Bugs!</li>
+            </ul>
+          </div>
+          <div class="estudo-cartao">
+            <h3>📚 Materiais da aula</h3>
+            <ul>
+              <li>Slides para o projetor</li>
+              <li>Roteiro de 50 minutos</li>
+              <li>Folhas de atividades</li>
+              <li>Mapas das 15 fases da Programação em Dupla</li>
+              <li>Certificado de Programador(a) Mirim</li>
+            </ul>
+          </div>
+          <div class="estudo-cartao">
+            <h3>✨ Oficina de Prompts</h3>
+            <ul>
+              <li>Formação em quatro encontros</li>
+              <li>Curso online com teste final</li>
+              <li>Jogo do Prompt e construtor de prompts</li>
+              <li>Biblioteca de prompts e Gems prontos</li>
+              <li>Guia do professor e galeria de jogos</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="container estudo-bloco">
+        <h2>Como foi pensado</h2>
+        <ol class="decisoes">
+          <li>
+            <h3>Funciona sem internet</h3>
+            <p>Depois da primeira visita, os jogos e as páginas ficam guardados no aparelho e abrem mesmo sem conexão. Dá para instalar como app na tela do celular.</p>
+          </li>
+          <li>
+            <h3>Links curtos e QR codes</h3>
+            <p>Cada jogo tem um endereço que dá para ditar ou escrever no quadro, como <b>…/Codigo-Mirim/ninja</b>, e um QR code grande para projetar. Os links também vão direto para o WhatsApp e o Google Classroom.</p>
+          </li>
+          <li>
+            <h3>Pronto para imprimir</h3>
+            <p>Roteiro, folhas de atividades, mapas das fases e certificados saem em PDF tamanho A4, gerados a partir das próprias páginas.</p>
+          </li>
+          <li>
+            <h3>Sem cadastro</h3>
+            <p>Nenhum jogo pede login, e o site não coleta dados das crianças. É abrir e jogar.</p>
+          </li>
+          <li>
+            <h3>Acessível</h3>
+            <p>Cores com contraste conferido, zoom liberado e áreas de toque maiores nos jogos mais rápidos.</p>
+          </li>
+          <li>
+            <h3>Simples de manter</h3>
+            <p>HTML, CSS e JavaScript, sem frameworks e sem servidor: o site inteiro é publicado de graça no GitHub Pages.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="container estudo-bloco">
+        <h2>Por dentro</h2>
+        <div class="galeria">
+          <figure>
+            <div class="janela"><img src="../../img/codigo-mirim/robo.webp" width="1024" height="640" loading="lazy" alt="Jogo Robô pega a estrela: um tabuleiro 3 por 3 com o robô, a estrela e botões de setas para montar a sequência."></div>
+            <figcaption><b>Robô pega a estrela.</b> A criança monta a sequência de setas e aperta ▶ para o robô seguir os comandos.</figcaption>
+          </figure>
+          <figure>
+            <div class="janela"><img src="../../img/codigo-mirim/conecta.webp" width="1024" height="640" loading="lazy" alt="Jogo Conecta o Sistema: celular, servidor e banco de dados ligados por setas, com os níveis Fácil, Normal e Desafio."></div>
+            <figcaption><b>Conecta o Sistema.</b> Ligar o celular ao servidor e o servidor ao banco de dados, em três níveis de dificuldade.</figcaption>
+          </figure>
+          <figure>
+            <div class="janela"><img src="../../img/codigo-mirim/oficina.webp" width="1024" height="640" loading="lazy" alt="Página da Oficina de Prompts para professores, com o robô Bit de capelo de formatura."></div>
+            <figcaption><b>Oficina de Prompts.</b> Quatro encontros para professores criarem materiais com o Gemini.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="container estudo-bloco">
+        <h2>Meu papel</h2>
+        <div class="estudo-texto">
+          <p>Desenvolvo o Código Mirim: o site, os jogos, os materiais da aula e a Oficina de Prompts. O jogo Robô pega a estrela é de <a href="https://github.com/paulosevero/robo-estrela" target="_blank" rel="noopener">Paulo Severo</a>, e os outros jogos seguem o mesmo estilo. O projeto é feito com o curso de Engenharia de Software da UNIPAMPA, no Campus Alegrete.</p>
+          <p>O Código Mirim segue em desenvolvimento: novos jogos e materiais vão entrando no site, e os que já existem continuam sendo melhorados.</p>
+        </div>
+        <div class="estudo-fim">
+          <a class="botao principal" href="https://medeiros08.github.io/Codigo-Mirim/" target="_blank" rel="noopener" data-evento="estudo-cm-site-fim" data-evento-titulo="Estudo de caso: abrir o Código Mirim (fim)">Abrir o Código Mirim ↗</a>
+          <a class="botao" href="../../#projetos">← Ver os outros projetos</a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="rodape" id="rodape"></footer>
+
+  <script src="../../js/dados.js"></script>
+  <script src="../../js/app.js"></script>
+</body>
+</html>
