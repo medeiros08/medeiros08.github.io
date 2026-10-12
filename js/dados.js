@@ -335,7 +335,7 @@ window.DADOS = {
   // Precisa do app giscus instalado no repositório: https://github.com/apps/giscus
   // Para esconder, troque ligado: true por ligado: false.
   livroDeVisitas: {
-    ligado: false,
+    ligado: true,
     repo: "medeiros08/medeiros08.github.io",
     repoId: "R_kgDOVEVnlQ",
     categoria: "Announcements",
