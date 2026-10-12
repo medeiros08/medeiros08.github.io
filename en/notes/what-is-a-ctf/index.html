@@ -1,0 +1,111 @@
+<!doctype html>
+<!-- Note (English). Menu, footer and "More notes" come from js/app.js; the text lives here. The list of notes is in js/dados.js. -->
+<html lang="en" data-theme="dark" data-idioma="en" data-raiz="../../../" data-pagina="nota">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What is a CTF (and how to start) · Arthur Medeiros</title>
+  <meta name="description" content="CTFs are security competitions where you hunt for hidden flags. The formats, the categories and where to start without getting lost.">
+  <meta name="author" content="Arthur Medeiros">
+  <meta name="theme-color" content="#0f0f13">
+  <link rel="canonical" href="https://medeiros08.github.io/en/notes/what-is-a-ctf/">
+  <link rel="alternate" hreflang="pt-BR" href="https://medeiros08.github.io/notas/o-que-e-ctf/">
+  <link rel="alternate" hreflang="en" href="https://medeiros08.github.io/en/notes/what-is-a-ctf/">
+  <link rel="alternate" hreflang="x-default" href="https://medeiros08.github.io/notas/o-que-e-ctf/">
+  <link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../img/icone-180.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://medeiros08.github.io/en/notes/what-is-a-ctf/">
+  <meta property="og:title" content="What is a CTF (and how to start)">
+  <meta property="og:description" content="The security competitions where you hunt for hidden flags, and where to start without getting lost.">
+  <meta property="og:image" content="https://medeiros08.github.io/img/compartilhar-en.jpg?v=1">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="627">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:published_time" content="2026-10-12">
+  <meta property="article:author" content="https://medeiros08.github.io/en/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "What is a CTF (and how to start)",
+    "description": "The security competitions where you hunt for hidden flags, and where to start without getting lost.",
+    "datePublished": "2026-10-12",
+    "inLanguage": "en",
+    "url": "https://medeiros08.github.io/en/notes/what-is-a-ctf/",
+    "author": { "@type": "Person", "name": "Arthur Medeiros", "url": "https://medeiros08.github.io/en/" }
+  }
+  </script>
+
+  <link rel="preload" href="../../../fontes/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../css/estilo.css">
+  <script>
+    document.documentElement.classList.add("js");
+    try {
+      var tema = localStorage.getItem("tema");
+      if (tema) document.documentElement.dataset.theme = tema;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="nav" id="nav"></header>
+
+  <main id="conteudo" class="pagina">
+    <article class="container nota">
+      <a class="voltar" href="../../#notas">← All notes</a>
+      <header class="nota-topo">
+        <span class="nota-meta"><time datetime="2026-10-12">October 12, 2026</time> · 4 min read</span>
+        <h1 class="nota-titulo">What is a CTF (and how to start)</h1>
+        <p class="nota-resumo">The security competitions where you hunt for hidden flags, and where to start without getting lost.</p>
+      </header>
+
+      <div class="nota-corpo">
+        <p>CTF stands for <strong>Capture The Flag</strong>. In information security, it's a competition where you solve challenges to find a <strong>flag</strong>: a secret string, almost always in a format like <code>flag{...}</code>, hidden in a website, a file, a program or an encrypted message. Find the flag, submit it, score the points.</p>
+
+        <h2>The two most common formats</h2>
+        <ul>
+          <li><strong>Jeopardy</strong>: a board of challenges split by category and difficulty. It's the most common format and the best one to start with.</li>
+          <li><strong>Attack-defense</strong>: each team runs a server, protects its own and tries to attack the others. It's more intense and better suited to people with some experience.</li>
+        </ul>
+
+        <h2>The categories</h2>
+        <ul>
+          <li><strong>Web</strong>: flaws in websites and web apps.</li>
+          <li><strong>Cryptography</strong>: encrypted or encoded messages.</li>
+          <li><strong>Forensics</strong>: clues hidden in files, images or network captures.</li>
+          <li><strong>Reverse engineering</strong>: understanding a program without its source code.</li>
+          <li><strong>Exploitation</strong> (or <em>pwn</em>): making a program behave in a way it shouldn't.</li>
+          <li><strong>Networking</strong>: analyzing traffic and protocols.</li>
+        </ul>
+
+        <h2>Why it's worth it</h2>
+        <p>CTFs are learning by doing. Every challenge forces you to really understand how something works: a protocol, a file format, a common programming mistake. And it all happens in an environment built for it, where attacking is allowed.</p>
+        <blockquote>One rule always applies: only test the security of systems you have permission to test. Outside a CTF or an authorized job, breaking into a system is a crime.</blockquote>
+
+        <h2>Where to start</h2>
+        <ol>
+          <li><a href="https://picoctf.org" target="_blank" rel="noopener">picoCTF</a>: made by Carnegie Mellon University for beginners, with practice challenges all year round.</li>
+          <li><a href="https://overthewire.org/wargames/bandit/" target="_blank" rel="noopener">OverTheWire: Bandit</a>: teaches the Linux terminal, level by level.</li>
+          <li><a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener">CyberChef</a>: a "kitchen" for encoding and decoding text, such as base64 and hex. It helps with lots of challenges.</li>
+          <li><a href="https://ctftime.org" target="_blank" rel="noopener">CTFtime</a>: the calendar of competitions happening around the world.</li>
+        </ol>
+        <p>A tip: write down what you learned from each challenge. Many tricks come back.</p>
+
+        <h2>There's a CTF on this site</h2>
+        <p class="destaque-caixa">I hid a small challenge here in the portfolio, made for people who have never played. The flag is split into three pieces, each encoded in a different way. To start, go to the <a href="../../#terminal">terminal</a> on the home page and type <code>ctf</code>. Happy hunting! 🚩</p>
+      </div>
+
+      <p class="nota-assinatura">Arthur Medeiros, Computer Science student at UNIPAMPA. Questions or suggestions? <a href="../../#contato">Get in touch</a>.</p>
+      <aside id="outrasNotas"></aside>
+    </article>
+  </main>
+
+  <footer class="rodape" id="rodape"></footer>
+
+  <script src="../../../js/dados.js"></script>
+  <script src="../../../js/app.js"></script>
+</body>
+</html>

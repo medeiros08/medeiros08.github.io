@@ -40,11 +40,33 @@
       formMensagem: "Escreva sua mensagem…", formEnviar: "Enviar", formEnviando: "Enviando…",
       formOk: "Recebi! Respondo em breve 🙂",
       formErro: (email) => `Não consegui enviar agora. Tenta pelo e-mail ${email}?`,
+      firewall: "Firewall", tituloFirewall: "Seja o firewall",
+      firewallSub: "Um jogo de um minuto para entender o que eu pesquiso.",
+      habilidades: "Habilidades", tituloHabilidades: "O que eu uso",
+      habilidadesSub: "Linguagens e ferramentas que uso de verdade, e onde usei cada uma.", aprendendo: "aprendendo",
+      notas: "Notas", tituloNotas: "Notas", notasSub: "Textos curtos sobre o que estou estudando.",
+      minutos: (n) => `${n} min de leitura`, ler: "Ler", outrasNotas: "Outras notas",
+      livro: "Livro de visitas", tituloLivro: "Livro de visitas",
+      livroSub: 'Passou por aqui? Deixe um recado! Para escrever, entre com sua conta do GitHub. Sem GitHub? Me manda uma mensagem pelo <a href="#contato">contato</a>.',
+      livroCarregando: "Abrindo o livro de visitas…",
+      estudo: "Ler o estudo de caso", abrirSite: "Abrir o site",
+      pular: "Pular para o conteúdo", inicio: "Início",
+      busca: "Busca rápida", buscaAtalho: "Busca rápida (Ctrl K)",
+      buscaPlaceholder: "Para onde vamos? Busque seções, notas, ações…", buscaVazia: "Nada encontrado. Tente outra palavra.",
+      buscaDica: "<kbd>↑</kbd> <kbd>↓</kbd> navegar · <kbd>Enter</kbd> abrir · <kbd>Esc</kbd> fechar",
+      grupos: { secoes: "Seções", paginas: "Páginas e notas", acoes: "Ações", links: "Links" },
+      acoes: {
+        tema: "Alternar tema claro/escuro", paleta: "Trocar a cor do site", idioma: "Ler em inglês",
+        hacker: "Modo hacker", terminal: "Abrir o terminal", firewall: "Jogar “Seja o firewall”",
+        ctf: "Desafio CTF", copiarEmail: "Copiar meu e-mail", codigoMirim: "Estudo de caso: Código Mirim",
+      },
+      emailCopiado: "E-mail copiado!",
       t: {
         boasVindas: 'Olá! 👋 Este é o terminal do portfólio. Digite <span class="t-cmd">help</span> para ver o que dá pra fazer.',
         ajuda: [
           ["help", "mostra esta lista"], ["whoami", "quem sou eu"], ["agora", "no que estou trabalhando"],
-          ["pesquisa", "meus interesses de pesquisa"], ["projetos", "lista os projetos"], ["p4", "afinal, o que é P4?"],
+          ["pesquisa", "meus interesses de pesquisa"], ["projetos", "lista os projetos"], ["habilidades", "linguagens e ferramentas"],
+          ["p4", "afinal, o que é P4?"], ["firewall", "joga o “Seja o firewall”"], ["notas", "meus textos mais recentes"],
           ["contato", "como falar comigo"], ["git log", "meus últimos commits no GitHub"], ["ls", "lista as seções do site"],
           ["cd <seção>", "vai até uma seção (ex.: cd projetos)"], ["ctf", "🚩 desafio: ache a flag escondida no site"],
           ["musica", "o que toca enquanto eu programo"], ["clear", "limpa a tela"],
@@ -103,11 +125,33 @@
       formMensagem: "Write your message…", formEnviar: "Send", formEnviando: "Sending…",
       formOk: "Got it! I'll reply soon 🙂",
       formErro: (email) => `Couldn't send it right now. Try e-mail: ${email}?`,
+      firewall: "Firewall", tituloFirewall: "Be the firewall",
+      firewallSub: "A one-minute game to understand what I research.",
+      habilidades: "Skills", tituloHabilidades: "What I use",
+      habilidadesSub: "Languages and tools I actually use, and where I used each one.", aprendendo: "learning",
+      notas: "Notes", tituloNotas: "Notes", notasSub: "Short pieces about what I'm studying.",
+      minutos: (n) => `${n} min read`, ler: "Read", outrasNotas: "More notes",
+      livro: "Guestbook", tituloLivro: "Guestbook",
+      livroSub: 'Stopped by? Leave a message! To write, sign in with your GitHub account. No GitHub? Send me a message through the <a href="#contato">contact</a> form.',
+      livroCarregando: "Opening the guestbook…",
+      estudo: "Read the case study", abrirSite: "Open the site",
+      pular: "Skip to content", inicio: "Home",
+      busca: "Quick search", buscaAtalho: "Quick search (Ctrl K)",
+      buscaPlaceholder: "Where to? Search sections, notes, actions…", buscaVazia: "Nothing found. Try another word.",
+      buscaDica: "<kbd>↑</kbd> <kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close",
+      grupos: { secoes: "Sections", paginas: "Pages and notes", acoes: "Actions", links: "Links" },
+      acoes: {
+        tema: "Toggle light/dark theme", paleta: "Change the site color", idioma: "Ler em português",
+        hacker: "Hacker mode", terminal: "Open the terminal", firewall: "Play “Be the firewall”",
+        ctf: "CTF challenge", copiarEmail: "Copy my e-mail", codigoMirim: "Case study: Código Mirim",
+      },
+      emailCopiado: "E-mail copied!",
       t: {
         boasVindas: 'Hi! 👋 This is the portfolio terminal. Type <span class="t-cmd">help</span> to see what you can do.',
         ajuda: [
           ["help", "shows this list"], ["whoami", "who I am"], ["now", "what I'm working on"],
-          ["research", "my research interests"], ["projects", "lists my projects"], ["p4", "so, what is P4?"],
+          ["research", "my research interests"], ["projects", "lists my projects"], ["skills", "languages and tools"],
+          ["p4", "so, what is P4?"], ["firewall", "plays “Be the firewall”"], ["notes", "my latest writing"],
           ["contact", "how to reach me"], ["git log", "my latest commits on GitHub"], ["ls", "lists the site sections"],
           ["cd <section>", "jumps to a section (e.g. cd projects)"], ["ctf", "🚩 challenge: find the flag hidden on the site"],
           ["music", "what plays while I code"], ["clear", "clears the screen"],
@@ -153,6 +197,7 @@
     site: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.6 3.7 5.6 3.7 9s-1.3 6.4-3.7 9c-2.4-2.6-3.7-5.6-3.7-9S9.6 5.6 12 3z"/></svg>',
     tema: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.6a8.4 8.4 0 0 1 0 16.8z" fill="currentColor"/></svg>',
     menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+    busca: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>',
   };
   ICONES.cv = ICONES.lattes;
 
@@ -180,10 +225,11 @@
   };
 
   // Cores que o visitante pode escolher no botão de paleta. A primeira vem de dados.js.
+  // As do tema claro têm contraste de pelo menos 4,5:1 com o fundo, para textos pequenos.
   const PALETAS = [
     { claro: D.cores?.claro || "#4338ff", escuro: D.cores?.escuro || "#9d9bff" },
-    { claro: "#e0452b", escuro: "#ff8a70" },
-    { claro: "#0f8a5f", escuro: "#4ade9b" },
+    { claro: "#c2381f", escuro: "#ff8a70" },
+    { claro: "#0b7a53", escuro: "#4ade9b" },
     { claro: "#9333ea", escuro: "#c99bff" },
   ];
 
@@ -200,9 +246,21 @@
   const raizSite = raiz.dataset.raiz || "";
   const idioma = idiomas.includes(raiz.dataset.idioma) ? raiz.dataset.idioma : idiomas[0];
   memoria.gravar("idioma", idioma); // a página 404 usa para escolher o idioma
+  // Página inicial de cada idioma
   const enderecoDoIdioma = (codigo) => (codigo === idiomas[0] ? raizSite || "./" : `${raizSite}${codigo}/`);
+  // A mesma página no outro idioma: vem do <link rel="alternate" hreflang> do <head>
+  function traducaoDaPagina(codigo) {
+    const alternativa = [...document.querySelectorAll('link[rel="alternate"][hreflang]')]
+      .find((l) => l.hreflang.toLowerCase().startsWith(codigo));
+    return alternativa ? new URL(alternativa.href).pathname : enderecoDoIdioma(codigo);
+  }
   // Caminhos relativos de dados.js (foto, imagens) partem da raiz do site
   const caminhoLocal = (url) => (url && !/^(https?:|\/|data:|#)/.test(url) ? raizSite + url : url);
+  // Página atual: "inicio" (o portfólio) ou uma página interna (estudo de caso, nota...)
+  const pagina = raiz.dataset.pagina || "inicio";
+  const naInicial = pagina === "inicio";
+  // Link para uma seção da página inicial, de qualquer página
+  const linkSecao = (id) => (naInicial ? `#${id}` : `${enderecoDoIdioma(idioma)}#${id}`);
 
   let paleta = Number(memoria.ler("paleta")) % PALETAS.length || 0;
   let pubsAbertas = false;
@@ -269,9 +327,14 @@
     const nome = D.nome || {};
     const detalhes = (D.topo?.detalhes || []).map(t).filter(Boolean);
     const selo = detalhes[detalhes.length - 1];
+    // Versões mais leves da foto (mesmo nome, .avif e .webp), quando fotoLeve: true em dados.js
+    const base = String(D.foto || "").replace(/\.(jpe?g|png)$/i, "");
+    const leves = base !== D.foto && D.fotoLeve === true
+      ? `<source srcset="${esc(caminhoLocal(base))}.avif" type="image/avif"><source srcset="${esc(caminhoLocal(base))}.webp" type="image/webp">`
+      : "";
     const foto = D.foto
       ? `<figure class="hero-foto" style="--foto-posicao:${esc(D.fotoPosicao || "50% 22%")}">
-          <img src="${esc(caminhoLocal(D.foto))}" alt="${esc(nomeCompleto())}" width="900" height="1400" fetchpriority="high" decoding="async" onerror="this.closest('figure').remove()">
+          <picture>${leves}<img src="${esc(caminhoLocal(D.foto))}" alt="${esc(nomeCompleto())}" width="900" height="1400" fetchpriority="high" decoding="async" onerror="this.closest('figure').remove()"></picture>
           <figcaption>${esc(t(D.contato?.cidade) || "")}</figcaption>
           ${selo ? `<span class="hero-selo">${esc(selo)}</span>` : ""}
         </figure>`
@@ -477,6 +540,10 @@
           <div class="projetos-grade">
             ${D.projetos.map((p, i) => {
               const titulo = esc(t(p.titulo));
+              // Com estudo de caso, o título leva para a página do estudo e o site vira um link à parte
+              const estudo = caminhoLocal(t(p.estudo));
+              const destino = estudo || p.url;
+              const evento = `projeto-${esc(normalizar(p.titulo?.pt || p.titulo))}`;
               return `
                 <article class="projeto revelar">
                   <div class="projeto-capa${p.imagem ? " com-imagem" : ""}" style="${estiloCapa(p)}">
@@ -485,10 +552,15 @@
                     ${p.categoria ? `<span class="projeto-tag">${esc(t(p.categoria))}</span>` : ""}
                   </div>
                   <div class="projeto-corpo">
-                    <h3>${p.url ? `<a href="${esc(p.url)}"${linkExterno(p.url)} data-evento="projeto-${esc(normalizar(p.titulo?.pt || p.titulo))}" data-evento-titulo="Projeto: ${titulo}">${titulo}<span aria-hidden="true">↗</span></a>` : titulo}</h3>
+                    <h3>${destino ? `<a href="${esc(destino)}"${linkExterno(destino)} data-evento="${evento}" data-evento-titulo="Projeto: ${titulo}">${titulo}<span aria-hidden="true">${estudo ? "→" : "↗"}</span></a>` : titulo}</h3>
                     ${p.descricao ? `<p class="texto-rico">${rico(t(p.descricao))}</p>` : ""}
                     ${p.papel ? `<p class="texto-rico"><strong>${u.meuPapel}</strong> ${rico(t(p.papel))}</p>` : ""}
                     ${temItens(p.tecnologias) ? `<ul class="techs">${p.tecnologias.map((x) => `<li>${esc(t(x))}</li>`).join("")}</ul>` : ""}
+                    ${estudo ? `
+                      <div class="projeto-acoes">
+                        <span class="projeto-estudo" aria-hidden="true">${u.estudo} →</span>
+                        ${p.url ? `<a href="${esc(p.url)}"${linkExterno(p.url)} data-evento="${evento}-site" data-evento-titulo="Site: ${titulo}">${u.abrirSite} ↗</a>` : ""}
+                      </div>` : ""}
                   </div>
                 </article>`;
             }).join("")}
@@ -496,6 +568,139 @@
           ${D.maisProjetos ? `<a class="botao mais-projetos revelar" href="${esc(D.maisProjetos)}"${linkExterno(D.maisProjetos)} data-evento="mais-projetos" data-evento-titulo="Clique: mais projetos no GitHub">${ICONES.github}<span>${u.maisProjetos}</span> ↗</a>` : ""}
         </div>
       </section>`;
+  }
+
+  // O jogo fica em js/firewall.js; aqui só o lugar dele na página
+  function secaoFirewall() {
+    if (D.firewall === false) return "";
+    const u = UI[idioma];
+    return `
+      <section class="secao" id="firewall">
+        <div class="container">
+          <h2 class="titulo-secao revelar">${u.tituloFirewall}</h2>
+          <p class="secao-sub revelar">${u.firewallSub}</p>
+          <div class="revelar" id="jogoFirewall"></div>
+        </div>
+      </section>`;
+  }
+
+  function secaoHabilidades() {
+    if (!temItens(D.habilidades)) return "";
+    const u = UI[idioma];
+    return `
+      <section class="secao" id="habilidades">
+        <div class="container">
+          <h2 class="titulo-secao revelar">${u.tituloHabilidades}</h2>
+          <p class="secao-sub revelar">${u.habilidadesSub}</p>
+          <div class="habilidades-grade">
+            ${D.habilidades.map((g, i) => `
+              <article class="habilidades-cartao revelar cor-${i % 3}">
+                <h3 class="aba">${esc(t(g.grupo))}</h3>
+                <ul class="habilidades-lista">
+                  ${(g.itens || []).map((h) => `
+                    <li${h.aprendendo ? ' class="aprendendo"' : ""}>
+                      <span class="habilidade-nome">${esc(t(h.nome))}${h.aprendendo ? `<span class="selo-aprendendo">${u.aprendendo}</span>` : ""}</span>
+                      ${h.onde ? `<span class="habilidade-onde">${esc(t(h.onde))}</span>` : ""}
+                    </li>`).join("")}
+                </ul>
+              </article>`).join("")}
+          </div>
+        </div>
+      </section>`;
+  }
+
+  /* ---------- Notas ---------- */
+
+  const enderecoNota = (n, codigo = idioma) =>
+    codigo === idiomas[0] ? `${raizSite}notas/${t(n.slug)}/` : `${raizSite}${codigo}/notes/${n.slug?.[codigo] || t(n.slug)}/`;
+
+  function dataNota(iso) {
+    const data = new Date(`${iso}T12:00:00`);
+    if (Number.isNaN(data.getTime())) return "";
+    return new Intl.DateTimeFormat(idioma === "pt" ? "pt-BR" : "en", { day: "numeric", month: "short", year: "numeric" }).format(data);
+  }
+
+  function cartoesNotas(notas) {
+    const u = UI[idioma];
+    return notas.map((n) => `
+      <a class="nota-cartao revelar" href="${esc(enderecoNota(n))}" data-evento="nota-${esc(t(n.slug))}" data-evento-titulo="Nota: ${esc(t(n.titulo))}">
+        <span class="nota-meta"><time datetime="${esc(n.data)}">${esc(dataNota(n.data))}</time>${n.minutos ? ` · ${u.minutos(n.minutos)}` : ""}</span>
+        <h3>${esc(t(n.titulo))}</h3>
+        ${n.resumo ? `<p>${esc(t(n.resumo))}</p>` : ""}
+        <span class="nota-ler">${u.ler} →</span>
+      </a>`).join("");
+  }
+
+  function secaoNotas() {
+    if (!temItens(D.notas)) return "";
+    const u = UI[idioma];
+    return `
+      <section class="secao" id="notas">
+        <div class="container">
+          <h2 class="titulo-secao revelar">${u.tituloNotas}</h2>
+          <p class="secao-sub revelar">${u.notasSub}</p>
+          <div class="notas-lista">${cartoesNotas(D.notas)}</div>
+        </div>
+      </section>`;
+  }
+
+  // Na página de uma nota, mostra as outras no fim
+  function preencherOutrasNotas() {
+    const alvo = $("#outrasNotas");
+    if (!alvo || !temItens(D.notas)) return;
+    const aqui = location.pathname.replace(/index\.html$/, "");
+    const outras = D.notas.filter((n) => !aqui.endsWith(`/${t(n.slug)}/`));
+    if (!outras.length) return;
+    alvo.innerHTML = `<h2 class="subrotulo">${UI[idioma].outrasNotas}</h2><div class="notas-lista">${cartoesNotas(outras)}</div>`;
+  }
+
+  /* ---------- Livro de visitas (giscus) ---------- */
+
+  const livro = () => (D.livroDeVisitas?.ligado && D.livroDeVisitas.repo ? D.livroDeVisitas : null);
+
+  function secaoLivro() {
+    if (!livro()) return "";
+    const u = UI[idioma];
+    return `
+      <section class="secao" id="livro">
+        <div class="container">
+          <h2 class="titulo-secao revelar">${u.tituloLivro}</h2>
+          <p class="secao-sub texto-rico revelar">${u.livroSub}</p>
+          <div class="livro revelar"><div class="giscus" id="giscus"><p class="repos-aviso"><span class="carregando"></span>${u.livroCarregando}</p></div></div>
+        </div>
+      </section>`;
+  }
+
+  const temaGiscus = () => (raiz.dataset.theme === "dark" || raiz.classList.contains("modo-hacker") ? "transparent_dark" : "light");
+
+  // Só carrega o giscus quando o visitante chega perto da seção
+  function prepararLivro() {
+    const L = livro();
+    const alvo = $("#giscus");
+    if (!L || !alvo) return;
+    const carregar = () => {
+      const s = document.createElement("script");
+      s.src = "https://giscus.app/client.js";
+      Object.assign(s.dataset, {
+        repo: L.repo, repoId: L.repoId, category: L.categoria, categoryId: L.categoriaId,
+        mapping: "number", term: String(L.discussao), strict: "0", reactionsEnabled: "1", emitMetadata: "0",
+        inputPosition: "top", theme: temaGiscus(), lang: idioma === "pt" ? "pt" : "en", loading: "lazy",
+      });
+      s.crossOrigin = "anonymous";
+      s.async = true;
+      alvo.innerHTML = "";
+      alvo.appendChild(s);
+    };
+    if (!("IntersectionObserver" in window)) return carregar();
+    const obs = new IntersectionObserver((entradas) => {
+      if (entradas.some((e) => e.isIntersecting)) { obs.disconnect(); carregar(); }
+    }, { rootMargin: "600px 0px" });
+    obs.observe(alvo);
+  }
+
+  function atualizarTemaLivro() {
+    document.querySelector("iframe.giscus-frame")?.contentWindow?.postMessage(
+      { giscus: { setConfig: { theme: temaGiscus() } } }, "https://giscus.app");
   }
 
   /* ---------- Atividade no GitHub (carregada ao vivo) ---------- */
@@ -764,6 +969,9 @@
     base64: "base64", hex: "hex", rot13: "rot13",
     hacker: "hacker", matrix: "hacker",
     musica: "musica", "música": "musica", music: "musica", spotify: "musica",
+    firewall: "firewall", jogo: "firewall", game: "firewall",
+    notas: "notas", notes: "notas", blog: "notas",
+    habilidades: "habilidades", skills: "habilidades",
     clear: "limpar", limpar: "limpar", cls: "limpar",
     sudo: "sudo",
     lattes: "link", github: "link", linkedin: "link", instagram: "link", orcid: "link", scholar: "link",
@@ -819,7 +1027,201 @@
   function alternarHacker() {
     const ligado = raiz.classList.toggle("modo-hacker");
     avisar(ligado ? UI[idioma].hackerLigado : UI[idioma].hackerDesligado);
+    atualizarTemaLivro();
     if (ligado) registrarEvento("modo-hacker", "Ativou o modo hacker");
+  }
+
+  function alternarTema() {
+    const novo = raiz.dataset.theme === "dark" ? "light" : "dark";
+    raiz.dataset.theme = novo;
+    memoria.gravar("tema", novo);
+    atualizarTemaLivro();
+    registrarEvento(`tema-${novo}`, `Trocou para o tema ${novo === "dark" ? "escuro" : "claro"}`);
+  }
+
+  function trocarPaleta() {
+    paleta = (paleta + 1) % PALETAS.length;
+    memoria.gravar("paleta", String(paleta));
+    aplicarCores();
+    registrarEvento("paleta", "Trocou a cor do site");
+  }
+
+  function trocarIdioma() {
+    const destino = idiomas.find((i) => i !== idioma) || idioma;
+    registrarEvento(`idioma-${destino}`, `Mudou o idioma para ${destino}`);
+    location.href = traducaoDaPagina(destino) + (naInicial ? location.hash : "");
+  }
+
+  /* ---------- Busca rápida (Ctrl K) ---------- */
+
+  let buscaItens = [];
+  let buscaVisiveis = [];
+  let buscaPos = 0;
+  let focoAntesDaBusca = null;
+
+  // Tudo o que dá para achar na busca: seções, páginas, ações e links
+  function itensDaBusca() {
+    const u = UI[idioma];
+    const g = u.grupos;
+    const itens = secoesAtuais.map((s) => ({
+      grupo: g.secoes, titulo: u[s.id] || s.id, icone: "#", href: linkSecao(s.id),
+      palavras: `${UI.pt[s.id] || ""} ${UI.en[s.id] || ""} ${s.id}`,
+    }));
+    (D.projetos || []).filter((p) => p.estudo).forEach((p) => itens.push({
+      grupo: g.paginas, titulo: `${u.acoes.codigoMirim.split(":")[0]}: ${t(p.titulo)}`, icone: "▣",
+      href: caminhoLocal(t(p.estudo)), palavras: `projeto project ${simples(p.descricao)}`,
+    }));
+    (D.notas || []).forEach((n) => itens.push({
+      grupo: g.paginas, titulo: t(n.titulo), icone: "✎", href: enderecoNota(n),
+      palavras: `nota note blog ${t(n.resumo)}`,
+    }));
+    const a = u.acoes;
+    const irPara = (id, depois) => () => {
+      if (!naInicial) { location.href = linkSecao(id); return; }
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      depois?.();
+    };
+    const email = D.contato?.emails?.[0];
+    itens.push(
+      { grupo: g.acoes, titulo: a.tema, icone: "◐", acao: alternarTema, palavras: "tema theme escuro claro dark light" },
+      { grupo: g.acoes, titulo: a.paleta, icone: "●", acao: trocarPaleta, palavras: "cor color paleta palette" },
+      ...(idiomas.length > 1 ? [{ grupo: g.acoes, titulo: a.idioma, icone: "⇄", acao: trocarIdioma, palavras: "idioma language english ingles portugues" }] : []),
+      { grupo: g.acoes, titulo: a.hacker, icone: ">_", acao: alternarHacker, palavras: "hacker matrix verde green" },
+      ...(secoesAtuais.some((s) => s.id === "terminal") ? [
+        { grupo: g.acoes, titulo: a.terminal, icone: "$", acao: irPara("terminal", () => setTimeout(() => $("#terminalEntrada")?.focus({ preventScroll: true }), 400)), palavras: "terminal console comando" },
+        { grupo: g.acoes, titulo: a.ctf, icone: "🚩", acao: irPara("terminal", () => executar("ctf")), palavras: "ctf flag desafio challenge" },
+      ] : []),
+      ...(secoesAtuais.some((s) => s.id === "firewall") ? [
+        { grupo: g.acoes, titulo: a.firewall, icone: "▶", acao: irPara("firewall", () => window.JogoFirewall?.comecar?.()), palavras: "jogo game firewall pacotes packets seguranca" },
+      ] : []),
+      ...(email ? [{ grupo: g.acoes, titulo: a.copiarEmail, icone: "@", dica: email, acao: () => copiarTexto(email), palavras: "email e-mail contato contact copiar copy" }] : []),
+    );
+    (D.links || []).forEach((l) => {
+      const url = l.url || (l.tipo === "email" && email ? `mailto:${email}` : "");
+      if (!url) return;
+      itens.push({ grupo: g.links, titulo: t(l.rotulo) || t(ROTULOS_LINK[l.tipo]) || l.tipo, icone: "↗", href: url, externo: /^https?:/.test(url), palavras: `${l.tipo} ${url}` });
+    });
+    const codigoMirim = (D.projetos || []).find((p) => p.url && p.estudo);
+    if (codigoMirim) itens.push({ grupo: g.links, titulo: t(codigoMirim.titulo), icone: "↗", href: codigoMirim.url, externo: true, palavras: "site jogos games" });
+    return itens;
+  }
+
+  async function copiarTexto(texto) {
+    try {
+      await navigator.clipboard.writeText(texto);
+      avisar(UI[idioma].emailCopiado);
+    } catch (e) {
+      location.href = `mailto:${texto}`;
+    }
+  }
+
+  function criarBusca() {
+    const u = UI[idioma];
+    const caixa = document.createElement("dialog");
+    caixa.className = "busca";
+    caixa.id = "busca";
+    caixa.setAttribute("aria-label", u.busca);
+    caixa.innerHTML = `
+      <div class="busca-caixa">
+        <div class="busca-topo">
+          ${ICONES.busca}
+          <input id="buscaEntrada" type="text" role="combobox" aria-expanded="true" aria-controls="buscaLista" aria-autocomplete="list"
+            autocomplete="off" spellcheck="false" placeholder="${esc(u.buscaPlaceholder)}" aria-label="${esc(u.busca)}">
+          <kbd>Esc</kbd>
+        </div>
+        <ul class="busca-lista" id="buscaLista" role="listbox" aria-label="${esc(u.busca)}"></ul>
+        <p class="busca-rodape" aria-hidden="true">${u.buscaDica}</p>
+      </div>`;
+    document.body.appendChild(caixa);
+    const entrada = $("#buscaEntrada");
+    entrada.addEventListener("input", () => { buscaPos = 0; desenharBusca(); });
+    entrada.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        if (!buscaVisiveis.length) return;
+        buscaPos = (buscaPos + (e.key === "ArrowDown" ? 1 : -1) + buscaVisiveis.length) % buscaVisiveis.length;
+        desenharBusca(false);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        escolherDaBusca(buscaVisiveis[buscaPos]);
+      }
+    });
+    $("#buscaLista").addEventListener("click", (e) => {
+      const li = e.target.closest(".busca-item");
+      if (li) escolherDaBusca(buscaVisiveis[Number(li.dataset.indice)]);
+    });
+    // Clicar fora da caixa fecha
+    caixa.addEventListener("click", (e) => { if (e.target === caixa) fecharBusca(); });
+    caixa.addEventListener("close", () => focoAntesDaBusca?.focus?.({ preventScroll: true }));
+    return caixa;
+  }
+
+  function filtrarBusca(consulta) {
+    const termos = normalizar(consulta).split("-").filter(Boolean);
+    if (!termos.length) return buscaItens;
+    return buscaItens
+      .map((item) => {
+        const titulo = normalizar(item.titulo);
+        const tudo = `${titulo}-${normalizar(item.palavras || "")}-${normalizar(item.grupo)}`;
+        if (!termos.every((p) => tudo.includes(p))) return null;
+        const pontos = (titulo.startsWith(termos[0]) ? 3 : 0) + (titulo.includes(termos[0]) ? 1 : 0);
+        return { item, pontos };
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.pontos - a.pontos)
+      .map((r) => r.item);
+  }
+
+  function desenharBusca(refiltrar = true) {
+    const entrada = $("#buscaEntrada");
+    const lista = $("#buscaLista");
+    if (refiltrar) buscaVisiveis = filtrarBusca(entrada.value);
+    if (!buscaVisiveis.length) {
+      lista.innerHTML = `<li class="busca-vazia">${UI[idioma].buscaVazia}</li>`;
+      entrada.removeAttribute("aria-activedescendant");
+      return;
+    }
+    let grupoAnterior = "";
+    lista.innerHTML = buscaVisiveis.map((item, i) => {
+      const cabecalho = item.grupo !== grupoAnterior ? `<li class="busca-grupo" role="presentation">${esc(item.grupo)}</li>` : "";
+      grupoAnterior = item.grupo;
+      return `${cabecalho}<li class="busca-item${i === buscaPos ? " ativo" : ""}" id="busca-${i}" role="option" aria-selected="${i === buscaPos}" data-indice="${i}">
+        <span class="busca-icone" aria-hidden="true">${esc(item.icone || "•")}</span>
+        <span class="busca-titulo">${esc(item.titulo)}</span>
+        ${item.dica ? `<span class="busca-dica">${esc(item.dica)}</span>` : ""}
+        ${item.externo ? '<span class="busca-dica" aria-hidden="true">↗</span>' : ""}
+      </li>`;
+    }).join("");
+    entrada.setAttribute("aria-activedescendant", `busca-${buscaPos}`);
+    $(`#busca-${buscaPos}`)?.scrollIntoView({ block: "nearest" });
+  }
+
+  function abrirBusca() {
+    const caixa = $("#busca") || criarBusca();
+    if (caixa.open) return;
+    focoAntesDaBusca = document.activeElement;
+    fecharMenu();
+    buscaItens = itensDaBusca();
+    buscaPos = 0;
+    $("#buscaEntrada").value = "";
+    desenharBusca();
+    caixa.showModal();
+    $("#buscaEntrada").focus();
+    registrarEvento("busca-aberta", "Abriu a busca rápida");
+  }
+
+  function fecharBusca() {
+    const caixa = $("#busca");
+    if (caixa?.open) caixa.close();
+  }
+
+  function escolherDaBusca(item) {
+    if (!item) return;
+    fecharBusca();
+    registrarEvento(`busca-${normalizar(item.titulo).slice(0, 40)}`, `Busca: ${item.titulo}`);
+    if (item.acao) { item.acao(); return; }
+    if (item.externo) { window.open(item.href, "_blank", "noopener"); return; }
+    location.href = item.href;
   }
 
   // ↑ ↑ ↓ ↓ ← → ← → B A
@@ -899,6 +1301,25 @@
         break;
       case "p4":
         imprimir(esc(T.p4));
+        break;
+      case "habilidades":
+        imprimir((D.habilidades || []).map((g) =>
+          `<span class="t-destaque">[${esc(simples(g.grupo))}]</span>\n  ` +
+          (g.itens || []).map((h) => esc(simples(h.nome)) + (h.aprendendo ? ` <span class="t-cmd">(${UI[idioma].aprendendo})</span>` : "")).join(", ")
+        ).join("\n") || esc(T.nada));
+        break;
+      case "notas":
+        imprimir((D.notas || []).map((n) =>
+          `  • ${linkHtml(enderecoNota(n), simples(n.titulo))}  <span class="t-cmd">${esc(dataNota(n.data))}</span>`
+        ).join("\n") || esc(T.nada));
+        break;
+      case "firewall":
+        if (!$("#jogoFirewall")) { imprimir(esc(T.nada)); break; }
+        imprimir(esc(T.indo(nomeSecao("firewall"))));
+        setTimeout(() => {
+          $("#firewall")?.scrollIntoView({ behavior: "smooth" });
+          window.JogoFirewall?.comecar?.();
+        }, 350);
         break;
       case "contato": {
         const emails = (D.contato?.emails || []).map((e) => `  ${"e-mail".padEnd(10)}${linkHtml(`mailto:${e}`, e)}`);
@@ -982,34 +1403,40 @@
     const u = UI[idioma];
 
     raiz.lang = idioma === "pt" ? "pt-BR" : "en";
-    document.title = [nomeCompleto(), t(D.topo?.chamada)].filter(Boolean).join(" · ");
-    $("#metaDescricao").setAttribute("content", simples(D.topo?.frase));
 
+    // As seções são montadas mesmo nas páginas internas: o menu delas aponta para as mesmas seções
     secoesAtuais = [
       { id: "agora", menu: true, html: secaoAgora() },
       { id: "sobre", menu: true, html: secaoSobre() },
       { id: "terminal", html: secaoTerminal() },
       { id: "pesquisa", menu: true, html: secaoPesquisa() },
+      { id: "firewall", html: secaoFirewall() },
       { id: "publicacoes", menu: true, html: secaoPublicacoes() },
       { id: "projetos", menu: true, html: secaoProjetos() },
+      { id: "habilidades", html: secaoHabilidades() },
       { id: "github", html: secaoGithub() },
       { id: "trajetoria", menu: true, html: secaoTrajetoria() },
+      { id: "notas", menu: true, html: secaoNotas() },
       { id: "reconhecimentos", html: secaoReconhecimentos() },
+      { id: "livro", html: secaoLivro() },
       { id: "contato", menu: true, html: secaoContato() },
     ].filter((s) => s.html);
 
     const outroIdioma = idiomas.find((i) => i !== idioma);
     // Os mesmos botões aparecem na barra e, em telas pequenas, dentro do menu
     const acoes = `
+      <button class="botao-icone" data-acao="busca" type="button" title="${u.buscaAtalho}" aria-label="${u.busca}" aria-haspopup="dialog">${ICONES.busca}</button>
       <button class="botao-icone botao-paleta" data-acao="paleta" type="button" title="${u.paleta}" aria-label="${u.paleta}"><span></span></button>
-      ${outroIdioma ? `<button class="botao-icone" data-acao="idioma" type="button" title="${u.idioma}" aria-label="${u.idioma}">${outroIdioma.toUpperCase()}</button>` : ""}
+      ${outroIdioma ? `<button class="botao-icone" data-acao="idioma" type="button" title="${u.idioma}" aria-label="${u.idioma}" lang="${outroIdioma === "pt" ? "pt-BR" : outroIdioma}">${outroIdioma.toUpperCase()}</button>` : ""}
       <button class="botao-icone" data-acao="tema" type="button" title="${u.tema}" aria-label="${u.tema}">${ICONES.tema}</button>`;
 
     $("#nav").innerHTML = `
+      <a class="pular" href="#conteudo">${u.pular}</a>
       <div class="container nav-dentro">
-        <a class="nav-nome" href="#inicio">${esc(nomeCompleto())}</a>
-        <nav class="nav-links" id="navLinks" aria-label="Seções">
-          ${secoesAtuais.filter((s) => s.menu).map((s) => `<a href="#${s.id}" data-secao="${s.id}">${u[s.id]}</a>`).join("")}
+        <a class="nav-nome" href="${naInicial ? "#inicio" : esc(enderecoDoIdioma(idioma))}">${esc(nomeCompleto())}</a>
+        <nav class="nav-links" id="navLinks" aria-label="${idioma === "pt" ? "Seções" : "Sections"}">
+          ${secoesAtuais.filter((s) => s.menu).map((s) =>
+            `<a href="${esc(linkSecao(s.id))}" data-secao="${s.id}"${!naInicial && s.id === "notas" && pagina === "nota" ? ' class="ativo" aria-current="page"' : ""}>${u[s.id]}</a>`).join("")}
           <div class="acoes-no-menu">${acoes}</div>
         </nav>
         <div class="nav-acoes">
@@ -1018,18 +1445,28 @@
         </div>
       </div>`;
 
-    $("#conteudo").innerHTML = topo() + secoesAtuais.map((s) => s.html).join("");
+    if (naInicial) {
+      document.title = [nomeCompleto(), t(D.topo?.chamada)].filter(Boolean).join(" · ");
+      $("#metaDescricao")?.setAttribute("content", simples(D.topo?.frase));
+      $("#conteudo").innerHTML = topo() + secoesAtuais.map((s) => s.html).join("");
+      imprimir(u.t.boasVindas);
+    } else {
+      preencherOutrasNotas();
+    }
 
     $("#rodape").innerHTML = `
       <div class="container">
         <span>© ${new Date().getFullYear()} ${esc(D.nomeCompleto || nomeCompleto())}</span>
-        <a href="#inicio">${u.voltarTopo} ↑</a>
+        <a href="${naInicial ? "#inicio" : "#"}">${u.voltarTopo} ↑</a>
       </div>`;
 
-    imprimir(u.t.boasVindas);
     fecharMenu();
     observarRevelacoes();
     observarSecaoAtiva();
+    if (naInicial) {
+      prepararLivro();
+      window.JogoFirewall?.montar($("#jogoFirewall"), { idioma, registrarEvento });
+    }
     jaRenderizou = true;
   }
 
@@ -1055,14 +1492,16 @@
 
   let obsSecao;
   function observarSecaoAtiva() {
-    if (!("IntersectionObserver" in window)) return;
+    if (!naInicial || !("IntersectionObserver" in window)) return;
     obsSecao?.disconnect();
     const links = new Map([...document.querySelectorAll(".nav-links a")].map((a) => [a.dataset.secao, a]));
     obsSecao = new IntersectionObserver((entradas) => {
       for (const e of entradas) {
         if (!e.isIntersecting) continue;
-        links.forEach((a) => a.classList.remove("ativo"));
-        links.get(e.target.id)?.classList.add("ativo");
+        links.forEach((a) => { a.classList.remove("ativo"); a.removeAttribute("aria-current"); });
+        const ativo = links.get(e.target.id);
+        ativo?.classList.add("ativo");
+        ativo?.setAttribute("aria-current", "true");
       }
     }, { rootMargin: "-45% 0px -50% 0px" });
     // Seções sem link (topo, terminal...) também são observadas para limpar o destaque
@@ -1103,19 +1542,13 @@
     if (alvo.id === "terminalCorpo") {
       if (!window.getSelection()?.toString()) $("#terminalEntrada")?.focus();
     } else if (alvo.dataset.acao === "tema") {
-      const novo = raiz.dataset.theme === "dark" ? "light" : "dark";
-      raiz.dataset.theme = novo;
-      memoria.gravar("tema", novo);
-      registrarEvento(`tema-${novo}`, `Trocou para o tema ${novo === "dark" ? "escuro" : "claro"}`);
+      alternarTema();
     } else if (alvo.dataset.acao === "paleta") {
-      paleta = (paleta + 1) % PALETAS.length;
-      memoria.gravar("paleta", String(paleta));
-      aplicarCores();
-      registrarEvento("paleta", "Trocou a cor do site");
+      trocarPaleta();
     } else if (alvo.dataset.acao === "idioma") {
-      const destino = idiomas.find((i) => i !== idioma) || idioma;
-      registrarEvento(`idioma-${destino}`, `Mudou o idioma para ${destino}`);
-      location.href = enderecoDoIdioma(destino) + location.hash;
+      trocarIdioma();
+    } else if (alvo.dataset.acao === "busca") {
+      abrirBusca();
     } else if (alvo.id === "btnMenu") {
       const aberto = $("#nav").classList.toggle("menu-aberto");
       alvo.setAttribute("aria-expanded", String(aberto));
@@ -1147,8 +1580,16 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") fecharMenu();
 
+    const digitando = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
+    // Busca rápida: Ctrl+K (ou ⌘K) em qualquer lugar, ou "/" fora de campos de texto
+    if ((e.key.toLowerCase() === "k" && (e.ctrlKey || e.metaKey) && !e.altKey) || (e.key === "/" && !digitando)) {
+      e.preventDefault();
+      if ($("#busca")?.open) fecharBusca(); else abrirBusca();
+      return;
+    }
+
     // Código secreto, ignorado enquanto a pessoa digita em algum campo
-    if (!/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) {
+    if (!digitando) {
       const tecla = e.key.length === 1 ? e.key.toLowerCase() : e.key;
       posKonami = tecla === KONAMI[posKonami] ? posKonami + 1 : (tecla === KONAMI[0] ? 1 : 0);
       if (posKonami === KONAMI.length) {
@@ -1170,12 +1611,12 @@
   aplicarCores();
   render();
   atualizarNav();
-  carregarAtividade();
+  if (naInicial) carregarAtividade();
   ativarContador();
 
   // Recado para quem abre o console do navegador
   console.log("%cOi, dev! 👋", "font: 800 22px sans-serif; color: #9d9bff");
   console.log(idioma === "en"
-    ? "Curious? Type ctf in the site's terminal. And psst: ↑ ↑ ↓ ↓ ← → ← → B A"
-    : "Curioso? Digite ctf no terminal do site. E psiu: ↑ ↑ ↓ ↓ ← → ← → B A");
+    ? "Curious? Type ctf in the site's terminal, or press Ctrl+K. And psst: ↑ ↑ ↓ ↓ ← → ← → B A"
+    : "Curioso? Digite ctf no terminal do site, ou aperte Ctrl+K. E psiu: ↑ ↑ ↓ ↓ ← → ← → B A");
 })();

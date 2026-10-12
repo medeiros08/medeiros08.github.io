@@ -1,0 +1,104 @@
+<!doctype html>
+<!-- Note (English). Menu, footer and "More notes" come from js/app.js; the text lives here. The list of notes is in js/dados.js. -->
+<html lang="en" data-theme="dark" data-idioma="en" data-raiz="../../../" data-pagina="nota">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P4 explained with a post office · Arthur Medeiros</title>
+  <meta name="description" content="What the P4 language is, without the jargon: packets, mail carriers and new rules for network devices. And how it can help with security.">
+  <meta name="author" content="Arthur Medeiros">
+  <meta name="theme-color" content="#0f0f13">
+  <link rel="canonical" href="https://medeiros08.github.io/en/notes/p4-explained/">
+  <link rel="alternate" hreflang="pt-BR" href="https://medeiros08.github.io/notas/p4-explicado/">
+  <link rel="alternate" hreflang="en" href="https://medeiros08.github.io/en/notes/p4-explained/">
+  <link rel="alternate" hreflang="x-default" href="https://medeiros08.github.io/notas/p4-explicado/">
+  <link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../img/icone-180.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://medeiros08.github.io/en/notes/p4-explained/">
+  <meta property="og:title" content="P4 explained with a post office">
+  <meta property="og:description" content="What the P4 language is, without the jargon: packets, mail carriers and new rules for network devices.">
+  <meta property="og:image" content="https://medeiros08.github.io/img/compartilhar-en.jpg?v=1">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="627">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:published_time" content="2026-10-12">
+  <meta property="article:author" content="https://medeiros08.github.io/en/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "P4 explained with a post office",
+    "description": "What the P4 language is, without the jargon: packets, mail carriers and new rules for network devices.",
+    "datePublished": "2026-10-12",
+    "inLanguage": "en",
+    "url": "https://medeiros08.github.io/en/notes/p4-explained/",
+    "author": { "@type": "Person", "name": "Arthur Medeiros", "url": "https://medeiros08.github.io/en/" }
+  }
+  </script>
+
+  <link rel="preload" href="../../../fontes/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../css/estilo.css">
+  <script>
+    document.documentElement.classList.add("js");
+    try {
+      var tema = localStorage.getItem("tema");
+      if (tema) document.documentElement.dataset.theme = tema;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="nav" id="nav"></header>
+
+  <main id="conteudo" class="pagina">
+    <article class="container nota">
+      <a class="voltar" href="../../#notas">← All notes</a>
+      <header class="nota-topo">
+        <span class="nota-meta"><time datetime="2026-10-12">October 12, 2026</time> · 4 min read</span>
+        <h1 class="nota-titulo">P4 explained with a post office</h1>
+        <p class="nota-resumo">The language I research, without the jargon: packets, mail carriers and new rules for network devices.</p>
+      </header>
+
+      <div class="nota-corpo">
+        <p>When you open a website, send a message or watch a video, nothing travels across the internet in one piece. Everything is chopped into small pieces called <strong>packets</strong>, and each packet makes its own way to the destination, passing through several devices along the route, such as routers and switches.</p>
+
+        <h2>Every packet is a letter</h2>
+        <p>Think of each packet as a letter. It has an envelope, with the address of whoever sent it and whoever will receive it, and it has the contents, which are a piece of the message. On a network, that envelope is called the <strong>header</strong>.</p>
+        <p>The network devices are the post offices along the way. In each one, a mail carrier looks at the envelope, checks a table and decides where the letter goes next. And they do it really fast: a network device checks millions of packets per second.</p>
+
+        <h2>The factory-trained mail carrier</h2>
+        <p>In most devices, that mail carrier comes trained from the factory. It knows how to read a few kinds of envelopes and follow a few rules, and that's it. If you want it to check something new, you usually have to wait for the manufacturer to release a new device.</p>
+
+        <h2>What P4 changes</h2>
+        <p><strong>P4</strong> is a programming language for writing that mail carrier's job. With it, you tell the device:</p>
+        <ol>
+          <li><strong>how to read the envelope</strong>: which fields exist and where each one is;</li>
+          <li><strong>which tables to check</strong>: for example, a list of blocked addresses;</li>
+          <li><strong>what to do with each letter</strong>: let it through, change its route, make a note or drop it.</li>
+        </ol>
+        <p>It's like being able to train the mail carrier with new rules without replacing the whole post office. That's why these are called <strong>programmable networks</strong>.</p>
+
+        <h2>What about security?</h2>
+        <p>Since the mail carrier sees every letter that passes by, it can help protect the network right at the door: stop addresses known for attacks, notice a flood of packets trying to take a service down, or set aside whatever looks suspicious.</p>
+        <p>But it has to be fast, so it can't run a full investigation of every letter on the spot. The heavy lifting is done by systems built to hunt for attacks, called <strong>intrusion detection systems</strong>.</p>
+        <p>That's where my research at AI Horizon Labs comes in: I study how to use P4 so the network itself does a first sorting and sets aside the packets that deserve a closer look, without leaving out anything that should be analyzed.</p>
+        <blockquote>In one sentence: P4 lets you program what the network does with each packet, and I research how to use that to make communication more secure.</blockquote>
+
+        <h2>Want to feel it yourself?</h2>
+        <p class="destaque-caixa">On the home page there's a one-minute game, <a href="../../#firewall">Be the firewall</a>: you check the packets arriving at a home and decide who gets in. It's a very simplified version of what a device programmed with P4 does.</p>
+      </div>
+
+      <p class="nota-assinatura">Arthur Medeiros, Computer Science student at UNIPAMPA. Questions or suggestions? <a href="../../#contato">Get in touch</a>.</p>
+      <aside id="outrasNotas"></aside>
+    </article>
+  </main>
+
+  <footer class="rodape" id="rodape"></footer>
+
+  <script src="../../../js/dados.js"></script>
+  <script src="../../../js/app.js"></script>
+</body>
+</html>

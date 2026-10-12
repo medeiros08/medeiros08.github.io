@@ -14,6 +14,25 @@ Todo o conteúdo fica em **`js/dados.js`**. Os outros arquivos não precisam ser
 - A versão em inglês fica em `en/index.html` e usa os mesmos dados (os textos `{ pt, en }`).
 - `trilhaSonora` (link do Spotify) e `formulario` (código do Formspree) ficam escondidos enquanto estiverem vazios.
 - O site abre no tema escuro. Para abrir no claro, troque `data-theme="dark"` por `data-theme="light"` na primeira linha do `index.html`.
+- `habilidades`: grupos de linguagens e ferramentas. `onde` diz onde você usou cada uma, e `aprendendo: true` marca o que está aprendendo.
+- `livroDeVisitas`: os recados ficam nas Discussions do repositório (giscus). Desligue com `ligado: false`.
+- O jogo "Seja o firewall" fica em `js/firewall.js`. Para esconder a seção, ponha `firewall: false` em `dados.js`.
+
+## Páginas internas
+
+- **Estudo de caso** do Código Mirim: `projetos/codigo-mirim/` (inglês em `en/projects/codigo-mirim/`). No cartão do projeto, o campo `estudo` aponta para essa página.
+- **Notas**: cada nota tem uma pasta em `notas/<slug>/` (inglês em `en/notes/<slug>/`). Para criar uma, copie a pasta de uma nota, troque o texto e os endereços do `<head>`, e acrescente a nota na lista `notas` do `dados.js`. Depois, inclua os dois endereços no `sitemap.xml`.
+- Essas páginas têm o texto no próprio HTML (melhor para o Google). O menu, o rodapé e os botões vêm do `js/app.js`.
+
+## Fontes e imagens
+
+- As fontes (Bricolage Grotesque e JetBrains Mono, licença OFL) ficam em `fontes/`, sem depender do Google Fonts.
+- A foto tem versões mais leves em `img/foto.avif` e `img/foto.webp`. Se trocar a foto sem gerar essas versões, ponha `fotoLeve: false` em `dados.js`.
+
+## Atalhos
+
+- **Ctrl K** (ou **/**) abre a busca rápida: seções, notas, ações e links.
+- No terminal, `firewall`, `notas` e `habilidades` também funcionam.
 
 ## Como ver no computador
 
