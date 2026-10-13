@@ -44,6 +44,7 @@ window.DADOS = {
     { tipo: "linkedin", url: "https://www.linkedin.com/in/arthur-medeiros-34a344356/" },
     { tipo: "instagram", url: "https://www.instagram.com/medeiros__08/" },
     { tipo: "email" }, // usa o primeiro e-mail de "contato"
+    { tipo: "orcid", url: "https://orcid.org/0009-0000-8991-4068" },
     { tipo: "lattes", url: "http://lattes.cnpq.br/3699255553076395" },
   ],
 
@@ -221,7 +222,7 @@ window.DADOS = {
       itens: [
         { nome: { pt: "Git e GitHub", en: "Git & GitHub" }, onde: { pt: "todos os projetos", en: "every project" } },
         { nome: "LaTeX", onde: { pt: "escrita de artigos", en: "writing papers" } },
-        { nome: { pt: "IA generativa (Gemini)", en: "Generative AI (Gemini)" }, onde: { pt: "Oficina de Prompts", en: "Prompt Workshop" } },
+        { nome: { pt: "IA generativa (Claude e Gemini)", en: "Generative AI (Claude & Gemini)" }, onde: { pt: "desenvolvimento e Oficina de Prompts", en: "development and Prompt Workshop" } },
         { nome: "GitHub Pages", onde: { pt: "publicação dos sites", en: "publishing websites" } },
       ],
     },
