@@ -5,6 +5,8 @@
   const D = window.DADOS;
   const raiz = document.documentElement;
   const $ = (seletor) => document.querySelector(seletor);
+  // Rolagem por script não obedece ao prefers-reduced-motion do CSS, então pergunta antes
+  const rolagem = () => (matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth");
 
   if (!D) {
     $("#conteudo").innerHTML = '<p style="padding:120px 24px">Não encontrei os dados em js/dados.js.</p>';
@@ -31,6 +33,7 @@
       chat: ["Oi! 👋", "Respondo por e-mail ou pelas redes aqui embaixo."],
       tema: "Alternar tema claro/escuro", idioma: "Read in English", menu: "Menu",
       paleta: "Trocar a cor do site", voltarTopo: "Voltar ao topo",
+      temasTitulo: "Cores e temas", temasCores: "Cores do site", temasTemas: "Temas (cores e fontes)", fechar: "Fechar",
       dica: "Experimente:", placeholder: "digite help",
       atalhos: ["help", "whoami", "agora", "projetos", "p4", "contato", "ctf"],
       hackerLigado: "MODO HACKER ATIVADO", hackerDesligado: "modo hacker desligado",
@@ -56,7 +59,7 @@
       buscaDica: "<kbd>↑</kbd> <kbd>↓</kbd> navegar · <kbd>Enter</kbd> abrir · <kbd>Esc</kbd> fechar",
       grupos: { secoes: "Seções", paginas: "Páginas e notas", acoes: "Ações", links: "Links" },
       acoes: {
-        tema: "Alternar tema claro/escuro", paleta: "Trocar a cor do site", idioma: "Ler em inglês",
+        tema: "Alternar tema claro/escuro", paleta: "Cores e temas do site", idioma: "Ler em inglês",
         hacker: "Modo hacker", terminal: "Abrir o terminal", firewall: "Jogar “Seja o firewall”",
         ctf: "Desafio CTF", copiarEmail: "Copiar meu e-mail", codigoMirim: "Estudo de caso: Código Mirim",
       },
@@ -116,6 +119,7 @@
       chat: ["Hi! 👋", "I reply by e-mail or on the networks below."],
       tema: "Toggle light/dark theme", idioma: "Ler em português", menu: "Menu",
       paleta: "Change the site color", voltarTopo: "Back to top",
+      temasTitulo: "Colors and themes", temasCores: "Site colors", temasTemas: "Themes (colors and fonts)", fechar: "Close",
       dica: "Try:", placeholder: "type help",
       atalhos: ["help", "whoami", "now", "projects", "p4", "contact", "ctf"],
       hackerLigado: "HACKER MODE ON", hackerDesligado: "hacker mode off",
@@ -141,7 +145,7 @@
       buscaDica: "<kbd>↑</kbd> <kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close",
       grupos: { secoes: "Sections", paginas: "Pages and notes", acoes: "Actions", links: "Links" },
       acoes: {
-        tema: "Toggle light/dark theme", paleta: "Change the site color", idioma: "Ler em português",
+        tema: "Toggle light/dark theme", paleta: "Site colors and themes", idioma: "Ler em português",
         hacker: "Hacker mode", terminal: "Open the terminal", firewall: "Play “Be the firewall”",
         ctf: "CTF challenge", copiarEmail: "Copy my e-mail", codigoMirim: "Case study: Código Mirim",
       },
@@ -227,11 +231,123 @@
   // Cores que o visitante pode escolher no botão de paleta. A primeira vem de dados.js.
   // As do tema claro têm contraste de pelo menos 4,5:1 com o fundo, para textos pequenos.
   const PALETAS = [
-    { claro: D.cores?.claro || "#4338ff", escuro: D.cores?.escuro || "#9d9bff" },
-    { claro: "#c2381f", escuro: "#ff8a70" },
-    { claro: "#0b7a53", escuro: "#4ade9b" },
-    { claro: "#9333ea", escuro: "#c99bff" },
+    { id: "cor-0", nome: { pt: "Lilás", en: "Lilac" }, claro: D.cores?.claro || "#4338ff", escuro: D.cores?.escuro || "#9d9bff" },
+    { id: "cor-1", nome: { pt: "Coral", en: "Coral" }, claro: "#c2381f", escuro: "#ff8a70" },
+    { id: "cor-2", nome: { pt: "Verde", en: "Green" }, claro: "#0b7a53", escuro: "#4ade9b" },
+    { id: "cor-3", nome: { pt: "Roxo", en: "Purple" }, claro: "#9333ea", escuro: "#c99bff" },
   ];
+
+  // Fontes dos temas do theme-factory. Os nomes originais (DejaVu, FreeSans) vêm primeiro;
+  // quem não tem essas fontes vê a equivalente que já vem no Windows e no Mac.
+  const FONTES = {
+    dejavu: '"DejaVu Sans", "Bitstream Vera Sans", Verdana, Geneva, sans-serif',
+    dejavuSerif: '"DejaVu Serif", "Bitstream Vera Serif", Georgia, serif',
+    freeSans: 'FreeSans, "Helvetica Neue", Helvetica, Arial, sans-serif',
+    freeSerif: 'FreeSerif, "Times New Roman", Times, serif',
+  };
+
+  // Formas dos temas: cantos, bordas, sombra dura, inclinação e fundo.
+  // "contorno" é a força da borda: 1 usa a cor do texto, menos que isso deixa a borda mais clara.
+  const GRADE = "linear-gradient(var(--grade) 1px, transparent 1px), linear-gradient(90deg, var(--grade) 1px, transparent 1px)";
+  const FORMAS = {
+    // A forma original do site: bordas grossas, sombra dura, cartões inclinados, fundo de pontinhos
+    brutal: {},
+    // Cantos bem redondos, bordas finas e claras, sem sombra e sem inclinação
+    suave: { curva: "1.2px", raio: "22px", borda: "1.5px", "borda-fina": "1px", desloc: "0px", giro: "0deg", padrao: "none", contorno: 0.22 },
+    // Cantos retos, sombra dura, nada inclinado, fundo quadriculado como um diagrama de rede
+    reto: { curva: "0px", raio: "0px", pilula: "0px", desloc: "1px", giro: "0deg", padrao: GRADE, "padrao-tam": "36px 36px" },
+    // Linhas finas, cantos pequenos, sem sombra, sem fundo: o mais discreto
+    fino: { curva: ".5px", raio: "8px", pilula: "8px", borda: "1px", "borda-fina": "1px", desloc: "0px", giro: "0deg", padrao: "none", contorno: 0.35 },
+  };
+
+  // Temas completos (cores, fontes e forma), do theme-factory. Cada um tem versão clara e escura.
+  // Todas as combinações de texto têm contraste de pelo menos 4,5:1.
+  // "destaques" substituem o lima, o amarelo e o coral das etiquetas (sempre com texto escuro).
+  // "capas" são as cores das capas dos projetos, na ordem dos cartões.
+  const TEMAS = [
+    {
+      id: "oceano", nome: { pt: "Oceano profundo", en: "Ocean Depths" }, titulo: FONTES.dejavu, corpo: FONTES.dejavu,
+      claro: { fundo: "#f1faee", cartao: "#ffffff", texto: "#1a2332", suave: "#3d4f63", acento: "#1f6f6f" },
+      escuro: { fundo: "#1a2332", cartao: "#223044", texto: "#f1faee", suave: "#a8bfc4", acento: "#a8dadc" },
+      destaques: ["#a8dadc", "#d3eeee", "#5fb3b3"],
+      forma: FORMAS.suave,
+      capas: ["#2d8b8b", "#1a2332", "#5fb3b3", "#3d6f8a"],
+    },
+    {
+      id: "sunset", nome: { pt: "Pôr do sol", en: "Sunset Boulevard" }, titulo: FONTES.dejavuSerif, corpo: FONTES.dejavu,
+      claro: { fundo: "#fbf3e4", cartao: "#fffaf1", texto: "#264653", suave: "#4f6670", acento: "#b0452a" },
+      escuro: { fundo: "#1d363f", cartao: "#264653", texto: "#fbf3e4", suave: "#c9c2b2", acento: "#f4a261" },
+      destaques: ["#e9c46a", "#f4a261", "#e76f51"],
+      forma: FORMAS.brutal,
+      capas: ["#e76f51", "#264653", "#f4a261", "#2a9d8f"],
+    },
+    {
+      id: "floresta", nome: { pt: "Floresta", en: "Forest Canopy" }, titulo: FONTES.freeSerif, corpo: FONTES.freeSans,
+      claro: { fundo: "#faf9f6", cartao: "#ffffff", texto: "#2d4a2b", suave: "#5b6152", acento: "#3f6b3c" },
+      escuro: { fundo: "#1b2e1a", cartao: "#2d4a2b", texto: "#faf9f6", suave: "#c3c8b3", acento: "#c3cc9b" },
+      destaques: ["#c3cc9b", "#e6e2c8", "#a4ac86"],
+      forma: FORMAS.fino,
+      capas: ["#2d4a2b", "#7d8471", "#5b7a3f", "#a4ac86"],
+    },
+    {
+      id: "minimal", nome: { pt: "Minimalista", en: "Modern Minimalist" }, titulo: FONTES.dejavu, corpo: FONTES.dejavu,
+      claro: { fundo: "#f4f4f4", cartao: "#ffffff", texto: "#36454f", suave: "#5a6672", acento: "#36454f" },
+      escuro: { fundo: "#22292f", cartao: "#36454f", texto: "#ffffff", suave: "#c4ccd3", acento: "#d3d3d3" },
+      destaques: ["#d3d3d3", "#ececec", "#a9b4bf"],
+      forma: FORMAS.fino,
+      capas: ["#36454f", "#708090", "#4f5d68", "#a9b4bf"],
+    },
+    {
+      id: "dourada", nome: { pt: "Hora dourada", en: "Golden Hour" }, titulo: FONTES.freeSans, corpo: FONTES.freeSans,
+      claro: { fundo: "#f6efe3", cartao: "#fffaf2", texto: "#4a403a", suave: "#6b5d52", acento: "#a0464c" },
+      escuro: { fundo: "#2e2824", cartao: "#4a403a", texto: "#f6efe3", suave: "#d4c3ad", acento: "#f4a900" },
+      destaques: ["#f4a900", "#d4b896", "#e0959a"],
+      forma: FORMAS.brutal,
+      capas: ["#f4a900", "#c1666b", "#4a403a", "#b8935f"],
+    },
+    {
+      id: "artico", nome: { pt: "Ártico", en: "Arctic Frost" }, titulo: FONTES.dejavu, corpo: FONTES.dejavu,
+      claro: { fundo: "#eef4fb", cartao: "#fafafa", texto: "#1f3350", suave: "#4a5a70", acento: "#3d5f91" },
+      escuro: { fundo: "#16233a", cartao: "#1f3350", texto: "#fafafa", suave: "#b9c6d8", acento: "#a9c4ea" },
+      destaques: ["#d4e4f7", "#c0c0c0", "#9fbbe0"],
+      forma: FORMAS.suave,
+      capas: ["#4a6fa5", "#1f3350", "#7f9cc7", "#8a8a8a"],
+    },
+    {
+      id: "deserto", nome: { pt: "Rosa do deserto", en: "Desert Rose" }, titulo: FONTES.freeSans, corpo: FONTES.freeSans,
+      claro: { fundo: "#f4ebe3", cartao: "#fbf5ef", texto: "#5d2e46", suave: "#7a5563", acento: "#8e4f3f" },
+      escuro: { fundo: "#3a1c2c", cartao: "#5d2e46", texto: "#f4ebe3", suave: "#dcc3c0", acento: "#d4a5a5" },
+      destaques: ["#d4a5a5", "#e8d5c4", "#c99383"],
+      forma: FORMAS.suave,
+      capas: ["#5d2e46", "#b87d6d", "#d4a5a5", "#8e4f3f"],
+    },
+    {
+      id: "tech", nome: { pt: "Tecnologia", en: "Tech Innovation" }, titulo: FONTES.dejavu, corpo: FONTES.dejavu,
+      claro: { fundo: "#f2f5fa", cartao: "#ffffff", texto: "#1e1e1e", suave: "#4d5560", acento: "#0057d9" },
+      escuro: { fundo: "#1e1e1e", cartao: "#282828", texto: "#ffffff", suave: "#b5bcc6", acento: "#00ffff" },
+      destaques: ["#00ffff", "#9cc2ff", "#4d94ff"],
+      forma: FORMAS.reto,
+      capas: ["#0066ff", "#1e1e1e", "#00b3b3", "#3d7eff"],
+    },
+    {
+      id: "jardim", nome: { pt: "Jardim botânico", en: "Botanical Garden" }, titulo: FONTES.dejavuSerif, corpo: FONTES.dejavu,
+      claro: { fundo: "#f5f3ed", cartao: "#fffdf8", texto: "#233b2a", suave: "#4f5e52", acento: "#3f6b4c" },
+      escuro: { fundo: "#1f3326", cartao: "#2a4533", texto: "#f5f3ed", suave: "#c7cbbd", acento: "#f9a620" },
+      destaques: ["#f9a620", "#9cc5a8", "#e08a6f"],
+      forma: FORMAS.suave,
+      capas: ["#4a7c59", "#f9a620", "#b7472a", "#6a9a77"],
+    },
+    {
+      id: "galaxia", nome: { pt: "Galáxia", en: "Midnight Galaxy" }, titulo: FONTES.freeSans, corpo: FONTES.freeSans,
+      claro: { fundo: "#efeefb", cartao: "#fbfbff", texto: "#2b1e3e", suave: "#554a6b", acento: "#4a4e8f" },
+      escuro: { fundo: "#2b1e3e", cartao: "#362a4d", texto: "#e6e6fa", suave: "#bdb3d2", acento: "#b9a6db" },
+      destaques: ["#a490c2", "#e6e6fa", "#8f93d6"],
+      forma: FORMAS.brutal,
+      capas: ["#4a4e8f", "#2b1e3e", "#a490c2", "#6b5a9e"],
+    },
+  ];
+
+  const ESTILOS = [...PALETAS, ...TEMAS];
 
   /* ---------- Utilitários ---------- */
 
@@ -262,7 +378,10 @@
   // Link para uma seção da página inicial, de qualquer página
   const linkSecao = (id) => (naInicial ? `#${id}` : `${enderecoDoIdioma(idioma)}#${id}`);
 
-  let paleta = Number(memoria.ler("paleta")) % PALETAS.length || 0;
+  // Guardado como id ("cor-2", "oceano"); versões antigas guardavam só o número da cor
+  const estiloGuardado = String(memoria.ler("paleta") ?? "");
+  const acharEstilo = (id) => ESTILOS.findIndex((e) => e.id === id || e.id === `cor-${id}`);
+  let paleta = [estiloGuardado, D.estilo, "cor-0"].map(acharEstilo).find((i) => i >= 0);
   let pubsAbertas = false;
   let jaRenderizou = false;
   let secoesAtuais = [];
@@ -441,13 +560,13 @@
       <section class="secao" id="terminal">
         <div class="container">
           <h2 class="titulo-secao revelar">${u.tituloTerminal}</h2>
-          <div class="terminal revelar">
+          <div class="terminal revelar" translate="no">
             <div class="terminal-barra" aria-hidden="true"><i></i><i></i><i></i><span>${esc(prompt())}</span></div>
             <div class="terminal-corpo" id="terminalCorpo">
               <div id="terminalSaida" aria-live="polite"></div>
               <form class="terminal-linha" id="terminalForm" autocomplete="off">
                 <label class="terminal-prompt" for="terminalEntrada">${esc(prompt())}$</label>
-                <input id="terminalEntrada" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${u.placeholder}">
+                <input id="terminalEntrada" type="text" aria-label="${idioma === "pt" ? "Comando do terminal" : "Terminal command"}" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${u.placeholder}">
               </form>
             </div>
           </div>
@@ -505,7 +624,7 @@
 
   function rotuloAlternarPubs(total) {
     const u = UI[idioma];
-    return pubsAbertas ? `${u.verMenos} −` : `${u.verTodas(total)} +`;
+    return pubsAbertas ? `${u.verMenos} <span aria-hidden="true">−</span>` : `${u.verTodas(total)} <span aria-hidden="true">+</span>`;
   }
 
   function secaoPublicacoes() {
@@ -900,11 +1019,11 @@
         <input class="pote-de-mel" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="chat-campos">
           <label><span class="so-leitor">${u.formNome}</span><input name="nome" required maxlength="100" autocomplete="name" placeholder="${u.formNome}"></label>
-          <label><span class="so-leitor">${u.formEmail}</span><input name="email" type="email" required maxlength="200" autocomplete="email" placeholder="${u.formEmail}"></label>
+          <label><span class="so-leitor">${u.formEmail}</span><input name="email" type="email" spellcheck="false" required maxlength="200" autocomplete="email" placeholder="${u.formEmail}"></label>
         </div>
         <div class="chat-escrever">
           <label><span class="so-leitor">${u.formMensagem}</span><textarea name="mensagem" required rows="2" maxlength="3000" placeholder="${u.formMensagem}"></textarea></label>
-          <button class="botao" type="submit">${u.formEnviar} ➤</button>
+          <button class="botao" type="submit">${u.formEnviar} <span aria-hidden="true">➤</span></button>
         </div>
         <div class="chat-respostas" aria-live="polite"></div>
       </form>`;
@@ -933,7 +1052,7 @@
       respostas.insertAdjacentHTML("beforeend", `<p class="bolha bolha-erro">${esc(u.formErro(D.contato?.emails?.[0] || ""))}</p>`);
     } finally {
       botao.disabled = false;
-      botao.textContent = `${u.formEnviar} ➤`;
+      botao.innerHTML = `${esc(u.formEnviar)} <span aria-hidden="true">➤</span>`;
     }
   }
 
@@ -1023,10 +1142,21 @@
     document.querySelector(".aviso-flutuante")?.remove();
     const aviso = document.createElement("div");
     aviso.className = "aviso-flutuante";
-    aviso.setAttribute("role", "status");
+    aviso.setAttribute("aria-hidden", "true");
     aviso.textContent = texto;
     document.body.appendChild(aviso);
     setTimeout(() => aviso.remove(), 2600);
+    // Região viva fixa: criada vazia uma vez e só depois preenchida, para o leitor de tela anunciar
+    let vivo = $("#avisoVivo");
+    if (!vivo) {
+      vivo = document.createElement("div");
+      vivo.id = "avisoVivo";
+      vivo.className = "so-leitor";
+      vivo.setAttribute("role", "status");
+      document.body.appendChild(vivo);
+    }
+    vivo.textContent = "";
+    setTimeout(() => { vivo.textContent = texto; }, 50);
   }
 
   function alternarHacker() {
@@ -1040,15 +1170,67 @@
     const novo = raiz.dataset.theme === "dark" ? "light" : "dark";
     raiz.dataset.theme = novo;
     memoria.gravar("tema", novo);
+    $('[data-acao="tema"]')?.setAttribute("aria-pressed", String(novo === "dark"));
+    atualizarCorDoNavegador();
     atualizarTemaLivro();
     registrarEvento(`tema-${novo}`, `Trocou para o tema ${novo === "dark" ? "escuro" : "claro"}`);
   }
 
-  function trocarPaleta() {
-    paleta = (paleta + 1) % PALETAS.length;
-    memoria.gravar("paleta", String(paleta));
+  // A barra do navegador no celular acompanha o fundo do tema atual
+  function atualizarCorDoNavegador() {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    const fundo = getComputedStyle(raiz).getPropertyValue("--fundo").trim();
+    if (meta && fundo) meta.setAttribute("content", fundo);
+  }
+
+  function escolherEstilo(indice) {
+    paleta = (indice + ESTILOS.length) % ESTILOS.length;
+    memoria.gravar("paleta", ESTILOS[paleta].id);
     aplicarCores();
-    registrarEvento("paleta", "Trocou a cor do site");
+    atualizarCorDoNavegador();
+    registrarEvento(`estilo-${ESTILOS[paleta].id}`, `Trocou o visual para ${t(ESTILOS[paleta].nome)}`);
+  }
+
+  // Pela busca rápida: passa para o próximo
+  function trocarPaleta() { escolherEstilo(paleta + 1); }
+
+  // Menu de cores e temas, aberto pelo botão de paleta
+  let abridorTemas = null;
+  function fecharTemas(devolverFoco = true) {
+    const menu = $("#temas");
+    if (!menu) return;
+    menu.remove();
+    document.querySelectorAll('[data-acao="paleta"]').forEach((b) => b.setAttribute("aria-expanded", "false"));
+    if (devolverFoco) abridorTemas?.focus();
+  }
+
+  function amostra(e) {
+    const cores = e.titulo ? [e.escuro.fundo, e.escuro.acento, e.destaques[0]] : [e.escuro, e.claro];
+    return `<span class="temas-amostra" aria-hidden="true">${cores.map((c) => `<i style="background:${c}"></i>`).join("")}</span>`;
+  }
+
+  function abrirTemas(botao) {
+    if ($("#temas")) return fecharTemas();
+    const u = UI[idioma];
+    abridorTemas = botao;
+    fecharMenu();
+    const item = (e) => {
+      const i = ESTILOS.indexOf(e);
+      const fonte = e.titulo ? ` style='font-family:${esc(e.titulo)}'` : "";
+      return `<li><button type="button" data-estilo="${i}" aria-pressed="${i === paleta}">${amostra(e)}<span${fonte}>${esc(t(e.nome))}</span></button></li>`;
+    };
+    const menu = document.createElement("div");
+    menu.id = "temas";
+    menu.className = "temas";
+    menu.setAttribute("role", "dialog");
+    menu.setAttribute("aria-label", u.temasTitulo);
+    menu.innerHTML = `
+      <div class="temas-topo"><h2>${u.temasTitulo}</h2><button class="botao-icone" type="button" data-acao="fechar-temas" aria-label="${u.fechar}">✕</button></div>
+      <h3>${u.temasCores}</h3><ul class="temas-cores">${PALETAS.map(item).join("")}</ul>
+      <h3>${u.temasTemas}</h3><ul>${TEMAS.map(item).join("")}</ul>`;
+    document.body.appendChild(menu);
+    document.querySelectorAll('[data-acao="paleta"]').forEach((b) => b.setAttribute("aria-expanded", "true"));
+    menu.querySelector('[aria-pressed="true"]')?.focus();
   }
 
   function trocarIdioma() {
@@ -1083,7 +1265,7 @@
     const a = u.acoes;
     const irPara = (id, depois) => () => {
       if (!naInicial) { location.href = linkSecao(id); return; }
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      document.getElementById(id)?.scrollIntoView({ behavior: rolagem() });
       depois?.();
     };
     const email = D.contato?.emails?.[0];
@@ -1322,7 +1504,7 @@
         if (!$("#jogoFirewall")) { imprimir(esc(T.nada)); break; }
         imprimir(esc(T.indo(nomeSecao("firewall"))));
         setTimeout(() => {
-          $("#firewall")?.scrollIntoView({ behavior: "smooth" });
+          $("#firewall")?.scrollIntoView({ behavior: rolagem() });
           window.JogoFirewall?.comecar?.();
         }, 350);
         break;
@@ -1338,13 +1520,13 @@
         break;
       case "cd": {
         if (!args[0] || args[0] === "~" || args[0] === "..") {
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          window.scrollTo({ top: 0, behavior: rolagem() });
           break;
         }
         const secao = acharSecao(args[0]);
         if (!secao) { imprimir(esc(T.semSecao(args[0])), "t-erro"); break; }
         imprimir(esc(T.indo(nomeSecao(secao.id))));
-        setTimeout(() => document.getElementById(secao.id)?.scrollIntoView({ behavior: "smooth" }), 350);
+        setTimeout(() => document.getElementById(secao.id)?.scrollIntoView({ behavior: rolagem() }), 350);
         break;
       }
       case "git": {
@@ -1431,9 +1613,9 @@
     // Os mesmos botões aparecem na barra e, em telas pequenas, dentro do menu
     const acoes = `
       <button class="botao-icone" data-acao="busca" type="button" title="${u.buscaAtalho}" aria-label="${u.busca}" aria-haspopup="dialog">${ICONES.busca}</button>
-      <button class="botao-icone botao-paleta" data-acao="paleta" type="button" title="${u.paleta}" aria-label="${u.paleta}"><span></span></button>
-      ${outroIdioma ? `<button class="botao-icone" data-acao="idioma" type="button" title="${u.idioma}" aria-label="${u.idioma}" lang="${outroIdioma === "pt" ? "pt-BR" : outroIdioma}">${outroIdioma.toUpperCase()}</button>` : ""}
-      <button class="botao-icone" data-acao="tema" type="button" title="${u.tema}" aria-label="${u.tema}">${ICONES.tema}</button>`;
+      <button class="botao-icone botao-paleta" data-acao="paleta" type="button" title="${u.paleta}" aria-label="${u.paleta}" aria-haspopup="dialog" aria-expanded="false"><span></span></button>
+      ${outroIdioma ? `<button class="botao-icone" data-acao="idioma" type="button" title="${u.idioma}" aria-label="${outroIdioma.toUpperCase()} · ${u.idioma}" lang="${outroIdioma === "pt" ? "pt-BR" : outroIdioma}">${outroIdioma.toUpperCase()}</button>` : ""}
+      <button class="botao-icone" data-acao="tema" type="button" title="${u.tema}" aria-label="${idioma === "pt" ? "Tema escuro" : "Dark theme"}" aria-pressed="${raiz.dataset.theme === "dark"}">${ICONES.tema}</button>`;
 
     $("#nav").innerHTML = `
       <a class="pular" href="#conteudo">${u.pular}</a>
@@ -1498,15 +1680,44 @@
     $("#nav").classList.toggle("rolou", window.scrollY > 40);
   }
 
-  function fecharMenu() {
+  function fecharMenu(devolverFoco) {
+    const estavaAberto = $("#nav").classList.contains("menu-aberto");
     $("#nav").classList.remove("menu-aberto");
     $("#btnMenu")?.setAttribute("aria-expanded", "false");
+    if (estavaAberto && devolverFoco) $("#btnMenu")?.focus();
   }
 
   function aplicarCores() {
-    const cores = PALETAS[paleta];
-    raiz.style.setProperty("--acento-claro", cores.claro);
-    raiz.style.setProperty("--acento-escuro", cores.escuro);
+    const e = ESTILOS[paleta];
+    const tema = Boolean(e.titulo);
+    raiz.style.setProperty("--acento-claro", tema ? e.claro.acento : e.claro);
+    raiz.style.setProperty("--acento-escuro", tema ? e.escuro.acento : e.escuro);
+    document.querySelectorAll("#temas [data-estilo]").forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.estilo) === paleta)));
+    if (tema) raiz.dataset.estilo = e.id; else delete raiz.dataset.estilo;
+    // Um tema troca todas as cores e as fontes; o modo hacker continua por cima
+    let folha = $("#estiloTema");
+    if (!tema) return folha?.remove();
+    if (!folha) {
+      folha = document.createElement("style");
+      folha.id = "estiloTema";
+      document.head.appendChild(folha);
+    }
+    const { contorno = 1, ...forma } = e.forma || {};
+    const alfa = Math.round(contorno * 255).toString(16).padStart(2, "0");
+    const modo = (m, escuro) => `
+      --fundo: ${m.fundo}; --cartao: ${m.cartao}; --texto: ${m.texto}; --suave: ${m.suave};
+      --tinta: ${m.texto}; --linha: ${m.texto}2e; --grade: ${m.texto}${escuro ? "0f" : "14"};
+      --contorno: ${contorno < 1 ? m.texto + alfa : m.texto};
+      --sombra: ${escuro ? m.acento : m.texto}; --sobre-acento: ${escuro ? m.fundo : "#ffffff"};`;
+    folha.textContent = `
+      html:not(.modo-hacker) {
+        --fonte: ${e.corpo}; --fonte-titulo: ${e.titulo};
+        --lima: ${e.destaques[0]}; --amarelo: ${e.destaques[1]}; --coral: ${e.destaques[2]};
+        ${Object.entries(forma).map(([k, v]) => `--${k}: ${v};`).join(" ")}
+      }
+      ${(e.capas || []).map((c, i) => `html:not(.modo-hacker) .projeto:nth-child(${e.capas.length}n + ${i + 1}) .projeto-capa:not(.com-imagem) { background-color: ${c}; }`).join("\n")}
+      html:not(.modo-hacker)[data-theme="light"] {${modo(e.claro, false)} }
+      html:not(.modo-hacker)[data-theme="dark"] {${modo(e.escuro, true)} }`;
   }
 
   // Contador de visitas do GoatCounter (sem cookies). Só liga se "contador" estiver preenchido em dados.js.
@@ -1521,6 +1732,11 @@
   }
 
   document.addEventListener("click", (evento) => {
+    // Clicar fora do menu de temas fecha o menu
+    if ($("#temas") && !evento.target.closest("#temas, [data-acao='paleta']")) fecharTemas(false);
+    if (!evento.target.closest("#nav")) fecharMenu();
+    // Toque ou clique na faixa de interesses pausa (e retoma) a rolagem
+    evento.target.closest(".faixa")?.classList.toggle("pausada");
     const alvo = evento.target.closest("button, a, #terminalCorpo");
     if (!alvo) return;
     if (alvo.dataset.evento) registrarEvento(alvo.dataset.evento, alvo.dataset.eventoTitulo || alvo.textContent.trim().slice(0, 80));
@@ -1530,7 +1746,11 @@
     } else if (alvo.dataset.acao === "tema") {
       alternarTema();
     } else if (alvo.dataset.acao === "paleta") {
-      trocarPaleta();
+      abrirTemas(alvo);
+    } else if (alvo.dataset.acao === "fechar-temas") {
+      fecharTemas();
+    } else if (alvo.dataset.estilo) {
+      escolherEstilo(Number(alvo.dataset.estilo));
     } else if (alvo.dataset.acao === "idioma") {
       trocarIdioma();
     } else if (alvo.dataset.acao === "busca") {
@@ -1538,6 +1758,7 @@
     } else if (alvo.id === "btnMenu") {
       const aberto = $("#nav").classList.toggle("menu-aberto");
       alvo.setAttribute("aria-expanded", String(aberto));
+      if (aberto) $("#navLinks a")?.focus();
     } else if (alvo.classList.contains("atalho")) {
       executar(alvo.dataset.comando);
     } else if (alvo.classList.contains("pubs-alternar")) {
@@ -1564,7 +1785,7 @@
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") fecharMenu();
+    if (e.key === "Escape") { fecharMenu(true); fecharTemas(); }
 
     const digitando = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
     // Busca rápida: Ctrl+K (ou ⌘K) em qualquer lugar, ou "/" fora de campos de texto
@@ -1595,6 +1816,7 @@
   window.addEventListener("scroll", atualizarNav, { passive: true });
 
   aplicarCores();
+  atualizarCorDoNavegador();
   render();
   atualizarNav();
   if (naInicial) carregarAtividade();
