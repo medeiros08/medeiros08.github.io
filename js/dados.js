@@ -143,7 +143,7 @@ window.DADOS = {
   // vermelho, rosa. Também aceita "imagem": "img/projeto.jpg".
   projetos: [
     {
-      categoria: { pt: "Pesquisa · Redes", en: "Research · Networks" },
+      categoria: { pt: "Pesquisa em redes", en: "Networks research" },
       titulo: { pt: "Cibersegurança com P4", en: "Cybersecurity with P4" },
       descricao: {
         pt: "Pesquisa no AI Horizon Labs sobre redes programáveis: o comportamento dos equipamentos de rede é escrito em P4 e pode ser usado para deixar a comunicação mais segura.",
@@ -153,7 +153,7 @@ window.DADOS = {
       cor: "violeta",
     },
     {
-      categoria: { pt: "Pesquisa · IoT", en: "Research · IoT" },
+      categoria: { pt: "Pesquisa em IoT", en: "IoT research" },
       titulo: "TRAP-IoT",
       descricao: {
         pt: "Projeto de pesquisa sobre segurança em protocolos IoT: dispositivos conectados e sistemas de automação mais resilientes a ataques.",
@@ -163,7 +163,7 @@ window.DADOS = {
       cor: "indigo",
     },
     {
-      categoria: { pt: "Extensão · Educação", en: "Outreach · Education" },
+      categoria: { pt: "Extensão e educação", en: "Outreach and education" },
       status: { pt: "Em desenvolvimento", en: "In progress" },
       titulo: "Código Mirim",
       descricao: {
@@ -181,7 +181,7 @@ window.DADOS = {
       estudo: { pt: "projetos/codigo-mirim/", en: "en/projects/codigo-mirim/" },
     },
     {
-      categoria: { pt: "Web · Design", en: "Web · Design" },
+      categoria: { pt: "Web e design", en: "Web and design" },
       titulo: { pt: "Sites para pequenos negócios", en: "Websites for small businesses" },
       descricao: {
         pt: "Trabalho anterior com design e desenvolvimento de sites, do rascunho ao site no ar. O portfólio reúne estudos de caso de consultório, salão e restaurante.",
