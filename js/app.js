@@ -45,7 +45,7 @@
       habilidades: "Habilidades", tituloHabilidades: "O que eu uso",
       habilidadesSub: "Linguagens e ferramentas que uso de verdade, e onde usei cada uma.", aprendendo: "aprendendo",
       notas: "Notas", tituloNotas: "Notas", notasSub: "Textos curtos sobre o que estou estudando.",
-      minutos: (n) => `${n} min de leitura`, ler: "Ler", outrasNotas: "Outras notas",
+      minutos: (n) => `${n} min de leitura`, ler: "Ler a nota", outrasNotas: "Outras notas",
       livro: "Livro de visitas", tituloLivro: "Livro de visitas",
       livroSub: 'Passou por aqui? Deixe um recado! Para escrever, entre com sua conta do GitHub. Sem GitHub? Me manda uma mensagem pelo <a href="#contato">contato</a>.',
       livroCarregando: "Abrindo o livro de visitas…",
@@ -130,7 +130,7 @@
       habilidades: "Skills", tituloHabilidades: "What I use",
       habilidadesSub: "Languages and tools I actually use, and where I used each one.", aprendendo: "learning",
       notas: "Notes", tituloNotas: "Notes", notasSub: "Short pieces about what I'm studying.",
-      minutos: (n) => `${n} min read`, ler: "Read", outrasNotas: "More notes",
+      minutos: (n) => `${n} min read`, ler: "Read the note", outrasNotas: "More notes",
       livro: "Guestbook", tituloLivro: "Guestbook",
       livroSub: 'Stopped by? Leave a message! To write, sign in with your GitHub account. No GitHub? Send me a message through the <a href="#contato">contact</a> form.',
       livroCarregando: "Opening the guestbook…",
@@ -308,15 +308,20 @@
     return [...String(texto || "")].map((ch) => (ch === " " ? " " : `<span class="letra">${esc(ch)}</span>`)).join("");
   }
 
-  function botoesLinks({ destacar = true, semEmail = false } = {}) {
+  // Links que viram botão no topo; os outros aparecem ao lado como links de texto
+  const LINKS_BOTAO = ["email", "github", "linkedin"];
+
+  function botoesLinks({ destacar = true, semEmail = false, soTexto = null } = {}) {
     const primeiroEmail = D.contato?.emails?.[0];
     return (D.links || [])
       .filter((link) => !(semEmail && link.tipo === "email"))
+      .filter((link) => soTexto === null || LINKS_BOTAO.includes(link.tipo) !== soTexto)
       .map((link) => {
         const url = link.url || (link.tipo === "email" && primeiroEmail ? `mailto:${primeiroEmail}` : "#");
         const rotulo = t(link.rotulo) || t(ROTULOS_LINK[link.tipo]) || link.tipo;
         const principal = destacar && link.principal ? " principal" : "";
-        return `<a class="botao${principal}" href="${esc(url)}"${linkExterno(url)} data-evento="link-${esc(link.tipo)}" data-evento-titulo="Clique: ${esc(rotulo)}">${ICONES[link.tipo] || ICONES.site}<span>${esc(rotulo)}</span></a>`;
+        const classe = soTexto ? "link-texto" : `botao${principal}`;
+        return `<a class="${classe}" href="${esc(url)}"${linkExterno(url)} data-evento="link-${esc(link.tipo)}" data-evento-titulo="Clique: ${esc(rotulo)}">${ICONES[link.tipo] || ICONES.site}<span>${esc(rotulo)}</span></a>`;
       })
       .join("");
   }
@@ -350,7 +355,8 @@
             </h1>
             ${D.topo?.frase ? `<p class="hero-frase texto-rico">${rico(t(D.topo.frase))}</p>` : ""}
             ${detalhes.length ? `<ul class="hero-chips">${detalhes.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>` : ""}
-            <div class="hero-links">${botoesLinks()}</div>
+            <div class="hero-links">${botoesLinks({ soTexto: false })}</div>
+            <p class="hero-outros">${botoesLinks({ soTexto: true })}</p>
           </div>
           ${foto}
         </div>
@@ -415,7 +421,7 @@
             ${resumo.length ? `
               <aside class="ficha revelar">
                 <h3>${u.emResumo}</h3>
-                <ul>${resumo.map((x) => `<li><span aria-hidden="true">→</span>${esc(x)}</li>`).join("")}</ul>
+                <ul>${resumo.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
               </aside>` : ""}
             ${player ? `
               <aside class="trilha revelar">
@@ -463,7 +469,7 @@
         <div class="container">
           <h2 class="titulo-secao revelar">${esc(t(D.pesquisa.rotulo)) || u.linhas}</h2>
           <ol class="linhas revelar">
-            ${linhas.map((l, i) => `<li><span class="num">${String(i + 1).padStart(2, "0")}</span><span>${esc(t(l))}</span></li>`).join("")}
+            ${linhas.map((l) => `<li>${esc(t(l))}</li>`).join("")}
           </ol>
           ${interesses.length ? `
             <div class="revelar">
@@ -547,18 +553,17 @@
               return `
                 <article class="projeto revelar">
                   <div class="projeto-capa${p.imagem ? " com-imagem" : ""}" style="${estiloCapa(p)}">
-                    <span class="projeto-num" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
                     ${p.status ? `<span class="projeto-status">${esc(t(p.status))}</span>` : ""}
                     ${p.categoria ? `<span class="projeto-tag">${esc(t(p.categoria))}</span>` : ""}
                   </div>
                   <div class="projeto-corpo">
-                    <h3>${destino ? `<a href="${esc(destino)}"${linkExterno(destino)} data-evento="${evento}" data-evento-titulo="Projeto: ${titulo}">${titulo}<span aria-hidden="true">${estudo ? "→" : "↗"}</span></a>` : titulo}</h3>
+                    <h3>${destino ? `<a href="${esc(destino)}"${linkExterno(destino)} data-evento="${evento}" data-evento-titulo="Projeto: ${titulo}">${titulo}${estudo ? "" : '<span aria-hidden="true">↗</span>'}</a>` : titulo}</h3>
                     ${p.descricao ? `<p class="texto-rico">${rico(t(p.descricao))}</p>` : ""}
                     ${p.papel ? `<p class="texto-rico"><strong>${u.meuPapel}</strong> ${rico(t(p.papel))}</p>` : ""}
                     ${temItens(p.tecnologias) ? `<ul class="techs">${p.tecnologias.map((x) => `<li>${esc(t(x))}</li>`).join("")}</ul>` : ""}
                     ${estudo ? `
                       <div class="projeto-acoes">
-                        <span class="projeto-estudo" aria-hidden="true">${u.estudo} →</span>
+                        <span class="projeto-estudo" aria-hidden="true">${u.estudo}</span>
                         ${p.url ? `<a href="${esc(p.url)}"${linkExterno(p.url)} data-evento="${evento}-site" data-evento-titulo="Site: ${titulo}">${u.abrirSite} ↗</a>` : ""}
                       </div>` : ""}
                   </div>
@@ -627,7 +632,7 @@
         <span class="nota-meta"><time datetime="${esc(n.data)}">${esc(dataNota(n.data))}</time>${n.minutos ? ` · ${u.minutos(n.minutos)}` : ""}</span>
         <h3>${esc(t(n.titulo))}</h3>
         ${n.resumo ? `<p>${esc(t(n.resumo))}</p>` : ""}
-        <span class="nota-ler">${u.ler} →</span>
+        <span class="nota-ler">${u.ler}</span>
       </a>`).join("");
   }
 
@@ -1461,7 +1466,6 @@
       </div>`;
 
     fecharMenu();
-    observarRevelacoes();
     observarSecaoAtiva();
     if (naInicial) {
       prepararLivro();
@@ -1471,24 +1475,6 @@
   }
 
   /* ---------- Comportamentos ---------- */
-
-  function observarRevelacoes() {
-    const elementos = document.querySelectorAll(".revelar");
-    // Na troca de idioma não anima de novo
-    if (jaRenderizou || !("IntersectionObserver" in window)) {
-      elementos.forEach((el) => el.classList.add("visivel"));
-      return;
-    }
-    const obs = new IntersectionObserver((entradas) => {
-      for (const e of entradas) {
-        if (e.isIntersecting) {
-          e.target.classList.add("visivel");
-          obs.unobserve(e.target);
-        }
-      }
-    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
-    elementos.forEach((el) => obs.observe(el));
-  }
 
   let obsSecao;
   function observarSecaoAtiva() {
