@@ -27,6 +27,11 @@ window.DADOS = {
   // "claro" é usada no tema claro e "escuro" no tema escuro.
   cores: { claro: "#4338ff", escuro: "#9d9bff" },
 
+  // Visual com que o site abre. Pode ser um tema do menu "Cores e temas" (oceano, sunset,
+  // floresta, minimal, dourada, artico, deserto, tech, jardim, galaxia) ou "cor-0" para o original.
+  // O visitante pode trocar no botão de paleta, e a escolha dele fica guardada no navegador.
+  estilo: "tech",
+
   topo: {
     chamada: { pt: "Pesquisa em cibersegurança e P4", en: "Cybersecurity and P4 research" },
     frase: {
