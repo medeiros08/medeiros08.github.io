@@ -8,7 +8,7 @@
     pt: {
       intro: "Pacotes da internet estão chegando na rede de uma casa. Você é o firewall: confere cada um e decide se ele <b>entra</b> ou é <b>bloqueado</b>, seguindo as regras.",
       comoJogar: "São 3 níveis, e cada um traz uma regra nova. Use os botões ou as setas do teclado: <kbd>←</kbd> bloquear, <kbd>→</kbd> deixar passar.",
-      comecar: "Começar", jogarDeNovo: "Jogar de novo", continuar: "Continuar",
+      comecar: "Começar", semTempo: "Jogar sem cronômetro", jogarDeNovo: "Jogar de novo", continuar: "Continuar",
       recorde: (n, total) => `Seu recorde: ${n} de ${total}`,
       nivel: (n) => `Nível ${n}`, pacote: (n, total) => `Pacote ${n} de ${total}`, acertos: (n) => `${n} acertos`,
       regras: "Regras", nova: "nova!", tempo: "Tempo para decidir",
@@ -39,7 +39,7 @@
     en: {
       intro: "Packets from the internet are arriving at a home network. You are the firewall: check each one and decide whether it gets <b>in</b> or gets <b>blocked</b>, following the rules.",
       comoJogar: "There are 3 levels, and each one adds a new rule. Use the buttons or the arrow keys: <kbd>←</kbd> block, <kbd>→</kbd> let it in.",
-      comecar: "Start", jogarDeNovo: "Play again", continuar: "Continue",
+      comecar: "Start", semTempo: "Play without a timer", jogarDeNovo: "Play again", continuar: "Continue",
       recorde: (n, total) => `Your best: ${n} out of ${total}`,
       nivel: (n) => `Level ${n}`, pacote: (n, total) => `Packet ${n} of ${total}`, acertos: (n) => `${n} correct`,
       regras: "Rules", nova: "new!", tempo: "Time to decide",
@@ -201,14 +201,18 @@
         <p class="fw-intro">${t.intro}</p>
         <p class="fw-como">${t.comoJogar}</p>
         <div class="fw-acoes-inicio">
-          <button type="button" class="botao principal" data-fw="comecar">▶ ${t.comecar}</button>
+          <button type="button" class="botao principal" data-fw="comecar"><span aria-hidden="true">▶</span> ${t.comecar}</button>
+          <button type="button" class="botao" data-fw="comecar-sem-tempo">${t.semTempo}</button>
           ${recorde ? `<span class="fw-recorde">${t.recorde(recorde, TOTAL)}</span>` : ""}
         </div>
       </div>`;
   }
 
-  function comecar() {
+  let semTempo = false;
+
+  function comecar(modoSemTempo = semTempo) {
     if (!el) return;
+    semTempo = modoSemTempo;
     estado = { nivel: 0, indice: 0, numero: 0, acertos: 0, ataques: 0, ataquesBarrados: 0, bloqueiosErrados: 0, inicio: Date.now(), fila: gerarFila(0), travado: false };
     opcoes.registrarEvento("firewall-inicio", "Começou o jogo do firewall");
     telaNivel();
@@ -224,7 +228,7 @@
       <div class="fw fw-transicao">
         <p class="fw-rotulo">${t.nivel(estado.nivel + 1)} · ${t.novaRegra}</p>
         <p class="fw-regra-grande">${REGRAS[nova][opcoes.idioma] || REGRAS[nova].pt}</p>
-        <button type="button" class="botao principal" data-fw="continuar">${t.continuar} →</button>
+        <button type="button" class="botao principal" data-fw="continuar">${t.continuar} <span aria-hidden="true">→</span></button>
       </div>`;
     el.querySelector('[data-fw="continuar"]').focus({ preventScroll: true });
   }
@@ -240,6 +244,7 @@
     const mostrarRitmo = nivel.regras.includes("enxurrada");
     // Quem joga pelo teclado continua com o foco nos botões a cada pacote
     const focoNosBotoes = estado.focoNoJogo || el.contains(document.activeElement);
+    const descricao = `fwDe fwQuer${mostrarRitmo ? " fwRitmo" : ""}`;
 
     el.innerHTML = `
       <div class="fw fw-jogo">
@@ -252,14 +257,14 @@
           ${regrasHtml(estado.nivel, estado.indice === 0)}
           <div class="fw-mesa">
             <article class="fw-pacote" aria-label="${t.pacote(estado.numero, TOTAL)}">
-              <div class="fw-campo"><span>${t.de}</span><b><i aria-hidden="true">${de.icone}</i>${nome(de)}</b><small>${t.internet}</small></div>
-              <div class="fw-campo"><span>${t.quer}</span><b><i aria-hidden="true">${quer.icone}</i>${nome(quer)}</b></div>
-              ${mostrarRitmo ? `<div class="fw-campo${p.ritmo > 100 ? " fw-alerta" : ""}"><span>${t.ritmo}</span><b>${t.porSegundo(p.ritmo.toLocaleString(opcoes.idioma === "pt" ? "pt-BR" : "en"))}</b></div>` : ""}
-              <div class="fw-tempo" role="progressbar" aria-label="${t.tempo}" aria-valuemin="0" aria-valuemax="100"><i></i></div>
+              <div class="fw-campo" id="fwDe"><span>${t.de}</span><b><i aria-hidden="true">${de.icone}</i>${nome(de)}</b><small>${t.internet}</small></div>
+              <div class="fw-campo" id="fwQuer"><span>${t.quer}</span><b><i aria-hidden="true">${quer.icone}</i>${nome(quer)}</b></div>
+              ${mostrarRitmo ? `<div class="fw-campo${p.ritmo > 100 ? " fw-alerta" : ""}" id="fwRitmo"><span>${t.ritmo}</span><b>${t.porSegundo(p.ritmo.toLocaleString(opcoes.idioma === "pt" ? "pt-BR" : "en"))}</b></div>` : ""}
+              ${semTempo ? "" : `<div class="fw-tempo" role="progressbar" aria-label="${t.tempo}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i></i></div>`}
             </article>
             <div class="fw-botoes">
-              <button type="button" class="botao fw-bloquear" data-fw="bloquear"><span aria-hidden="true">✋</span> ${t.bloquear} <kbd aria-hidden="true">←</kbd></button>
-              <button type="button" class="botao fw-deixar" data-fw="deixar">${t.deixar} <span aria-hidden="true">✅</span> <kbd aria-hidden="true">→</kbd></button>
+              <button type="button" class="botao fw-bloquear" data-fw="bloquear" aria-describedby="${descricao}"><span aria-hidden="true">✋</span> ${t.bloquear} <kbd aria-hidden="true">←</kbd></button>
+              <button type="button" class="botao fw-deixar" data-fw="deixar" aria-describedby="${descricao}">${t.deixar} <span aria-hidden="true">✅</span> <kbd aria-hidden="true">→</kbd></button>
             </div>
             <p class="fw-retorno" aria-live="polite"></p>
           </div>
@@ -267,7 +272,7 @@
       </div>`;
     if (focoNosBotoes) el.querySelector('[data-fw="bloquear"]').focus({ preventScroll: true });
     // O primeiro pacote de cada nível ganha tempo extra para ler as regras
-    iniciarRelogio(nivel.tempo + (estado.indice === 0 ? 5000 : 0));
+    if (!semTempo) iniciarRelogio(nivel.tempo + (estado.indice === 0 ? 5000 : 0));
   }
 
   /* Relógio de cada pacote (atualizado por JavaScript, então funciona mesmo sem animações) */
@@ -296,10 +301,11 @@
       relogio.restante = restante;
       const barra = el?.querySelector(".fw-tempo");
       if (barra) {
-        const pct = Math.round((restante / total) * 100);
-        barra.firstElementChild.style.width = `${pct}%`;
-        barra.setAttribute("aria-valuenow", String(pct));
-        barra.classList.toggle("fw-acabando", pct < 30);
+        const fracao = restante / total;
+        barra.firstElementChild.style.transform = `scaleX(${fracao})`;
+        const passo10 = String(Math.ceil(fracao * 10) * 10);
+        if (barra.getAttribute("aria-valuenow") !== passo10) barra.setAttribute("aria-valuenow", passo10);
+        barra.classList.toggle("fw-acabando", fracao < 0.3);
       }
       if (restante <= 0) { decidir(null); return; }
       quadro = requestAnimationFrame(passo);
@@ -344,12 +350,22 @@
     const retorno = el.querySelector(".fw-retorno");
     if (retorno) {
       retorno.className = `fw-retorno ${certo ? "fw-ok" : "fw-ruim"}`;
-      retorno.innerHTML = `<b>${certo ? "✔" : "✖"} ${titulo}</b> ${motivo}`;
+      retorno.innerHTML = `<b><span aria-hidden="true">${certo ? "✔" : "✖"}</span> ${titulo}</b> ${motivo}`;
     }
     const placar = el.querySelector(".fw-placar");
     if (placar) placar.textContent = t.acertos(estado.acertos);
 
-    setTimeout(avancar, certo ? 1300 : 2600);
+    if (semTempo) {
+      const seguir = document.createElement("button");
+      seguir.type = "button";
+      seguir.className = "botao principal fw-seguir";
+      seguir.dataset.fw = "avancar";
+      seguir.innerHTML = `${t.continuar} <span aria-hidden="true">→</span>`;
+      retorno?.after(seguir);
+      seguir.focus({ preventScroll: true });
+    } else {
+      setTimeout(avancar, certo ? 1300 : 2600);
+    }
   }
 
   function avancar() {
@@ -382,17 +398,21 @@
         <h3 class="fw-resultado">${t.fimTitulo(acertos, TOTAL)}</h3>
         <p class="fw-resumo">${t.fimResumo(ataquesBarrados, ataques, bloqueiosErrados)} ${t.fimTempo(segundos)}</p>
         <p class="fw-explica">${t.fimExplica}</p>
-        <button type="button" class="botao principal" data-fw="comecar">↻ ${t.jogarDeNovo}</button>
+        <button type="button" class="botao principal" data-fw="repetir"><span aria-hidden="true">↻</span> ${t.jogarDeNovo}</button>
       </div>`;
-    el.querySelector('[data-fw="comecar"]').focus({ preventScroll: true });
+    el.querySelector('[data-fw="repetir"]').focus({ preventScroll: true });
   }
 
   function aoClicar(e) {
     const botao = e.target.closest("[data-fw]");
     if (!botao || botao.disabled) return;
     const acao = botao.dataset.fw;
-    if (acao === "comecar") comecar();
+    if (acao === "comecar") comecar(false);
+    else if (acao === "comecar-sem-tempo") comecar(true);
+    // "Jogar de novo" mantém o modo escolhido (com ou sem cronômetro)
+    else if (acao === "repetir") comecar();
     else if (acao === "continuar") proximoPacote();
+    else if (acao === "avancar") avancar();
     else decidir(acao);
   }
 
@@ -400,6 +420,8 @@
   document.addEventListener("keydown", (e) => {
     if (!estado || estado.travado || !el?.querySelector(".fw-jogo")) return;
     if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || document.querySelector("dialog[open]")) return;
+    const foco = document.activeElement;
+    if (pausas.has("tela") || !(foco === document.body || el.contains(foco))) return;
     if (e.key === "ArrowLeft") { e.preventDefault(); decidir("bloquear"); }
     if (e.key === "ArrowRight") { e.preventDefault(); decidir("deixar"); }
   });
@@ -420,7 +442,7 @@
       telaInicial();
     },
     comecar() {
-      if (el && !estado) comecar();
+      if (el && !estado) comecar(false);
     },
   };
 })();
