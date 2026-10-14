@@ -77,6 +77,8 @@
 
     var idioma = null;
     try { idioma = localStorage.getItem("idioma"); } catch (e) {}
+    // Primeira visita: segue o idioma do navegador
+    if (!idioma) idioma = /^pt/i.test((navigator.languages || [navigator.language || ""])[0] || "") ? "pt" : "en";
     if (idioma === "en") {
       var textos = {
         titulo: "Page not found",

@@ -16,6 +16,8 @@ Todo o conteúdo fica em **`js/dados.js`**. Os outros arquivos não precisam ser
 - O site abre no tema escuro. Para abrir no claro, troque `data-theme="dark"` por `data-theme="light"` na primeira linha do `index.html`.
 - `habilidades`: grupos de linguagens e ferramentas. `onde` diz onde você usou cada uma, e `aprendendo: true` marca o que está aprendendo.
 - `livroDeVisitas`: os recados ficam nas Discussions do repositório (giscus). Desligue com `ligado: false`.
+- O botão de paleta (bolinha no menu) abre **Cores e temas**: as 4 cores de destaque do site e 10 temas completos do [theme-factory](https://github.com/anthropics/skills/tree/main/skills/theme-factory), que trocam cores, fontes e a forma do site (cantos, bordas, sombras, inclinações e fundo). Os temas ficam em `TEMAS`, no começo do `js/app.js`.
+- O visual com que o site abre fica em `estilo` no `dados.js` (hoje `"tech"`; `"cor-0"` volta ao lilás original).
 - O jogo "Seja o firewall" fica em `js/firewall.js`. Para esconder a seção, ponha `firewall: false` em `dados.js`.
 
 ## Páginas internas
