@@ -394,12 +394,29 @@ html[data-estilo] .sobre-texto p:first-child { font-weight: 400; }
   border: var(--borda) solid var(--contorno);
   border-radius: calc(6 * var(--curva));
   box-shadow: calc(8 * var(--desloc)) calc(8 * var(--desloc)) 0 var(--sombra);
-  transform: rotate(calc(3 * var(--giro)));
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(calc(3 * var(--giro)));
+  transform-style: preserve-3d;
   transition: transform .45s cubic-bezier(.3, 1.6, .5, 1);
   animation: entrar-foto .9s .2s cubic-bezier(.2, .7, .2, 1) backwards;
 }
 @keyframes entrar-foto { from { opacity: 0; translate: 0 30px; } }
-.hero-foto:hover { transform: rotate(calc(-1 * var(--giro))) scale(1.02); }
+.hero-foto:hover { transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(calc(-1 * var(--giro))) scale(1.02); }
+/* Enquanto segue o mouse a resposta é rápida; ao soltar, volta com a mola de sempre */
+.hero-foto.inclinando { transition: transform .15s ease-out; }
+.hero-foto .hero-selo { translate: 0 0 60px; }
+.hero-foto::before { transform: translateZ(30px); }
+/* Brilho que segue o mouse por cima da foto */
+.hero-foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), #ffffff40, transparent 55%);
+  opacity: 0;
+  transition: opacity .35s;
+}
+.hero-foto.inclinando::after { opacity: 1; }
 .hero-foto::before {
   content: "";
   position: absolute;
@@ -698,7 +715,7 @@ html[data-estilo] .sobre-texto p:first-child { font-weight: 400; }
 }
 .projeto:nth-child(4n + 1) { grid-column: span 4; }
 .projeto:nth-child(4n + 2) { grid-column: span 2; }
-.projeto:hover, .projeto:has(a:focus-visible) { transform: translate(calc(-4 * var(--desloc)), calc(-4 * var(--desloc))); box-shadow: calc(9 * var(--desloc)) calc(9 * var(--desloc)) 0 var(--sombra); }
+.projeto:hover, .projeto:has(a:focus-visible) { transform: var(--inclinar) translate(calc(-4 * var(--desloc)), calc(-4 * var(--desloc))); box-shadow: calc(9 * var(--desloc)) calc(9 * var(--desloc)) 0 var(--sombra); }
 .projeto-capa {
   position: relative;
   display: flex;
@@ -784,11 +801,31 @@ html[data-estilo] .sobre-texto p:first-child { font-weight: 400; }
   border-radius: var(--raio);
   box-shadow: calc(5 * var(--desloc)) calc(5 * var(--desloc)) 0 var(--sombra);
 }
-.nota-cartao:hover, .nota-cartao:has(a:focus-visible), a.nota-cartao:focus-visible { transform: translate(calc(-3 * var(--desloc)), calc(-3 * var(--desloc))); box-shadow: calc(8 * var(--desloc)) calc(8 * var(--desloc)) 0 var(--sombra); }
+.nota-cartao:hover, .nota-cartao:has(a:focus-visible), a.nota-cartao:focus-visible { transform: var(--inclinar) translate(calc(-3 * var(--desloc)), calc(-3 * var(--desloc))); box-shadow: calc(8 * var(--desloc)) calc(8 * var(--desloc)) 0 var(--sombra); }
 .nota-meta { font-family: var(--fonte-mono); font-size: 12.5px; color: var(--suave); }
 .nota-cartao h3 { font-size: 23px; font-weight: 800; line-height: 1.15; letter-spacing: -.025em; }
 .nota-cartao p { font-size: 15.5px; color: var(--suave); }
 .nota-ler { margin-top: auto; padding-top: 6px; font-weight: 700; color: var(--acento); }
+
+/* Cartões que reagem ao mouse (projetos, notas e repositórios do GitHub) */
+.projeto, .nota-cartao, .repo {
+  --inclinar: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  position: relative;
+  transition: transform .45s cubic-bezier(.3, 1.6, .5, 1), box-shadow .2s ease;
+}
+.projeto.inclinando, .nota-cartao.inclinando, .repo.inclinando { transition: transform .12s ease-out, box-shadow .2s ease; }
+.projeto::after, .nota-cartao::after, .repo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--acento) 18%, transparent), transparent 60%);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.inclinando::after { opacity: 1; }
 
 /* Livro de visitas */
 .livro {
@@ -813,7 +850,7 @@ html[data-estilo] .sobre-texto p:first-child { font-weight: 400; }
   box-shadow: calc(4 * var(--desloc)) calc(4 * var(--desloc)) 0 var(--sombra);
   transition: transform .2s ease, box-shadow .2s ease;
 }
-.repo:hover, .repo:focus-visible, .repo:has(a:focus-visible) { transform: translate(calc(-3 * var(--desloc)), calc(-3 * var(--desloc))); box-shadow: calc(7 * var(--desloc)) calc(7 * var(--desloc)) 0 var(--sombra); }
+.repo:hover, .repo:focus-visible, .repo:has(a:focus-visible) { transform: var(--inclinar) translate(calc(-3 * var(--desloc)), calc(-3 * var(--desloc))); box-shadow: calc(7 * var(--desloc)) calc(7 * var(--desloc)) 0 var(--sombra); }
 .repo-topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .repo-nome { display: inline-flex; align-items: center; gap: 8px; min-width: 0; font-family: var(--fonte-mono); font-size: 15.5px; font-weight: 700; overflow-wrap: anywhere; }
 .repo-nome svg { width: 17px; height: 17px; }
