@@ -1671,6 +1671,61 @@
     });
   }
 
+  /* ---------- Foto e cartões reagem ao mouse ---------- */
+
+  // A foto do topo vira na direção do mouse (em qualquer ponto do topo), e os cartões de projeto,
+  // nota e repositório inclinam sob o mouse com uma luz no ponto onde ele está.
+  // Só com mouse: em tela de toque não há "passar por cima". E não liga para quem prefere menos movimento.
+  const CARTOES = ".projeto, .nota-cartao, .repo";
+
+  function reagirAoMouse() {
+    if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let cartaoAtual = null;
+    let ultimo = null;
+    let agendado = false;
+
+    const soltar = (el) => {
+      if (!el) return;
+      el.classList.remove("inclinando");
+      el.style.removeProperty("--rx");
+      el.style.removeProperty("--ry");
+    };
+    // graus: inclinação máxima. Fora do elemento (a foto reage ao topo inteiro) o valor fica no limite.
+    const inclinar = (el, x, y, graus) => {
+      const r = el.getBoundingClientRect();
+      const px = Math.min(1, Math.max(0, (x - r.left) / r.width));
+      const py = Math.min(1, Math.max(0, (y - r.top) / r.height));
+      el.style.setProperty("--rx", `${((0.5 - py) * graus).toFixed(2)}deg`);
+      el.style.setProperty("--ry", `${((px - 0.5) * graus).toFixed(2)}deg`);
+      el.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
+      el.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
+      el.classList.add("inclinando");
+    };
+
+    const processar = () => {
+      agendado = false;
+      const e = ultimo;
+      const alvo = e?.target instanceof Element ? e.target : null;
+      const cartao = alvo?.closest(CARTOES) || null;
+      if (cartao !== cartaoAtual) { soltar(cartaoAtual); cartaoAtual = cartao; }
+      if (cartao) inclinar(cartao, e.clientX, e.clientY, 9);
+      const foto = $(".hero-foto");
+      if (foto) {
+        if (alvo?.closest(".hero")) inclinar(foto, e.clientX, e.clientY, 18);
+        else if (foto.classList.contains("inclinando")) soltar(foto);
+      }
+    };
+
+    document.addEventListener("pointermove", (e) => {
+      if (e.pointerType !== "mouse") return;
+      ultimo = e;
+      if (!agendado) { agendado = true; requestAnimationFrame(processar); }
+    }, { passive: true });
+    // Mouse saiu da janela: tudo volta ao lugar
+    document.documentElement.addEventListener("mouseleave", () => { ultimo = null; processar(); });
+  }
+
   let obsSecao;
   function observarSecaoAtiva() {
     if (!naInicial || !("IntersectionObserver" in window)) return;
@@ -1800,6 +1855,7 @@
 
   window.addEventListener("scroll", atualizarNav, { passive: true });
   window.addEventListener("scroll", pedirRota, { passive: true });
+  reagirAoMouse();
   window.addEventListener("resize", medirRota);
   // Imagens, GitHub e livro de visitas carregam depois e mudam a altura das seções
   if ("ResizeObserver" in window) new ResizeObserver(() => medirRota()).observe(document.body);
