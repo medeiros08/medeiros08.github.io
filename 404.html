@@ -30,6 +30,16 @@
       if (tema) document.documentElement.dataset.theme = tema;
     } catch (e) {}
   </script>
+  <!-- Mesmo visual do resto do site: o tema que o visitante escolheu, ou o "estilo" de dados.js -->
+  <script src="/js/dados.js"></script>
+  <script src="/js/temas.js"></script>
+  <script>
+    if (window.TEMAS_DO_SITE) {
+      var guardado = null;
+      try { guardado = localStorage.getItem("paleta"); } catch (e) {}
+      TEMAS_DO_SITE.aplicar(TEMAS_DO_SITE.indiceInicial(guardado));
+    }
+  </script>
   <style>
     .erro { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; padding: 64px 0; }
     .erro-codigo { font-size: clamp(6rem, 22vw, 14rem); font-weight: 800; line-height: .8; letter-spacing: -.06em; color: var(--acento); }
@@ -46,6 +56,8 @@
       100% { transform: translate(330px, 90px) rotate(170deg); opacity: 0; }
     }
     .erro-acoes { margin-top: 34px; }
+    /* Fontes dos temas são mais largas: menos aperto entre as letras */
+    html[data-estilo] .erro-codigo, html[data-estilo] .erro h1 { letter-spacing: -.02em; }
   </style>
 </head>
 <body>
