@@ -41,7 +41,7 @@
       trilha: "Trilha sonora", trilhaSub: "O que toca enquanto eu programo.",
       formIntro: "Ou me manda uma mensagem por aqui:", formNome: "Seu nome", formEmail: "Seu e-mail",
       formMensagem: "Escreva sua mensagem…", formEnviar: "Enviar", formEnviando: "Enviando…",
-      formOk: "Recebi! Respondo em breve 🙂",
+      formOk: "Mensagem recebida. Respondo em breve 🙂",
       formErro: (email) => `Não consegui enviar agora. Tenta pelo e-mail ${email}?`,
       firewall: "Firewall", tituloFirewall: "Seja o firewall",
       firewallSub: "Um jogo de um minuto para entender o que eu pesquiso.",
@@ -63,7 +63,7 @@
         hacker: "Modo hacker", terminal: "Abrir o terminal", firewall: "Jogar “Seja o firewall”",
         ctf: "Desafio CTF", copiarEmail: "Copiar meu e-mail", codigoMirim: "Estudo de caso: Código Mirim",
       },
-      emailCopiado: "E-mail copiado!",
+      emailCopiado: "E-mail copiado",
       t: {
         boasVindas: 'Olá! 👋 Este é o terminal do portfólio. Digite <span class="t-cmd">help</span> para ver o que dá pra fazer.',
         ajuda: [
@@ -80,7 +80,7 @@
           "",
           "Pista 1: todo site tem um código-fonte. Já deu uma olhada no deste? (Ctrl+U)",
           "Pista 2: os robôs de busca recebem instruções que você não vê, num arquivo .txt bem conhecido.",
-          "Pista 3: nem todo caminho existe... mas até o que não existe tem algo a dizer.",
+          "Pista 3: nem todo caminho existe… mas até o que não existe tem algo a dizer.",
           "",
           'Cada pedaço está codificado de um jeito. Ferramentas: <span class="t-cmd">base64 -d &lt;texto&gt;</span> · <span class="t-cmd">hex &lt;texto&gt;</span> · <span class="t-cmd">rot13 &lt;texto&gt;</span>',
           'Juntou os 3? <span class="t-cmd">submit flag{...}</span>',
@@ -98,7 +98,7 @@
         sudo: (u) => `${u} não está no arquivo sudoers. Este incidente será reportado. 😄`,
         p4: "Tudo o que circula na internet viaja em pequenos pedaços chamados pacotes, passando por equipamentos como roteadores. Normalmente, esses equipamentos já vêm de fábrica sabendo o que fazer. P4 é uma linguagem de programação que permite ensinar a eles regras novas: deixar o pacote seguir, mudar o caminho ou bloquear.\n\nÉ como um carteiro que pode ser treinado para conferir cada carta antes de entregar. Eu pesquiso como usar isso para deixar a comunicação mais segura.",
         semSecao: (s) => `seção não encontrada: ${s}. Use ls para ver as seções.`,
-        indo: (s) => `indo para ${s}/ ...`,
+        indo: (s) => `indo para ${s}/…`,
         nada: "nada por aqui ainda.",
       },
     },
@@ -127,7 +127,7 @@
       trilha: "Soundtrack", trilhaSub: "What plays while I code.",
       formIntro: "Or send me a message right here:", formNome: "Your name", formEmail: "Your e-mail",
       formMensagem: "Write your message…", formEnviar: "Send", formEnviando: "Sending…",
-      formOk: "Got it! I'll reply soon 🙂",
+      formOk: "Message received. I'll reply soon 🙂",
       formErro: (email) => `Couldn't send it right now. Try e-mail: ${email}?`,
       firewall: "Firewall", tituloFirewall: "Be the firewall",
       firewallSub: "A one-minute game to understand what I research.",
@@ -149,7 +149,7 @@
         hacker: "Hacker mode", terminal: "Open the terminal", firewall: "Play “Be the firewall”",
         ctf: "CTF challenge", copiarEmail: "Copy my e-mail", codigoMirim: "Case study: Código Mirim",
       },
-      emailCopiado: "E-mail copied!",
+      emailCopiado: "E-mail copied",
       t: {
         boasVindas: 'Hi! 👋 This is the portfolio terminal. Type <span class="t-cmd">help</span> to see what you can do.',
         ajuda: [
@@ -166,7 +166,7 @@
           "",
           "Clue 1: every website has source code. Have you looked at this one's? (Ctrl+U)",
           "Clue 2: search robots get instructions you don't see, in a well-known .txt file.",
-          "Clue 3: not every path exists... but even what doesn't exist has something to say.",
+          "Clue 3: not every path exists… but even what doesn't exist has something to say.",
           "",
           'Each piece is encoded differently. Tools: <span class="t-cmd">base64 -d &lt;text&gt;</span> · <span class="t-cmd">hex &lt;text&gt;</span> · <span class="t-cmd">rot13 &lt;text&gt;</span>',
           'Got all 3? <span class="t-cmd">submit flag{...}</span>',
@@ -184,7 +184,7 @@
         sudo: (u) => `${u} is not in the sudoers file. This incident will be reported. 😄`,
         p4: "Everything on the internet travels in small pieces called packets, passing through devices such as routers. Normally these devices come from the factory already knowing what to do. P4 is a programming language that lets you teach them new rules: let a packet through, change its route or block it.\n\nIt's like a mail carrier who can be trained to check every letter before delivering it. I research how to use this to make communication more secure.",
         semSecao: (s) => `section not found: ${s}. Use ls to see the sections.`,
-        indo: (s) => `going to ${s}/ ...`,
+        indo: (s) => `going to ${s}/…`,
         nada: "nothing here yet.",
       },
     },
@@ -351,7 +351,7 @@
         <div class="container hero-grade">
           <div class="hero-texto">
             ${D.topo?.chamada ? `<p class="hero-pill"><i></i>${esc(t(D.topo.chamada))}</p>` : ""}
-            <h1 class="hero-nome" aria-label="${esc(nomeCompleto())}">
+            <h1 class="hero-nome" translate="no" aria-label="${esc(nomeCompleto())}">
               <span aria-hidden="true">${letras(nome.primeiro)}</span><span aria-hidden="true">${letras(nome.sobrenome)}</span>
             </h1>
             ${D.topo?.frase ? `<p class="hero-frase texto-rico">${rico(t(D.topo.frase))}</p>` : ""}
@@ -788,7 +788,11 @@
   function conteudoAtividade() {
     const u = UI[idioma];
     const perfil = `https://github.com/${usuarioGithub()}`;
-    if (estadoAtividade === "carregando") return `<p class="repos-aviso"><span class="carregando"></span>${u.githubCarregando}</p>`;
+    // Enquanto carrega: cartões vazios no formato dos repositórios, em vez de um círculo girando
+    if (estadoAtividade === "carregando") {
+      return `<p class="so-leitor" role="status">${u.githubCarregando}</p>
+        <div class="repos" aria-hidden="true">${'<div class="repo repo-esqueleto"><i></i><i></i><i></i><i></i></div>'.repeat(4)}</div>`;
+    }
     if (estadoAtividade === "erro" || !atividade?.repos?.length) {
       return `<p class="repos-aviso">${u.githubErro} <a href="${esc(perfil)}" target="_blank" rel="noopener">${u.verGithub} ↗</a></p>`;
     }
@@ -901,7 +905,7 @@
         <input class="pote-de-mel" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="chat-campos">
           <label><span class="so-leitor">${u.formNome}</span><input name="nome" required maxlength="100" autocomplete="name" placeholder="${u.formNome}"></label>
-          <label><span class="so-leitor">${u.formEmail}</span><input name="email" type="email" spellcheck="false" required maxlength="200" autocomplete="email" placeholder="${u.formEmail}"></label>
+          <label><span class="so-leitor">${u.formEmail}</span><input name="email" type="email" spellcheck="false" required maxlength="200" autocomplete="email" placeholder="${idioma === "pt" ? "voce@exemplo.com" : "you@example.com"}"></label>
         </div>
         <div class="chat-escrever">
           <label><span class="so-leitor">${u.formMensagem}</span><textarea name="mensagem" required rows="2" maxlength="3000" placeholder="${u.formMensagem}"></textarea></label>
@@ -1502,7 +1506,7 @@
     $("#nav").innerHTML = `
       <a class="pular" href="#conteudo">${u.pular}</a>
       <div class="container nav-dentro">
-        <a class="nav-nome" href="${naInicial ? "#inicio" : esc(enderecoDoIdioma(idioma))}">${esc(nomeCompleto())}</a>
+        <a class="nav-nome" translate="no" href="${naInicial ? "#inicio" : esc(enderecoDoIdioma(idioma))}">${esc(nomeCompleto())}</a>
         <nav class="nav-links" id="navLinks" aria-label="${idioma === "pt" ? "Seções" : "Sections"}">
           ${secoesAtuais.filter((s) => s.menu).map((s) =>
             `<a href="${esc(linkSecao(s.id))}" data-secao="${s.id}"${!naInicial && s.id === "notas" && pagina === "nota" ? ' class="ativo" aria-current="page"' : ""}>${u[s.id]}</a>`).join("")}
