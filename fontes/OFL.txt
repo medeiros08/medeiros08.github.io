@@ -1,5 +1,6 @@
 Bricolage Grotesque: Copyright 2022 The Bricolage Grotesque Project Authors (https://github.com/ateliertriay/bricolage)
 JetBrains Mono: Copyright 2020 The JetBrains Mono Project Authors (https://github.com/JetBrains/JetBrainsMono)
+Geist: Copyright 2024 The Geist Project Authors (https://github.com/vercel/geist-font)
 
 Arquivos baixados do Google Fonts (subconjuntos latin e latin-ext).
 

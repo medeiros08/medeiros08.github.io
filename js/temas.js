@@ -22,6 +22,8 @@
     dejavuSerif: '"DejaVu Serif", "Bitstream Vera Serif", Georgia, serif',
     freeSans: 'FreeSans, "Helvetica Neue", Helvetica, Arial, sans-serif',
     freeSerif: 'FreeSerif, "Times New Roman", Times, serif',
+    // Servida pelo próprio site (fontes/geist-*.woff2)
+    geist: '"Geist", "DejaVu Sans", Verdana, sans-serif',
   };
 
   // Formas dos temas: cantos, bordas, sombra dura, inclinação e fundo.
@@ -100,12 +102,13 @@
       capas: ["#5d2e46", "#b87d6d", "#d4a5a5", "#8e4f3f"],
     },
     {
-      id: "tech", nome: { pt: "Tecnologia", en: "Tech Innovation" }, titulo: FONTES.dejavu, corpo: FONTES.dejavu,
-      claro: { fundo: "#f2f5fa", cartao: "#ffffff", texto: "#1e1e1e", suave: "#4d5560", acento: "#0057d9" },
-      escuro: { fundo: "#1e1e1e", cartao: "#282828", texto: "#ffffff", suave: "#b5bcc6", acento: "#00ffff" },
-      destaques: ["#00ffff", "#9cc2ff", "#4d94ff"],
+      // Fonte trocada de DejaVu Sans para Geist, e um acento só: ciano com menos saturação
+      id: "tech", nome: { pt: "Tecnologia", en: "Tech Innovation" }, titulo: FONTES.geist, corpo: FONTES.geist,
+      claro: { fundo: "#f2f5f7", cartao: "#ffffff", texto: "#14191c", suave: "#4b565c", acento: "#0b6f72" },
+      escuro: { fundo: "#181b1d", cartao: "#202426", texto: "#f2f5f7", suave: "#a9b4b9", acento: "#3fe0d8" },
+      destaques: ["#3fe0d8", "#bff1ee", "#86d3d8"],
       forma: FORMAS.reto,
-      capas: ["#0066ff", "#1e1e1e", "#00b3b3", "#3d7eff"],
+      capas: ["#0f6467", "#232b2e", "#13807f", "#2d4247"],
     },
     {
       id: "jardim", nome: { pt: "Jardim botânico", en: "Botanical Garden" }, titulo: FONTES.dejavuSerif, corpo: FONTES.dejavu,

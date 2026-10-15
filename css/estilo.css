@@ -36,6 +36,23 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fontes/geist-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fontes/geist-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 :root {
   --fonte: "Bricolage Grotesque", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --fonte-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
@@ -93,7 +110,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 96px; -webkit-text-size-adjust: 100%; }
+html { -webkit-tap-highlight-color: color-mix(in srgb, var(--acento) 25%, transparent); scroll-behavior: smooth; scroll-padding-top: 96px; -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
@@ -111,10 +128,15 @@ body {
 
 h1, h2, h3, h4, p, ol, ul, figure { margin: 0; }
 h1, h2, h3, h4, .linhas li, .faixa-item, .nav-nome, .contato-titulo { font-family: var(--fonte-titulo); }
+h1, h2, h3, h4 { text-wrap: balance; }
+p, li { text-wrap: pretty; }
+time, .traj-periodo, .nota-meta, .rota-rotulo small, .repo-meta, .fw-barra, .estudo-numeros b { font-variant-numeric: tabular-nums; }
 ol, ul { padding: 0; list-style: none; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
 button, input { font: inherit; color: inherit; }
+/* Sem a espera do toque duplo (zoom) nos controles */
+a, button, input, textarea, label { touch-action: manipulation; }
 svg { flex-shrink: 0; }
 
 :focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; border-radius: calc(8 * var(--curva)); }
@@ -242,6 +264,10 @@ kbd {
 html[data-estilo] :is(.hero-nome, .titulo-secao, .linhas li, .contato-titulo, .estudo-titulo, .nota-titulo, .fw-resultado, .estudo-bloco > h2, .nota-corpo h2) { letter-spacing: -.02em; }
 html[data-estilo] .hero-nome { font-size: clamp(2.8rem, 7.4vw, 6.2rem); }
 html[data-estilo] .sobre-texto p:first-child { font-weight: 400; }
+/* A Geist foi desenhada para títulos apertados: o tema Tecnologia volta ao tamanho e ao aperto originais */
+html[data-estilo="tech"] :is(.hero-nome, .titulo-secao, .linhas li, .contato-titulo, .estudo-titulo, .nota-titulo, .fw-resultado, .estudo-bloco > h2, .nota-corpo h2) { letter-spacing: -.045em; }
+html[data-estilo="tech"] .hero-nome { font-size: clamp(3.3rem, 10vw, 8.4rem); letter-spacing: -.055em; }
+html[data-estilo="tech"] .sobre-texto p:first-child { font-weight: 500; }
 
 /* ---------- Navegação ---------- */
 
@@ -518,7 +544,8 @@ html[data-estilo] .sobre-texto p:first-child { font-weight: 400; }
 .titulo-secao { margin-bottom: 44px; font-size: clamp(2.4rem, 6vw, 4.4rem); font-weight: 800; line-height: .95; letter-spacing: -.045em; }
 
 /* Agora */
-.agora-grade { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.agora-grade { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 22px; }
+.agora-grade > :first-child:nth-last-child(3) { grid-row: span 2; }
 .agora-cartao {
   padding: 24px;
   background: var(--cartao);
@@ -873,6 +900,13 @@ html[data-estilo] .sobre-texto p:first-child { font-weight: 400; }
 .repo-meta i { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border: var(--borda-fina) solid var(--contorno); border-radius: 50%; background: var(--cor-linguagem); vertical-align: -1px; }
 .repos-aviso { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 18px 20px; border: var(--borda) dashed var(--linha); border-radius: var(--raio); color: var(--suave); }
 .repos-aviso a { color: var(--acento); font-weight: 700; text-decoration: underline; }
+.repo-esqueleto { pointer-events: none; min-height: 168px; }
+.repo-esqueleto i { display: block; height: 14px; border-radius: calc(4 * var(--curva)); background: var(--linha); animation: piscar 1.4s ease-in-out infinite; }
+.repo-esqueleto i:nth-child(1) { width: 45%; height: 18px; }
+.repo-esqueleto i:nth-child(2) { width: 90%; }
+.repo-esqueleto i:nth-child(3) { width: 70%; }
+.repo-esqueleto i:nth-child(4) { width: 30%; margin-top: auto; }
+@keyframes piscar { 50% { opacity: .45; } }
 .carregando { width: 14px; height: 14px; border: 2px solid var(--linha); border-top-color: var(--acento); border-radius: 50%; animation: girar .8s linear infinite; }
 @keyframes girar { to { transform: rotate(360deg); } }
 
