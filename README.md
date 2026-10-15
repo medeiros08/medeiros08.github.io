@@ -52,3 +52,7 @@ e acesse http://localhost:8080.
 2. Envie todos os arquivos desta pasta para ele.
 3. Em **Settings → Pages**, escolha a branch `main` e a pasta `/ (root)`.
 4. Em alguns minutos o site fica no ar em `https://SEU-USUARIO.github.io`.
+
+## Depois de mudar o CSS ou o JS
+
+Os arquivos são carregados com `?v=...` no fim do endereço (em todos os `.html`). Ao mudar `css/estilo.css` ou algum `js/*.js`, troque esse número em todos os `.html` para o navegador de quem já visitou baixar a versão nova.

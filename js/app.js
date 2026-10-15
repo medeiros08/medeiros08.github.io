@@ -260,8 +260,9 @@
   // Link para uma seção da página inicial, de qualquer página
   const linkSecao = (id) => (naInicial ? `#${id}` : `${enderecoDoIdioma(idioma)}#${id}`);
 
-  // Guardado como id ("cor-2", "oceano"); versões antigas guardavam só o número da cor
-  const estiloGuardado = String(memoria.ler("paleta") ?? "");
+  // Escolha do visitante no menu de cores e temas. A chave antiga "paleta" é ignorada de propósito:
+  // guardava a cor do botão antigo e fazia o site abrir no lilás em vez do visual padrão.
+  const estiloGuardado = String(memoria.ler("estilo") ?? "");
   let paleta = window.TEMAS_DO_SITE.indiceInicial(estiloGuardado);
   let pubsAbertas = false;
   let jaRenderizou = false;
@@ -1066,7 +1067,7 @@
 
   function escolherEstilo(indice) {
     paleta = (indice + ESTILOS.length) % ESTILOS.length;
-    memoria.gravar("paleta", ESTILOS[paleta].id);
+    memoria.gravar("estilo", ESTILOS[paleta].id);
     aplicarCores();
     atualizarCorDoNavegador();
     registrarEvento(`estilo-${ESTILOS[paleta].id}`, `Trocou o visual para ${t(ESTILOS[paleta].nome)}`);
