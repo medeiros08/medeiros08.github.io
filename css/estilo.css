@@ -273,6 +273,65 @@ html[data-estilo] .sobre-texto p:first-child { font-weight: 400; }
 .nav-links a.ativo { background: var(--tinta); color: var(--fundo); }
 
 .nav-acoes, .acoes-na-barra { display: flex; gap: 6px; }
+
+/* Rota do pacote: barra abaixo do menu, um nó por seção, o pacote anda com a rolagem */
+.rota { margin-top: 8px; }
+.rota-caixa {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 34px;
+  padding: 0 14px 0 18px;
+  background: var(--cartao);
+  border: var(--borda) solid var(--contorno);
+  border-radius: var(--pilula);
+}
+.rota-trilho { position: relative; flex: 1; height: 18px; }
+.rota-trilho::before { content: ""; position: absolute; left: 0; right: 0; top: 8px; border-top: var(--borda) dashed var(--linha); }
+.rota-feito { position: absolute; left: 0; top: 8px; width: calc(var(--progresso, 0) * 100%); height: var(--borda); background: var(--acento); }
+.rota-no {
+  position: absolute;
+  top: 3px;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  padding: 0;
+  border: var(--borda) solid var(--contorno);
+  border-radius: calc(3 * var(--curva));
+  background: var(--cartao);
+  cursor: pointer;
+  transition: background-color .25s, transform .25s;
+}
+.rota-no::after { content: ""; position: absolute; inset: -9px -5px; } /* área de clique maior */
+.rota-no:hover, .rota-no.aqui { transform: scale(1.35); }
+.rota-no.passou { background: var(--acento); }
+.rota-pacote {
+  position: absolute;
+  top: 0;
+  left: calc(var(--progresso, 0) * 100%);
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  background: var(--acento);
+  border: var(--borda) solid var(--contorno);
+  border-radius: calc(4 * var(--curva));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--acento) 25%, transparent);
+  pointer-events: none;
+}
+.rota-rotulo { display: flex; align-items: baseline; justify-content: flex-end; gap: 8px; min-width: 150px; font-family: var(--fonte-mono); font-size: 12.5px; white-space: nowrap; }
+.rota-rotulo b { font-weight: 700; }
+.rota-rotulo small { font-size: 11.5px; color: var(--suave); }
+@media (max-width: 560px) {
+  .rota-caixa { gap: 10px; padding: 0 10px 0 14px; }
+  .rota-rotulo { min-width: 0; }
+  .rota-rotulo small { display: none; }
+}
+.nav.menu-aberto .rota { display: none; }
+
+/* Título de seção recebido: a barra cresce quando o pacote chega e fica como marca de "já passei aqui" */
+.titulo-secao::after { content: ""; display: block; width: 0; height: 6px; margin-top: 16px; background: var(--acento); transition: width .7s cubic-bezier(.2, .7, .2, 1); }
+.titulo-secao.recebido::after { width: 96px; }
 .nav-menu, .acoes-no-menu { display: none; }
 
 /* ---------- Topo ---------- */

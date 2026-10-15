@@ -1531,6 +1531,8 @@
 
     fecharMenu();
     observarSecaoAtiva();
+    montarRota();
+    if (naInicial && !jaRenderizou) decodificarNome();
     if (naInicial) {
       prepararLivro();
       window.JogoFirewall?.montar($("#jogoFirewall"), { idioma, registrarEvento });
@@ -1539,6 +1541,135 @@
   }
 
   /* ---------- Comportamentos ---------- */
+
+  /* ---------- Rota do pacote: rolar a página é um pacote atravessando a rede ---------- */
+
+  // Cada seção é um nó na linha abaixo do menu. O pacote anda junto com a rolagem, o nó acende
+  // quando o pacote chega, e o título da seção ganha a marca de "recebido". Clicar num nó leva até a seção.
+  // Nas páginas internas a linha mostra só quanto do texto já foi lido.
+  let rota = null;
+  let rotaPendente = false;
+
+  function montarRota() {
+    $("#rota")?.remove();
+    const paradas = naInicial
+      ? ["inicio", ...secoesAtuais.map((s) => s.id)].map((id) => document.getElementById(id)).filter(Boolean)
+      : [];
+    // Nome curto do menu quando existe (Agora, Projetos, Contato...); senão, o título da seção
+    const nomeParada = (secao) => {
+      const doMenu = UI[idioma][secao.id];
+      if (typeof doMenu === "string") return doMenu;
+      return secao.querySelector(".titulo-secao, .contato-titulo")?.textContent.trim() || "";
+    };
+    const el = document.createElement("div");
+    el.id = "rota";
+    el.className = "rota";
+    el.setAttribute("aria-hidden", "true"); // quem usa leitor de tela ou teclado tem o menu principal
+    const passo = paradas.length > 1 ? 100 / (paradas.length - 1) : 0;
+    el.innerHTML = `
+      <div class="container rota-caixa">
+        <div class="rota-trilho">
+          <i class="rota-feito"></i>
+          ${paradas.map((secao, i) => `<button type="button" tabindex="-1" class="rota-no" data-parada="${i}" title="${esc(nomeParada(secao))}" style="left:${(i * passo).toFixed(3)}%"></button>`).join("")}
+          <b class="rota-pacote"></b>
+        </div>
+        <span class="rota-rotulo"><b></b><small></small></span>
+      </div>`;
+    el.addEventListener("click", (e) => {
+      const no = e.target.closest(".rota-no");
+      if (!no) return;
+      paradas[Number(no.dataset.parada)]?.scrollIntoView({ behavior: rolagem() });
+      registrarEvento("rota", "Pulou de seção pela rota do pacote");
+    });
+    $("#nav").appendChild(el);
+    rota = { el, paradas, nomeParada, nos: [...el.querySelectorAll(".rota-no")], pos: [], atual: -1 };
+    medirRota();
+  }
+
+  // Onde cada seção começa (em pixels de rolagem). As últimas podem não chegar ao topo da tela,
+  // então o fim da página conta como chegada nelas.
+  function medirRota() {
+    if (!rota) return;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    // A seção "chega" quando o topo dela passa de 40% da altura da tela, como no destaque do menu
+    const folga = Math.max(200, innerHeight * 0.4);
+    let anterior = 0;
+    rota.pos = rota.paradas.map((secao, i) => {
+      const topo = i === 0 ? 0 : Math.min(max, secao.getBoundingClientRect().top + scrollY - folga);
+      anterior = Math.max(anterior, topo);
+      return anterior;
+    });
+    atualizarRota();
+  }
+
+  function atualizarRota() {
+    rotaPendente = false;
+    if (!rota) return;
+    const y = scrollY;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    let progresso;
+    if (!rota.paradas.length) {
+      progresso = max > 0 ? Math.min(1, y / max) : 0;
+      rota.el.querySelector(".rota-rotulo b").textContent = `${Math.round(progresso * 100)}% ${idioma === "pt" ? "lido" : "read"}`;
+    } else {
+      const { pos } = rota;
+      const n = pos.length;
+      let i = 0;
+      while (i < n - 1 && y >= pos[i + 1] - 1) i++;
+      // No fim da página o pacote chega ao último nó
+      if (y >= max - 2) i = n - 1;
+      const trecho = i < n - 1 ? pos[i + 1] - pos[i] : 0;
+      const parte = trecho > 0 ? Math.min(1, Math.max(0, (y - pos[i]) / trecho)) : 0;
+      progresso = n > 1 ? (i + parte) / (n - 1) : 0;
+      if (i !== rota.atual) chegarNaParada(i);
+    }
+    rota.el.style.setProperty("--progresso", progresso.toFixed(4));
+  }
+
+  function chegarNaParada(i) {
+    rota.atual = i;
+    rota.nos.forEach((no, j) => {
+      no.classList.toggle("passou", j <= i);
+      no.classList.toggle("aqui", j === i);
+    });
+    const secao = rota.paradas[i];
+    rota.el.querySelector(".rota-rotulo b").textContent = rota.nomeParada(secao);
+    rota.el.querySelector(".rota-rotulo small").textContent = `${i + 1}/${rota.paradas.length}`;
+    secao.querySelector(".titulo-secao")?.classList.add("recebido");
+  }
+
+  function pedirRota() {
+    if (rotaPendente) return;
+    rotaPendente = true;
+    requestAnimationFrame(atualizarRota);
+  }
+
+  // Abertura: as letras do nome passam por símbolos de código até virarem o nome, como bits sendo decodificados
+  function decodificarNome() {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const simbolos = "01<>/{}[]#=+*";
+    document.querySelectorAll(".hero-nome .letra").forEach((el, i) => {
+      const final = el.textContent;
+      // Largura travada: o nome não "pula" enquanto as letras trocam
+      el.style.width = `${el.getBoundingClientRect().width}px`;
+      el.style.textAlign = "center";
+      const fim = performance.now() + 300 + i * 70;
+      let ultimaTroca = 0;
+      const passo = (agora) => {
+        if (agora >= fim) {
+          el.textContent = final;
+          el.style.width = el.style.textAlign = "";
+          return;
+        }
+        if (agora - ultimaTroca > 55) {
+          el.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+          ultimaTroca = agora;
+        }
+        requestAnimationFrame(passo);
+      };
+      requestAnimationFrame(passo);
+    });
+  }
 
   let obsSecao;
   function observarSecaoAtiva() {
@@ -1668,6 +1799,10 @@
   });
 
   window.addEventListener("scroll", atualizarNav, { passive: true });
+  window.addEventListener("scroll", pedirRota, { passive: true });
+  window.addEventListener("resize", medirRota);
+  // Imagens, GitHub e livro de visitas carregam depois e mudam a altura das seções
+  if ("ResizeObserver" in window) new ResizeObserver(() => medirRota()).observe(document.body);
 
   aplicarCores();
   atualizarCorDoNavegador();
