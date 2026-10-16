@@ -39,6 +39,8 @@ window.DADOS = {
       en: "I research how programmable networks with P4 can make communication more secure.",
     },
     detalhes: [{ pt: "Ciência da Computação", en: "Computer Science" }, "UNIPAMPA", "AI Horizon Labs"],
+    // Etiquetas que flutuam em volta da foto (até 4)
+    etiquetas: ["P4", "IoT", "CTF", "SYN → ACK"],
   },
 
   // Botões do topo. Tipos com ícone: lattes, orcid, scholar, github, linkedin,

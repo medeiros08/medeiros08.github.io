@@ -343,6 +343,7 @@
           <picture>${leves}<img src="${esc(caminhoLocal(D.foto))}" alt="${esc(nomeCompleto())}" width="900" height="1400" fetchpriority="high" decoding="async" onerror="this.closest('figure').remove()"></picture>
           <figcaption>${esc(t(D.contato?.cidade) || "")}</figcaption>
           ${selo ? `<span class="hero-selo">${esc(selo)}</span>` : ""}
+          ${(D.topo?.etiquetas || []).slice(0, 4).map(t).filter(Boolean).map((e, i) => `<span class="hero-etiqueta e${i + 1}" aria-hidden="true">${esc(e)}</span>`).join("")}
         </figure>`
       : "";
 
@@ -1538,6 +1539,7 @@
     observarSecaoAtiva();
     montarRota();
     prepararRevelar();
+    if (naInicial) prepararPalavras();
     animarRolagem();
     if (naInicial && !jaRenderizou) decodificarNome();
     if (naInicial) {
@@ -1753,6 +1755,10 @@
         if (!e.isIntersecting && !passou) continue;
         e.target.classList.add("visivel");
         if (passou) e.target.style.animation = "none";
+        else {
+          const titulo = e.target.matches(".titulo-secao") ? e.target : e.target.querySelector(".titulo-secao");
+          if (titulo) decodificarTitulo(titulo);
+        }
         obsRevelar.unobserve(e.target);
       }
     }, { rootMargin: "0px 0px -8% 0px" });
@@ -1763,6 +1769,70 @@
       el.style.setProperty("--atraso", `${Math.min(irmaos.indexOf(el), 6) * 70}ms`);
     });
     document.querySelectorAll(".revelar:not(.visivel)").forEach((el) => obsRevelar.observe(el));
+  }
+
+  // Título aparece embaralhado e as letras se resolvem da esquerda para a direita, como o nome do topo
+  const SIMBOLOS = "01<>/{}[]#=+*_";
+  function decodificarTitulo(el) {
+    if (el.dataset.decodificando) return;
+    const final = el.textContent;
+    el.dataset.decodificando = "1";
+    el.setAttribute("aria-label", final);
+    // Altura travada: a troca de letras não empurra o resto da página
+    el.style.minHeight = `${el.offsetHeight}px`;
+    const inicio = performance.now();
+    const passo = (agora) => {
+      const pronto = Math.floor((agora - inicio - 150) / 38);
+      if (pronto >= final.length) {
+        el.textContent = final;
+        el.style.minHeight = "";
+        el.removeAttribute("aria-label");
+        delete el.dataset.decodificando;
+        return;
+      }
+      el.textContent = [...final].map((c, i) =>
+        i < pronto || c === " " ? c : SIMBOLOS[Math.floor(Math.random() * SIMBOLOS.length)]).join("");
+      requestAnimationFrame(passo);
+    };
+    requestAnimationFrame(passo);
+  }
+
+  // O texto do "Sobre" acende palavra por palavra conforme a rolagem passa por ele
+  let palavras = null;
+  function prepararPalavras() {
+    palavras = null;
+    const caixa = anima && $(".sobre-texto");
+    if (!caixa) return;
+    const textos = [];
+    const andar = document.createTreeWalker(caixa, NodeFilter.SHOW_TEXT);
+    while (andar.nextNode()) if (andar.currentNode.textContent.trim()) textos.push(andar.currentNode);
+    for (const no of textos) {
+      const pedaco = document.createDocumentFragment();
+      for (const parte of no.textContent.split(/(\s+)/)) {
+        if (!parte) continue;
+        if (/^\s+$/.test(parte)) { pedaco.append(parte); continue; }
+        const span = document.createElement("span");
+        span.className = "palavra";
+        span.textContent = parte;
+        pedaco.append(span);
+      }
+      no.replaceWith(pedaco);
+    }
+    palavras = { caixa, lista: [...caixa.querySelectorAll(".palavra")], acesas: 0 };
+  }
+
+  function acenderPalavras() {
+    if (!palavras) return;
+    const r = palavras.caixa.getBoundingClientRect();
+    // Começa quando o texto entra pelo pé da tela e termina quando o fim dele passa do meio
+    const comeco = innerHeight * 0.88;
+    const fim = innerHeight * 0.45;
+    const p = Math.min(1, Math.max(0, (comeco - r.top) / (r.height + comeco - fim)));
+    const n = Math.round(p * palavras.lista.length);
+    if (n === palavras.acesas) return;
+    const [de, ate] = n > palavras.acesas ? [palavras.acesas, n] : [n, palavras.acesas];
+    for (let i = de; i < ate; i++) palavras.lista[i].classList.toggle("acesa", i < n);
+    palavras.acesas = n;
   }
 
   // Valores que seguem a rolagem, gravados como variáveis CSS
@@ -1785,6 +1855,7 @@
       fimDaRolagem = setTimeout(() => faixa.style.setProperty("--inclinacao", "0deg"), 90);
     }
     ultimaRolagem = y;
+    acenderPalavras();
   }
 
   // Botões magnéticos: puxados um pouco na direção do mouse, e uma onda sai de onde o clique caiu
