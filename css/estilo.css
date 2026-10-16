@@ -1933,3 +1933,6 @@ html.trocando-tema * { view-transition-name: none !important; }
 
 /* Botões de pausa e de som lado a lado no rodapé */
 .rodape-botoes { display: inline-flex; flex-wrap: wrap; gap: 4px 20px; }
+
+/* O "Currículo (PDF)" do topo é um <button> com cara de link: sem o fundo e a borda que o navegador põe */
+button.link-texto { background: none; border: 0; border-radius: 0; color: inherit; font-family: inherit; cursor: pointer; }
