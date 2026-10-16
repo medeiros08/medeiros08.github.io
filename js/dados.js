@@ -158,6 +158,15 @@ window.DADOS = {
       },
       tecnologias: ["P4", { pt: "Redes programáveis", en: "Programmable networks" }],
       cor: "violeta",
+      // Capa feita de código: as linhas se digitam quando o cartão aparece
+      codigo: [
+        "table ipv4_lpm {",
+        "  key = { hdr.ipv4.dstAddr: lpm; }",
+        "  actions = { ipv4_forward; drop; }",
+        "  default_action = drop();",
+        "}",
+        "apply { if (hdr.ipv4.isValid()) ipv4_lpm.apply(); }",
+      ],
     },
     {
       categoria: { pt: "Pesquisa em IoT", en: "IoT research" },
@@ -168,6 +177,13 @@ window.DADOS = {
       },
       tecnologias: ["IoT", { pt: "Cibersegurança", en: "Cybersecurity" }],
       cor: "indigo",
+      // Ilustração: uma captura de mensagens MQTT, com a conexão suspeita barrada
+      codigo: [
+        "sensor-07  CONNECT  ok",
+        "sensor-07  PUBLISH  casa/temp 23.4",
+        "10.0.0.66  CONNECT  sem senha ✗",
+        "broker     PUBLISH  casa/porta",
+      ],
     },
     {
       categoria: { pt: "Extensão e educação", en: "Outreach and education" },
@@ -183,6 +199,7 @@ window.DADOS = {
       },
       tecnologias: ["HTML", "CSS", "JavaScript"],
       cor: "verde",
+      imagem: "img/codigo-mirim/home.webp",
       url: "https://medeiros08.github.io/Codigo-Mirim/",
       // Página com o estudo de caso (o título do cartão leva para ela)
       estudo: { pt: "projetos/codigo-mirim/", en: "en/projects/codigo-mirim/" },
@@ -197,6 +214,8 @@ window.DADOS = {
       papel: { pt: "design e código.", en: "design and code." },
       tecnologias: ["HTML", "CSS", "JavaScript"],
       cor: "laranja",
+      // Capa: uma janela de navegador com o endereço do portfólio de sites
+      navegador: { endereco: "medeiros08.github.io/portfolio", paginas: [{ pt: "Consultório", en: "Dental office" }, { pt: "Salão", en: "Salon" }, { pt: "Restaurante", en: "Restaurant" }] },
       url: "https://medeiros08.github.io/portfolio/",
     },
   ],

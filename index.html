@@ -59,7 +59,7 @@
 
   <link rel="preconnect" href="https://api.github.com" crossorigin>
   <link rel="preload" href="fontes/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/estilo.css?v=20261016e">
+  <link rel="stylesheet" href="css/estilo.css?v=20261016h">
 
   <!-- Aplica o tema salvo antes de desenhar a página, para não piscar -->
   <script>
@@ -67,6 +67,7 @@
     try {
       var tema = localStorage.getItem("tema");
       if (tema) document.documentElement.dataset.theme = tema;
+      if (localStorage.getItem("animacoes") === "paradas") document.documentElement.classList.add("parado");
     } catch (e) {}
   </script>
 </head>
@@ -98,10 +99,10 @@
   <footer class="rodape" id="rodape"></footer>
 
   <!-- Seus dados ficam em js/dados.js -->
-  <script src="js/dados.js?v=20261016e"></script>
-  <script src="js/temas.js?v=20261016e"></script>
-  <script src="js/firewall.js?v=20261016e"></script>
-  <script src="js/rede.js?v=20261016e"></script>
-  <script src="js/app.js?v=20261016e"></script>
+  <script src="js/dados.js?v=20261016h"></script>
+  <script src="js/temas.js?v=20261016h"></script>
+  <script src="js/firewall.js?v=20261016h"></script>
+  <script src="js/rede.js?v=20261016h"></script>
+  <script src="js/app.js?v=20261016h"></script>
 </body>
 </html>

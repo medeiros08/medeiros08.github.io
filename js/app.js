@@ -32,7 +32,7 @@
       emAndamento: "em andamento", hoje: "hoje",
       chat: ["Oi! 👋", "Respondo por e-mail ou pelas redes aqui embaixo."],
       tema: "Alternar tema claro/escuro", idioma: "Read in English", menu: "Menu",
-      paleta: "Trocar a cor do site", voltarTopo: "Voltar ao topo",
+      paleta: "Trocar a cor do site", voltarTopo: "Voltar ao topo", pausar: "Pausar animações", retomar: "Retomar animações",
       temasTitulo: "Cores e temas", temasCores: "Cores do site", temasTemas: "Temas (cores e fontes)", fechar: "Fechar",
       dica: "Experimente:", placeholder: "digite help",
       atalhos: ["help", "whoami", "agora", "projetos", "p4", "contato", "ctf"],
@@ -118,7 +118,7 @@
       emAndamento: "in progress", hoje: "present",
       chat: ["Hi! 👋", "I reply by e-mail or on the networks below."],
       tema: "Toggle light/dark theme", idioma: "Ler em português", menu: "Menu",
-      paleta: "Change the site color", voltarTopo: "Back to top",
+      paleta: "Change the site color", voltarTopo: "Back to top", pausar: "Pause animations", retomar: "Resume animations",
       temasTitulo: "Colors and themes", temasCores: "Site colors", temasTemas: "Themes (colors and fonts)", fechar: "Close",
       dica: "Try:", placeholder: "type help",
       atalhos: ["help", "whoami", "now", "projects", "p4", "contact", "ctf"],
@@ -538,6 +538,27 @@
     return `--capa: ${esc(cor)}`;
   }
 
+  // Capa do projeto feita do próprio trabalho: código que se digita ou uma janela de navegador
+  const PALAVRAS_CODIGO = /\b(table|key|actions|default_action|apply|if|lpm|CONNECT|PUBLISH)\b/g;
+  function miolosCapa(p) {
+    if (temItens(p.codigo)) {
+      const linhas = p.codigo.map((l, i) => {
+        const html = esc(t(l)).replace(PALAVRAS_CODIGO, "<b>$1</b>");
+        return `<span class="capa-linha${/✗/.test(l) ? " barrada" : ""}" style="--l:${i}">${html}</span>`;
+      }).join("");
+      return `<pre class="capa-codigo" data-ui aria-hidden="true" translate="no"><code>${linhas}</code></pre>`;
+    }
+    if (p.navegador) {
+      const n = p.navegador;
+      return `
+        <div class="capa-navegador" data-ui aria-hidden="true">
+          <span class="capa-barra"><i></i><i></i><i></i><span translate="no">${esc(n.endereco)}</span></span>
+          <span class="capa-paginas">${(n.paginas || []).map((x, i) => `<span style="--l:${i}">${esc(t(x))}</span>`).join("")}</span>
+        </div>`;
+    }
+    return "";
+  }
+
   function secaoProjetos() {
     if (!temItens(D.projetos)) return "";
     const u = UI[idioma];
@@ -554,7 +575,8 @@
               const evento = `projeto-${esc(normalizar(p.titulo?.pt || p.titulo))}`;
               return `
                 <article class="projeto revelar">
-                  <div class="projeto-capa${p.imagem ? " com-imagem" : ""}" style="${estiloCapa(p)}">
+                  <div class="projeto-capa${p.imagem ? " com-imagem" : ""}${temItens(p.codigo) || p.navegador ? " com-miolo" : ""}" style="${estiloCapa(p)}">
+                    ${miolosCapa(p)}
                     ${p.status ? `<span class="projeto-status">${esc(t(p.status))}</span>` : ""}
                     ${p.categoria ? `<span class="projeto-tag">${esc(t(p.categoria))}</span>` : ""}
                   </div>
@@ -952,7 +974,6 @@
       <section class="secao" id="contato">
         <div class="container">
           <div class="contato-bloco revelar">
-            <p class="contato-pre">${u.contato}</p>
             <h2 class="contato-titulo">${u.tituloContato}</h2>
             <div class="chat">
               ${u.chat.map((msg) => `<p class="bolha">${esc(msg)}</p>`).join("")}
@@ -1052,6 +1073,14 @@
     avisar(ligado ? UI[idioma].hackerLigado : UI[idioma].hackerDesligado);
     atualizarTemaLivro();
     if (ligado) registrarEvento("modo-hacker", "Ativou o modo hacker");
+  }
+
+  // Pausa o que se move sozinho e sem parar (globo, faixa, etiquetas); a escolha fica salva
+  function alternarPausa() {
+    const parado = raiz.classList.toggle("parado");
+    try { localStorage.setItem("animacoes", parado ? "paradas" : "ligadas"); } catch (e) {}
+    const b = $('[data-acao="pausar"]');
+    if (b) { b.setAttribute("aria-pressed", String(parado)); b.textContent = parado ? UI[idioma].retomar : UI[idioma].pausar; }
   }
 
   function alternarTema() {
@@ -1529,12 +1558,20 @@
       preencherOutrasNotas();
     }
 
+    // O nome volta grande no fim, como fechamento da página
+    const parado = raiz.classList.contains("parado");
     $("#rodape").innerHTML = `
       <div class="container">
-        <span>© ${new Date().getFullYear()} ${esc(D.nomeCompleto || nomeCompleto())}</span>
-        <a href="${naInicial ? "#inicio" : "#"}">${u.voltarTopo} ↑</a>
+        <p class="rodape-nome revelar" aria-hidden="true" translate="no"><span>${letras(D.nome?.primeiro)}</span> <span>${letras(D.nome?.sobrenome)}</span></p>
+        <div class="rodape-linha">
+          <span>© ${new Date().getFullYear()} ${esc(D.nomeCompleto || nomeCompleto())}</span>
+          <button class="rodape-pausa" type="button" data-acao="pausar" aria-pressed="${parado}">${parado ? u.retomar : u.pausar}</button>
+          <a href="${naInicial ? "#inicio" : "#"}">${u.voltarTopo} ↑</a>
+        </div>
       </div>`;
 
+    // Cada letra do nome do rodapé sobe com um pequeno atraso em relação à anterior
+    document.querySelectorAll(".rodape-nome .letra").forEach((l, i) => l.style.setProperty("--i", i));
     fecharMenu();
     observarSecaoAtiva();
     montarRota();
@@ -1946,6 +1983,8 @@
 
     if (alvo.id === "terminalCorpo") {
       if (!window.getSelection()?.toString()) $("#terminalEntrada")?.focus();
+    } else if (alvo.dataset.acao === "pausar") {
+      alternarPausa();
     } else if (alvo.dataset.acao === "tema") {
       alternarTema();
     } else if (alvo.dataset.acao === "paleta") {

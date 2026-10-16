@@ -89,7 +89,9 @@
     cores = { linha: ler("--texto", "#f3efe6"), acento: ler("--acento", "#9d9bff"), coral: ler("--coral", "#ff7a59") };
   }
   // Tema, paleta e modo hacker mudam atributos e variáveis no <html>
-  new MutationObserver(() => { lerCores(); if (movimentoReduzido.matches) desenhar(0); })
+  // A classe "parado" vem do botão "Pausar animações" do rodapé
+  const parado = () => movimentoReduzido.matches || raiz.classList.contains("parado");
+  new MutationObserver(() => { lerCores(); if (parado()) { rodando = false; desenhar(0); } else iniciar(); })
     .observe(raiz, { attributes: true, attributeFilter: ["data-theme", "data-estilo", "class", "style"] });
 
   /* ---------- Tamanho, mouse e rolagem ---------- */
@@ -246,16 +248,16 @@
   }
 
   function iniciar() {
-    if (movimentoReduzido.matches) { rodando = false; andarPacotes(0); desenhar(0); return; }
+    if (parado()) { rodando = false; andarPacotes(0); desenhar(0); return; }
     if (rodando) return;
     rodando = true;
     anterior = performance.now();
     requestAnimationFrame(quadro);
   }
 
-  window.addEventListener("resize", () => { medir(); if (movimentoReduzido.matches) desenhar(0); });
-  // Com movimento reduzido, a rolagem ainda muda onde o globo fica
-  window.addEventListener("scroll", () => { if (movimentoReduzido.matches) desenhar(0); }, { passive: true });
+  window.addEventListener("resize", () => { medir(); if (parado()) desenhar(0); });
+  // Parado, a rolagem ainda muda onde o globo fica
+  window.addEventListener("scroll", () => { if (parado()) desenhar(0); }, { passive: true });
   movimentoReduzido.addEventListener?.("change", () => { rodando = false; iniciar(); });
 
   lerCores();
