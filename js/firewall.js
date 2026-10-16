@@ -346,6 +346,8 @@
 
     const pacote = el.querySelector(".fw-pacote");
     pacote?.classList.add(escolha === "bloquear" ? "fw-saiu-bloqueado" : "fw-saiu-passou", certo ? "fw-certo" : "fw-errado");
+    // Som e vibração (app.js): o bloqueio vibra no celular
+    if (escolha === "bloquear") window.EfeitosSite?.barrado(); else if (escolha) window.EfeitosSite?.passou();
     el.querySelectorAll("[data-fw]").forEach((b) => { b.disabled = true; });
     const retorno = el.querySelector(".fw-retorno");
     if (retorno) {
