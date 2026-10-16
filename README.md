@@ -22,7 +22,7 @@ Todo o conteúdo fica em **`js/dados.js`**. Os outros arquivos não precisam ser
 
 ## Páginas internas
 
-- **Estudo de caso** do Código Mirim: `projetos/codigo-mirim/` (inglês em `en/projects/codigo-mirim/`). No cartão do projeto, o campo `estudo` aponta para essa página.
+- **Estudo de caso** do GamificaPampa: `projetos/gamificapampa/` (inglês em `en/projects/gamificapampa/`). No cartão do projeto, o campo `estudo` aponta para essa página.
 - **Notas**: cada nota tem uma pasta em `notas/<slug>/` (inglês em `en/notes/<slug>/`). Para criar uma, copie a pasta de uma nota, troque o texto e os endereços do `<head>`, e acrescente a nota na lista `notas` do `dados.js`. Depois, inclua os dois endereços no `sitemap.xml`.
 - Essas páginas têm o texto no próprio HTML (melhor para o Google). O menu, o rodapé e os botões vêm do `js/app.js`.
 

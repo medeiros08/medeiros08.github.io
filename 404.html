@@ -8,7 +8,12 @@
   <script>
     // Endereços que mudaram de nome: o caminho antigo leva para o novo, mantendo o resto
     // (ex.: /Jogo-ES/escola/robo/ vai para /Codigo-Mirim/escola/robo/). Serve para links e QR codes antigos.
-    var REDIRECIONAMENTOS = { "/jogo-es": "/Codigo-Mirim" };
+    var REDIRECIONAMENTOS = {
+      "/jogo-es": "/Codigo-Mirim",
+      // Estudo de caso que trocou de nome junto com o projeto
+      "/projetos/codigo-mirim": "/projetos/gamificapampa",
+      "/en/projects/codigo-mirim": "/en/projects/gamificapampa",
+    };
     (function () {
       var caminho = location.pathname;
       for (var antigo in REDIRECIONAMENTOS) {
@@ -23,7 +28,7 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="/fontes/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Caminhos absolutos: o GitHub Pages mostra esta página em qualquer endereço que não existe -->
-  <link rel="stylesheet" href="/css/estilo.css?v=20261016v">
+  <link rel="stylesheet" href="/css/estilo.css?v=20261016w">
   <script>
     try {
       var tema = localStorage.getItem("tema");
@@ -34,8 +39,8 @@
     } catch (e) {}
   </script>
   <!-- Mesmo visual do resto do site: o tema que o visitante escolheu, ou o "estilo" de dados.js -->
-  <script src="/js/dados.js?v=20261016v"></script>
-  <script src="/js/temas.js?v=20261016v"></script>
+  <script src="/js/dados.js?v=20261016w"></script>
+  <script src="/js/temas.js?v=20261016w"></script>
   <script>
     if (window.TEMAS_DO_SITE) {
       var guardado = null;

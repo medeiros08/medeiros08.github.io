@@ -92,11 +92,11 @@ window.DADOS = {
       rotulo: { pt: "Desenvolvendo", en: "Building" },
       itens: [
         {
-          titulo: "Código Mirim",
+          titulo: "GamificaPampa",
           selo: { pt: "Extensão", en: "Outreach" },
           texto: {
-            pt: "Jogos que apresentam a programação para crianças de 6 a 14 anos, com materiais de aula para professores.",
-            en: "Games that introduce programming to kids aged 6 to 14, with classroom materials for teachers.",
+            pt: "Jogos que apresentam a programação para crianças de 6 a 14 anos e uma Oficina de Prompts para professores, no hub de gamificação e IA da UNIPAMPA.",
+            en: "Games that introduce programming to kids aged 6 to 14 and a Prompt Workshop for teachers, in UNIPAMPA's gamification and AI hub.",
           },
         },
       ],
@@ -114,8 +114,8 @@ window.DADOS = {
       en: "My main interests are cybersecurity, computer networks and artificial intelligence. Right now I'm learning C and the fundamentals of computing, and I learn best by experimenting and getting my hands dirty.",
     },
     {
-      pt: "Fora do laboratório, desenvolvo o Código Mirim, um site de jogos que apresenta a programação para crianças. Também curto música, esporte e viajar.",
-      en: "Outside the lab, I'm building Código Mirim, a website of games that introduces programming to kids. I also enjoy music, sports and travelling.",
+      pt: "Fora do laboratório, crio os jogos e a Oficina de Prompts do GamificaPampa, um hub da UNIPAMPA que leva gamificação e IA para professores e apresenta a programação para crianças. Também curto música, esporte e viajar.",
+      en: "Outside the lab, I build the games and the Prompt Workshop for GamificaPampa, a UNIPAMPA hub that brings gamification and AI to teachers and introduces programming to kids. I also enjoy music, sports and travelling.",
     },
   ],
 
@@ -188,21 +188,21 @@ window.DADOS = {
     {
       categoria: { pt: "Extensão e educação", en: "Outreach and education" },
       status: { pt: "Em desenvolvimento", en: "In progress" },
-      titulo: "Código Mirim",
+      titulo: "GamificaPampa",
       descricao: {
-        pt: "Site de jogos que apresenta a programação para crianças de 6 a 14 anos: guiar um robô até a estrela com setas, caçar bugs, programar em dupla e ligar celular, servidor e banco de dados. Os professores recebem slides, roteiro de aula e folhas de atividades, e uma Oficina de Prompts ensina a criar materiais com IA. Projeto de extensão com o curso de Engenharia de Software da UNIPAMPA.",
-        en: "A website of games that introduces programming to kids aged 6 to 14: guiding a robot to a star with arrows, hunting bugs, pair programming and wiring a phone to a server and a database. Teachers get slides, a lesson plan and activity sheets, and a Prompt Workshop shows them how to create materials with AI. An outreach project with UNIPAMPA's Software Engineering program.",
+        pt: "Hub de extensão da UNIPAMPA que leva gamificação e IA a professores da Educação Básica de Alegrete. Criei os recursos pedagógicos: sete jogos que apresentam a programação para crianças de 6 a 14 anos (guiar um robô até a estrela, caçar bugs, programar em dupla, ligar celular, servidor e banco de dados), uma aula de 50 minutos com slides e atividades, e uma Oficina de Prompts que ensina professores a criar materiais com o Gemini.",
+        en: "A UNIPAMPA outreach hub that brings gamification and AI to K-12 teachers in Alegrete. I built its teaching resources: seven games that introduce programming to kids aged 6 to 14 (guiding a robot to a star, hunting bugs, pair programming, wiring a phone to a server and a database), a 50-minute lesson with slides and activities, and a Prompt Workshop that teaches teachers to create materials with Gemini.",
       },
       papel: {
-        pt: "sigo criando novos jogos e materiais e melhorando os que já existem.",
-        en: "I keep building new games and materials and improving the existing ones.",
+        pt: "crio os jogos e a oficina, e estou levando tudo para a organização do projeto no GitHub sem quebrar nenhum link ou QR code.",
+        en: "I build the games and the workshop, and I'm moving everything to the project's GitHub organization without breaking any link or QR code.",
       },
       tecnologias: ["HTML", "CSS", "JavaScript"],
       cor: "verde",
-      imagem: "img/codigo-mirim/home.webp",
-      url: "https://medeiros08.github.io/Codigo-Mirim/",
+      imagem: "img/gamificapampa/home.webp",
+      url: "https://gamificapampa.github.io/",
       // Página com o estudo de caso (o título do cartão leva para ela)
-      estudo: { pt: "projetos/codigo-mirim/", en: "en/projects/codigo-mirim/" },
+      estudo: { pt: "projetos/gamificapampa/", en: "en/projects/gamificapampa/" },
     },
     {
       categoria: { pt: "Web e design", en: "Web and design" },
@@ -228,7 +228,7 @@ window.DADOS = {
       itens: [
         { nome: "Python", onde: { pt: "compilador da pesquisa com P4", en: "compiler in my P4 research" } },
         { nome: "P4", onde: { pt: "pesquisa no AI Horizon Labs", en: "research at AI Horizon Labs" } },
-        { nome: "JavaScript", onde: { pt: "Código Mirim e este site", en: "Código Mirim and this site" } },
+        { nome: "JavaScript", onde: { pt: "GamificaPampa e este site", en: "GamificaPampa and this site" } },
         { nome: { pt: "HTML e CSS", en: "HTML & CSS" }, onde: { pt: "sites e materiais de aula", en: "websites and class materials" } },
         { nome: "Shell (Bash)", onde: { pt: "scripts dos experimentos", en: "experiment scripts" } },
         { nome: "C", onde: { pt: "fundamentos da computação", en: "computing fundamentals" }, aprendendo: true },
