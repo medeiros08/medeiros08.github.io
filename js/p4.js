@@ -138,7 +138,7 @@
     el.innerHTML = `
       <div class="p4-historia" data-etapa="0">
         <div class="p4-palco">
-          <div class="p4-pipeline" aria-hidden="true">
+          <div class="p4-pipeline" aria-hidden="true" data-ui>
             ${T.etapas.map(([nome, oque], i) => `<div class="p4-etapa" data-n="${i}"><b>${nome}</b><small>${oque}</small></div>`).join("")}
             <div class="p4-trilho">
               <span class="p4-pacote"><i>eth</i><i>ipv4 10.0.2.7</i><i>tcp 443</i></span>
