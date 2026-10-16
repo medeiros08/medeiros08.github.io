@@ -1754,7 +1754,8 @@
         const passou = e.boundingClientRect.bottom < 0;
         if (!e.isIntersecting && !passou) continue;
         e.target.classList.add("visivel");
-        if (passou) e.target.style.animation = "none";
+        // "passou" também desliga a coreografia das partes internas (CSS)
+        if (passou) { e.target.style.animation = "none"; e.target.classList.add("passou"); }
         else {
           const titulo = e.target.matches(".titulo-secao") ? e.target : e.target.querySelector(".titulo-secao");
           if (titulo) decodificarTitulo(titulo);

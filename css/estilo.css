@@ -1445,6 +1445,29 @@ html.anima .agora-cartao.visivel, html.anima .habilidades-cartao.visivel { anima
 html.anima :is(.projeto, .nota-cartao, .repo).visivel { animation-name: revelar-deitado; animation-duration: 1.3s; }
 @keyframes revelar-deitado { from { opacity: 0; translate: 0 90px; scale: .92; filter: blur(14px); transform: perspective(1200px) rotateX(18deg); } }
 
+/* Coreografia dentro dos cartões (inspirada em naomicreates.co.za): o cartão chega primeiro e as partes
+   entram em sequência — capa abre, etiqueta, título, texto, e por último as tecnologias e o link crescem.
+   Os atrasos somam o --atraso da cascata do cartão. */
+html.anima .visivel:not(.passou) :is(.projeto-capa) { animation: abrir-capa 1.3s calc(var(--atraso, 0s) + .1s) cubic-bezier(.16, 1, .3, 1) backwards; }
+@keyframes abrir-capa { from { clip-path: inset(14% 14% 14% 14% round 18px); scale: 1.25; } to { clip-path: inset(0 0 0 0 round 0); } }
+html.anima .visivel:not(.passou) :is(.projeto-tag, .projeto-status) { animation: surgir .8s calc(var(--atraso, 0s) + .55s) cubic-bezier(.16, 1, .3, 1) backwards; }
+html.anima .visivel:not(.passou) .projeto-corpo > *,
+html.anima :is(.nota-cartao, .agora-cartao).visivel:not(.passou) > *,
+html.anima .pub.visivel:not(.passou) > div > * { animation: surgir .9s calc(var(--atraso, 0s) + var(--passo, 0s)) cubic-bezier(.16, 1, .3, 1) backwards; }
+:is(.projeto-corpo, .agora-cartao, .nota-cartao, .pub > div) > :nth-child(1) { --passo: .35s; }
+:is(.projeto-corpo, .agora-cartao, .nota-cartao, .pub > div) > :nth-child(2) { --passo: .5s; }
+:is(.projeto-corpo, .agora-cartao, .nota-cartao, .pub > div) > :nth-child(3) { --passo: .65s; }
+:is(.projeto-corpo, .agora-cartao, .nota-cartao, .pub > div) > :nth-child(4) { --passo: .8s; }
+:is(.projeto-corpo, .agora-cartao, .nota-cartao, .pub > div) > :nth-child(n + 5) { --passo: .95s; }
+@keyframes surgir { from { opacity: 0; translate: 0 18px; filter: blur(6px); } }
+/* O que é para clicar (link do estudo, "ler", ano da publicação) e as tecnologias crescem do nada */
+html.anima .visivel:not(.passou) :is(.projeto-acoes, .nota-ler, .pub-ano, .pub-seta) { animation-name: crescer; animation-duration: .7s; }
+html.anima .visivel:not(.passou) :is(.pub-ano, .pub-seta) { animation: crescer .7s calc(var(--atraso, 0s) + .25s) cubic-bezier(.3, 1.6, .5, 1) backwards; }
+html.anima .visivel:not(.passou) .techs > li { animation: crescer .55s calc(var(--atraso, 0s) + .85s + var(--i, 0) * 60ms) cubic-bezier(.3, 1.6, .5, 1) backwards; }
+.techs > li:nth-child(2) { --i: 1; } .techs > li:nth-child(3) { --i: 2; } .techs > li:nth-child(4) { --i: 3; }
+.techs > li:nth-child(5) { --i: 4; } .techs > li:nth-child(6) { --i: 5; } .techs > li:nth-child(n + 7) { --i: 6; }
+@keyframes crescer { from { opacity: 0; scale: .4; } }
+
 /* Topo se afasta em camadas: texto sobe mais rápido e some, a foto fica para trás */
 html.anima .hero-texto { translate: 0 calc(var(--saida, 0) * -90px); opacity: calc(1 - var(--saida, 0) * 1.1); filter: blur(calc(var(--saida, 0) * 10px)); }
 html.anima .hero-foto { translate: 0 calc(var(--saida, 0) * 70px); }
