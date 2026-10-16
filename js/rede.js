@@ -19,45 +19,77 @@
 
   /* ---------- A rede: pontos espalhados por uma esfera (espiral de Fibonacci) ---------- */
 
+  // A rede tem três formas e muda de uma para outra conforme a seção na tela:
+  // globo (o topo e quase tudo), pipeline (três colunas: parser, match-action, deparser, no laboratório P4)
+  // e estrela (todos os nós ligados a um só, você, no contato)
+  const FORMAS = ["globo", "pipeline", "estrela"];
   let nos = [];
-  let enlaces = [];
-  let vizinhos = [];
+  let formas = {};
+  const peso = { globo: 1, pipeline: 0, estrela: 0 };
+
+  function ligar(pares) {
+    const vistos = new Set();
+    const enlaces = [];
+    const vizinhos = nos.map(() => []);
+    for (const [i, j] of pares) {
+      const chave = i < j ? `${i}-${j}` : `${j}-${i}`;
+      if (i === j || vistos.has(chave)) continue;
+      vistos.add(chave);
+      enlaces.push([i, j]);
+      vizinhos[i].push(j);
+      vizinhos[j].push(i);
+    }
+    return { enlaces, vizinhos };
+  }
 
   function montarRede(qtd) {
     const ouro = Math.PI * (3 - Math.sqrt(5));
+    const porColuna = Math.ceil(qtd / 3);
     nos = Array.from({ length: qtd }, (_, i) => {
       const y = 1 - (i / (qtd - 1)) * 2;
       const r = Math.sqrt(1 - y * y);
       const a = i * ouro;
       // Um pouco de irregularidade para não parecer uma bola perfeita
       const raio = 0.86 + Math.random() * 0.24;
-      return { x: Math.cos(a) * r * raio, y: y * raio, z: Math.sin(a) * r * raio, switch: i % 7 === 0, ping: 0 };
+      const globo = { x: Math.cos(a) * r * raio, y: y * raio, z: Math.sin(a) * r * raio };
+      const coluna = i % 3, k = Math.floor(i / 3);
+      const pipeline = { x: (coluna - 1) * 0.95 + (Math.random() - 0.5) * 0.14, y: -0.72 + (1.44 * k) / Math.max(1, porColuna - 1), z: (Math.random() - 0.5) * 0.4 };
+      const ang = (i / (qtd - 1)) * Math.PI * 2, anel = 0.72 + (i % 3) * 0.14;
+      const estrela = i === 0 ? { x: 0, y: 0, z: 0 } : { x: Math.cos(ang) * anel, y: Math.sin(ang) * anel, z: (i % 2 ? 0.12 : -0.12) };
+      return { alvo: { globo, pipeline, estrela }, ...globo, switch: i % 7 === 0, ping: 0, coluna, k };
     });
-    const vistos = new Set();
-    enlaces = [];
-    vizinhos = nos.map(() => []);
+
+    const pertos = [];
     nos.forEach((a, i) => {
       nos
-        .map((b, j) => ({ j, d: (a.x - b.x) ** 2 + (a.y - b.y) ** 2 + (a.z - b.z) ** 2 }))
+        .map((b, j) => ({ j, d: (a.alvo.globo.x - b.alvo.globo.x) ** 2 + (a.alvo.globo.y - b.alvo.globo.y) ** 2 + (a.alvo.globo.z - b.alvo.globo.z) ** 2 }))
         .filter((o) => o.j !== i)
         .sort((p, q) => p.d - q.d)
         .slice(0, a.switch ? 5 : 3)
-        .forEach(({ j }) => {
-          const chave = i < j ? `${i}-${j}` : `${j}-${i}`;
-          if (vistos.has(chave)) return;
-          vistos.add(chave);
-          enlaces.push([i, j]);
-          vizinhos[i].push(j);
-          vizinhos[j].push(i);
-        });
+        .forEach(({ j }) => pertos.push([i, j]));
     });
+    // Pipeline: cada coluna é uma corrente, e alguns nós passam o pacote para a coluna seguinte
+    const cadeia = [];
+    nos.forEach((a, i) => {
+      if (i + 3 < qtd) cadeia.push([i, i + 3]);
+      if (a.coluna < 2 && a.k % 3 === 0 && i + 1 < qtd) cadeia.push([i, i + 1]);
+    });
+    formas = {
+      globo: ligar(pertos),
+      pipeline: ligar(cadeia),
+      estrela: ligar(nos.map((_, i) => [0, i])),
+    };
+    nos[0].switch = true;
   }
+
+  // A forma que manda nos pacotes é a de maior peso no momento
+  const formaAtual = () => FORMAS.reduce((a, b) => (peso[b] > peso[a] ? b : a), "globo");
 
   /* ---------- Pacotes: andam de nó em nó; alguns são barrados ---------- */
 
   let pacotes = [];
   function novoPacote(de = Math.floor(Math.random() * nos.length)) {
-    const opcoes = vizinhos[de];
+    const opcoes = formas[formaAtual()].vizinhos[de];
     if (!opcoes?.length) return;
     pacotes.push({ de, para: opcoes[Math.floor(Math.random() * opcoes.length)], t: 0, vel: 0.6 + Math.random() * 0.7, saltos: 2 + Math.floor(Math.random() * 6), barrado: false, some: 1 });
   }
@@ -71,7 +103,7 @@
       p.saltos--;
       // O firewall barra cerca de 1 em cada 12 chegadas
       if (p.saltos <= 0 || Math.random() < 0.08) { p.barrado = p.saltos > 0; p.t = 1; if (!p.barrado) p.some = 0; continue; }
-      const opcoes = vizinhos[p.para].filter((n) => n !== p.de);
+      const opcoes = formas[formaAtual()].vizinhos[p.para].filter((n) => n !== p.de);
       p.de = p.para;
       p.para = opcoes.length ? opcoes[Math.floor(Math.random() * opcoes.length)] : p.de;
       p.t = 0;
@@ -121,6 +153,16 @@
     raiz.addEventListener("mouseleave", () => { mola.alvoX = mola.alvoY = 0; mouse = null; });
   }
 
+  // Laboratório P4 no meio da tela: pipeline. Contato aparecendo: estrela. Fora disso: globo.
+  function formaDaSecao() {
+    const meio = A / 2;
+    const lab = document.getElementById("laboratorio")?.getBoundingClientRect();
+    if (lab && lab.top < meio && lab.bottom > meio) return "pipeline";
+    const contato = document.getElementById("contato")?.getBoundingClientRect();
+    if (contato && contato.top < A * 0.7) return "estrela";
+    return "globo";
+  }
+
   // 0 no topo, 1 quando o topo já saiu da tela
   function saidaDoTopo() {
     const hero = document.querySelector(".hero");
@@ -139,14 +181,29 @@
     const pequeno = L < 760;
     const s = suave(saidaDoTopo());
     // No topo o globo fica grande atrás da foto; depois encolhe para a direita e fica discreto
-    const cx = mistura(pequeno ? 0.5 : 0.75, pequeno ? 0.86 : 0.9, s) * L;
+    const cxSolto = mistura(pequeno ? 0.5 : 0.75, pequeno ? 0.86 : 0.9, s);
     const cy = mistura(pequeno ? 0.62 : 0.5, 0.62, s) * A;
     const raio = mistura(Math.min(L, A) * (pequeno ? 0.42 : 0.44), Math.min(L, A) * (pequeno ? 0.3 : 0.26), s);
-    const opacidade = mistura(pequeno ? 0.5 : 0.75, pequeno ? 0.22 : 0.32, s);
+    // Qual forma a seção na tela pede; os pesos andam até ela aos poucos (parado: na hora)
+    const alvo = formaDaSecao();
+    const k = dt ? 1 - Math.exp(-dt * 2.6) : 1;
+    for (const f of FORMAS) peso[f] += ((f === alvo ? 1 : 0) - peso[f]) * k;
+    const calma = Math.max(peso.pipeline, peso.estrela);
+    // O pipeline vem mais para o meio, para as três colunas caberem; a estrela fica com o centro (você) na margem direita
+    const cx = (cxSolto * peso.globo + (pequeno ? 0.5 : 0.8) * peso.pipeline + (pequeno ? 0.9 : 0.95) * peso.estrela) * L;
+    // Pipeline e estrela aparecem um pouco mais, para dar para ler a forma
+    const opacidade = mistura(pequeno ? 0.5 : 0.75, pequeno ? 0.22 : 0.32, s) * (1 + calma * 0.45);
+
+    for (const n of nos) {
+      n.x = n.y = n.z = 0;
+      for (const f of FORMAS) { n.x += n.alvo[f].x * peso[f]; n.y += n.alvo[f].y * peso[f]; n.z += n.alvo[f].z * peso[f]; }
+    }
 
     giro += dt * 0.12;
-    const ry = giro + scrollY * 0.0009 + mola.x * 0.6;
-    const rx = 0.32 + mola.y * 0.45;
+    // Girando livre no globo; quase de frente no pipeline e na estrela (ângulo normalizado para não dar voltas)
+    const livre = Math.atan2(Math.sin(giro + scrollY * 0.0009), Math.cos(giro + scrollY * 0.0009));
+    const ry = mistura(livre, 0, calma) + mola.x * 0.6;
+    const rx = mistura(0.32, 0.1, calma) + mola.y * 0.45;
     const [sy, cyR, sx, cxR] = [Math.sin(ry), Math.cos(ry), Math.sin(rx), Math.cos(rx)];
     const camera = 3.2;
 
@@ -164,16 +221,19 @@
     ctx.clearRect(0, 0, L, A);
     ctx.globalAlpha = 1;
 
-    // Enlaces: mais fortes na frente
+    // Enlaces de cada forma, na medida do peso dela; mais fortes na frente
     ctx.strokeStyle = cores.linha;
     ctx.lineWidth = 1;
-    for (const [i, j] of enlaces) {
-      const a = proj[i], b = proj[j];
-      ctx.globalAlpha = opacidade * (0.05 + 0.22 * Math.min(a.p, b.p));
-      ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(b.x, b.y);
-      ctx.stroke();
+    for (const f of FORMAS) {
+      if (peso[f] < 0.02) continue;
+      for (const [i, j] of formas[f].enlaces) {
+        const a = proj[i], b = proj[j];
+        ctx.globalAlpha = opacidade * peso[f] * (0.05 + 0.22 * Math.min(a.p, b.p));
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
     }
 
     // Mouse perto de um nó: ele pinga e solta pacotes
