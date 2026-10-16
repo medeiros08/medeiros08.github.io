@@ -1335,7 +1335,7 @@
     menu.setAttribute("aria-label", u.temasTitulo);
     menu.innerHTML = `
       <div class="temas-topo"><h2>${u.temasTitulo}</h2><button class="botao-icone" type="button" data-acao="fechar-temas" aria-label="${u.fechar}">✕</button></div>
-      <h3>${u.temasCores}</h3><ul class="temas-cores">${PALETAS.map(item).join("")}</ul>
+      ${PALETAS.length ? `<h3>${u.temasCores}</h3><ul class="temas-cores">${PALETAS.map(item).join("")}</ul>` : ""}
       <h3>${u.temasTemas}</h3><ul>${TEMAS.map(item).join("")}</ul>`;
     document.body.appendChild(menu);
     document.querySelectorAll('[data-acao="paleta"]').forEach((b) => b.setAttribute("aria-expanded", "true"));

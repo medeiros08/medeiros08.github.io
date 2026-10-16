@@ -20,6 +20,23 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fontes/archivo-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fontes/archivo-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
   font-family: "JetBrains Mono";
   font-style: normal;
   font-weight: 400 700;
@@ -55,7 +72,10 @@
 
 :root {
   --fonte: "Bricolage Grotesque", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --fonte-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  /* Monoespaçada de verdade, só para código (terminal, capas, tabelas do P4). Os temas fazem --fonte-mono
+     (usada nos rótulos pequenos) virar a fonte do texto. */
+  --fonte-codigo: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --fonte-mono: var(--fonte-codigo);
   --fonte-titulo: var(--fonte); /* os temas do menu de cores podem trocar */
   --largura: 1200px;
   --margem: 40px;
@@ -1936,3 +1956,20 @@ html.trocando-tema * { view-transition-name: none !important; }
 
 /* O "Currículo (PDF)" do topo é um <button> com cara de link: sem o fundo e a borda que o navegador põe */
 button.link-texto { background: none; border: 0; border-radius: 0; color: inherit; font-family: inherit; cursor: pointer; }
+
+
+/* ---------- Código continua em monoespaçada em qualquer tema ---------- */
+html body :is(.terminal, pre, code, kbd, .capa-codigo, .p4-log, .p4-tabela, .p4-pacote, .traj-comando, .repo-commit, .rodape-status, #trace),
+html body :is(.terminal, .capa-codigo, .p4-log, .p4-tabela, .p4-pacote) *,
+html body .p4-form :is(input, select) { font-family: var(--fonte-codigo); }
+
+/* ---------- Tema Areais de Alegrete ---------- */
+/* Títulos em peso regular: o tamanho faz o trabalho, não o negrito */
+html[data-estilo="areais"]:not(.modo-hacker) :is(h1, h2, .hero-nome, .titulo-secao, .contato-titulo, .rodape-nome, .nav-nome, .p4-sim-titulo, .erro-codigo) { font-weight: 400; letter-spacing: -.03em; }
+html[data-estilo="areais"]:not(.modo-hacker) :is(h3, h4, .p4-etapa b) { font-weight: 500; }
+html[data-estilo="areais"]:not(.modo-hacker) .hero-nome { line-height: .95; }
+/* A foto entra na mesma paleta: quase sem cor, um pouco quente */
+html[data-estilo="areais"]:not(.modo-hacker) .hero-foto img { filter: grayscale(.85) sepia(.15); }
+/* O ponto verde de "disponível" vira o azul do tema */
+html[data-estilo="areais"]:not(.modo-hacker) :is(.hero-pill i, .status-ponto:not(.dormindo), .projeto-status::before) { background: var(--acento); animation-name: pulsar-acento; }
+@keyframes pulsar-acento { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--acento) 55%, transparent); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
