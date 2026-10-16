@@ -111,6 +111,16 @@
       capas: ["#0f6467", "#232b2e", "#13807f", "#2d4247"],
     },
     {
+      // As cores que o Wireshark usa para cada protocolo; o escuro é o fundo do "Bad TCP".
+      // Nas abas do "Agora", cada cor mostra o nome do protocolo dela (a legenda para quem reconhece)
+      id: "wireshark", nome: { pt: "Wireshark", en: "Wireshark" }, titulo: FONTES.geist, corpo: FONTES.geist,
+      claro: { fundo: "#f7f7f4", cartao: "#ffffff", texto: "#12272e", suave: "#4a5a60", acento: "#16679a" },
+      escuro: { fundo: "#12272e", cartao: "#1a333c", texto: "#f2f5f7", suave: "#a9bcc2", acento: "#f78787" },
+      destaques: ["#e4ffc7", "#e7e6ff", "#daeeff"],
+      forma: FORMAS.reto,
+      capas: ["#e7e6ff", "#daeeff", "#e4ffc7", "#fce0ff"],
+    },
+    {
       id: "jardim", nome: { pt: "Jardim botânico", en: "Botanical Garden" }, titulo: FONTES.dejavuSerif, corpo: FONTES.dejavu,
       claro: { fundo: "#f5f3ed", cartao: "#fffdf8", texto: "#233b2a", suave: "#4f5e52", acento: "#3f6b4c" },
       escuro: { fundo: "#1f3326", cartao: "#2a4533", texto: "#f5f3ed", suave: "#c7cbbd", acento: "#f9a620" },

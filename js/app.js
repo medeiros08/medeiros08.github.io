@@ -1172,7 +1172,18 @@
     if (b) { b.setAttribute("aria-pressed", String(parado)); b.textContent = parado ? UI[idioma].retomar : UI[idioma].pausar; }
   }
 
-  function alternarTema() {
+  // O tema novo se espalha num círculo que nasce no botão (View Transitions; sem suporte, troca na hora)
+  function alternarTema(evento) {
+    const trocar = () => alternarTemaAgora();
+    if (!document.startViewTransition || matchMedia("(prefers-reduced-motion: reduce)").matches) return trocar();
+    const botao = evento?.target?.closest?.("button");
+    const r = botao?.getBoundingClientRect();
+    raiz.style.setProperty("--vt-x", `${r ? r.left + r.width / 2 : innerWidth - 40}px`);
+    raiz.style.setProperty("--vt-y", `${r ? r.top + r.height / 2 : 40}px`);
+    raiz.classList.add("trocando-tema");
+    document.startViewTransition(trocar).finished.finally(() => raiz.classList.remove("trocando-tema"));
+  }
+  function alternarTemaAgora() {
     const novo = raiz.dataset.theme === "dark" ? "light" : "dark";
     raiz.dataset.theme = novo;
     memoria.gravar("tema", novo);
@@ -2085,7 +2096,7 @@
     } else if (alvo.dataset.acao === "pausar") {
       alternarPausa();
     } else if (alvo.dataset.acao === "tema") {
-      alternarTema();
+      alternarTema(evento);
     } else if (alvo.dataset.acao === "paleta") {
       abrirTemas(alvo);
     } else if (alvo.dataset.acao === "fechar-temas") {
