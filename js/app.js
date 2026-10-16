@@ -817,6 +817,7 @@
   function desenharAtividade() {
     const alvo = $("#githubAtividade");
     if (alvo) alvo.innerHTML = conteudoAtividade();
+    prepararRevelar();
   }
 
   function secaoGithub() {
@@ -1536,6 +1537,8 @@
     fecharMenu();
     observarSecaoAtiva();
     montarRota();
+    prepararRevelar();
+    animarRolagem();
     if (naInicial && !jaRenderizou) decodificarNome();
     if (naInicial) {
       prepararLivro();
@@ -1730,6 +1733,90 @@
     document.documentElement.addEventListener("mouseleave", () => { ultimo = null; processar(); });
   }
 
+  /* ---------- Animações da rolagem ---------- */
+
+  // Cada bloco entra na tela subindo quando aparece; itens de uma lista entram em cascata.
+  // O topo se afasta em camadas ao rolar, e a faixa de temas entorta com a velocidade da rolagem.
+  // Quem prefere menos movimento vê tudo parado, sem esconder nada.
+  const anima = !matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window;
+  // Listas cujos itens entram um depois do outro
+  const CASCATA = ".projetos-grade > *, .notas-lista > *, .habilidades-grade > *, .agora-grade > *, .pubs-lista > li, .traj-lista > li, .repos > .repo:not(.repo-esqueleto), .reconhecimentos > li, .chips > li";
+  let obsRevelar;
+
+  function prepararRevelar() {
+    if (!anima) return;
+    raiz.classList.add("anima");
+    obsRevelar ??= new IntersectionObserver((entradas) => {
+      for (const e of entradas) {
+        // Bloco que já ficou para trás (rolagem rápida, salto pelo menu) aparece sem esperar a volta
+        const passou = e.boundingClientRect.bottom < 0;
+        if (!e.isIntersecting && !passou) continue;
+        e.target.classList.add("visivel");
+        if (passou) e.target.style.animation = "none";
+        obsRevelar.unobserve(e.target);
+      }
+    }, { rootMargin: "0px 0px -8% 0px" });
+    document.querySelectorAll(CASCATA).forEach((el) => {
+      if (el.classList.contains("revelar")) return;
+      el.classList.add("revelar");
+      const irmaos = [...el.parentElement.children];
+      el.style.setProperty("--atraso", `${Math.min(irmaos.indexOf(el), 6) * 70}ms`);
+    });
+    document.querySelectorAll(".revelar:not(.visivel)").forEach((el) => obsRevelar.observe(el));
+  }
+
+  // Valores que seguem a rolagem, gravados como variáveis CSS
+  let ultimaRolagem = scrollY;
+  let fimDaRolagem;
+  function animarRolagem() {
+    if (!anima || !naInicial) return;
+    const y = scrollY;
+    const hero = $(".hero");
+    if (hero) {
+      const p = Math.min(1, Math.max(0, y / hero.offsetHeight));
+      hero.style.setProperty("--saida", p.toFixed(3));
+    }
+    // Velocidade da rolagem entorta a faixa; parada, ela volta devagar ao lugar
+    const faixa = $(".faixa");
+    if (faixa) {
+      const inclinacao = Math.max(-12, Math.min(12, (y - ultimaRolagem) * 0.35));
+      faixa.style.setProperty("--inclinacao", `${inclinacao.toFixed(2)}deg`);
+      clearTimeout(fimDaRolagem);
+      fimDaRolagem = setTimeout(() => faixa.style.setProperty("--inclinacao", "0deg"), 90);
+    }
+    ultimaRolagem = y;
+  }
+
+  // Botões magnéticos: puxados um pouco na direção do mouse, e uma onda sai de onde o clique caiu
+  const MAGNETICOS = ".botao, .botao-icone, .atalho, .contato-links a";
+  function botoesVivos() {
+    if (!anima) return;
+    if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      let atual = null;
+      document.addEventListener("pointermove", (e) => {
+        const alvo = e.target instanceof Element ? e.target.closest(MAGNETICOS) : null;
+        if (atual && atual !== alvo) { atual.style.removeProperty("--ima-x"); atual.style.removeProperty("--ima-y"); }
+        atual = alvo;
+        if (!alvo) return;
+        const r = alvo.getBoundingClientRect();
+        alvo.style.setProperty("--ima-x", `${((e.clientX - r.left - r.width / 2) * 0.25).toFixed(1)}px`);
+        alvo.style.setProperty("--ima-y", `${((e.clientY - r.top - r.height / 2) * 0.3).toFixed(1)}px`);
+      }, { passive: true });
+    }
+    document.addEventListener("pointerdown", (e) => {
+      const botao = e.target instanceof Element ? e.target.closest(".botao, .botao-icone, .atalho") : null;
+      if (!botao) return;
+      const r = botao.getBoundingClientRect();
+      const onda = document.createElement("span");
+      onda.className = "onda";
+      onda.setAttribute("aria-hidden", "true");
+      onda.style.left = `${e.clientX - r.left}px`;
+      onda.style.top = `${e.clientY - r.top}px`;
+      botao.append(onda);
+      onda.addEventListener("animationend", () => onda.remove());
+    });
+  }
+
   let obsSecao;
   function observarSecaoAtiva() {
     if (!naInicial || !("IntersectionObserver" in window)) return;
@@ -1859,7 +1946,14 @@
 
   window.addEventListener("scroll", atualizarNav, { passive: true });
   window.addEventListener("scroll", pedirRota, { passive: true });
+  let rolagemPendente = false;
+  window.addEventListener("scroll", () => {
+    if (rolagemPendente) return;
+    rolagemPendente = true;
+    requestAnimationFrame(() => { rolagemPendente = false; animarRolagem(); });
+  }, { passive: true });
   reagirAoMouse();
+  botoesVivos();
   window.addEventListener("resize", medirRota);
   // Imagens, GitHub e livro de visitas carregam depois e mudam a altura das seções
   if ("ResizeObserver" in window) new ResizeObserver(() => medirRota()).observe(document.body);

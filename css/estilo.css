@@ -1428,6 +1428,49 @@ html.modo-hacker .fw-campo { border-color: var(--linha); }
 html.modo-hacker .fw-pacote::before { opacity: .4; }
 html.modo-hacker .fw-ok b, html.modo-hacker .fw-ruim b { color: var(--texto); }
 
+/* ---------- Animações da rolagem (classe "anima" só existe com JS e sem preferência por menos movimento) ---------- */
+
+/* Blocos entram subindo quando aparecem; em listas, um depois do outro (--atraso vem do JS) */
+html.anima .revelar:not(.visivel) { opacity: 0; }
+html.anima .revelar.visivel { animation: revelar .9s var(--atraso, 0s) cubic-bezier(.2, .7, .2, 1) backwards; }
+@keyframes revelar { from { opacity: 0; translate: 0 48px; scale: .97; } }
+/* Títulos sobem por trás de uma "cortina" */
+html.anima .titulo-secao.revelar.visivel { animation-name: revelar-titulo; animation-duration: 1s; }
+@keyframes revelar-titulo { from { opacity: 0; translate: 0 .6em; clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 -40% 0); } }
+/* Cartões coloridos chegam girando de leve, como papéis jogados na mesa */
+html.anima .agora-cartao.visivel, html.anima .habilidades-cartao.visivel { animation-name: revelar-girando; }
+@keyframes revelar-girando { from { opacity: 0; translate: 0 60px; rotate: -3deg; } }
+
+/* Topo se afasta em camadas: texto sobe mais rápido e some, a foto fica para trás */
+html.anima .hero-texto { translate: 0 calc(var(--saida, 0) * -90px); opacity: calc(1 - var(--saida, 0) * 1.1); }
+html.anima .hero-foto { translate: 0 calc(var(--saida, 0) * 70px); }
+html.anima .pacotes { translate: 0 calc(var(--saida, 0) * -40px); }
+/* Faixa entorta com a velocidade da rolagem e volta com mola */
+html.anima .faixa-grupo { transform: skewX(var(--inclinacao, 0deg)); transition: transform .5s cubic-bezier(.3, 1.6, .5, 1); }
+
+/* Ímã: o botão vai um pouco na direção do mouse (translate não briga com o transform do hover) */
+html.anima :is(.botao, .botao-icone, .atalho, .contato-links a) {
+  translate: var(--ima-x, 0) var(--ima-y, 0);
+  transition-property: transform, box-shadow, background-color, color, translate;
+}
+html.anima :is(.botao, .botao-icone, .atalho, .contato-links a):not(:hover) { transition-duration: .45s; transition-timing-function: cubic-bezier(.3, 1.6, .5, 1); }
+
+/* Onda que sai do ponto do clique */
+.botao, .botao-icone, .atalho { position: relative; overflow: hidden; }
+.onda {
+  position: absolute;
+  width: 12px; height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .35;
+  pointer-events: none;
+  animation: onda .6s ease-out forwards;
+}
+@keyframes onda { to { scale: 18; opacity: 0; } }
+
+@media print { html.anima .revelar { opacity: 1 !important; animation: none !important; } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
