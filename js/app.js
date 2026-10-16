@@ -43,6 +43,8 @@
       formMensagem: "Escreva sua mensagem…", formEnviar: "Enviar", formEnviando: "Enviando…",
       formOk: "Mensagem recebida. Respondo em breve 🙂",
       formErro: (email) => `Não consegui enviar agora. Tenta pelo e-mail ${email}?`,
+      laboratorio: "Lab P4", tituloLab: "Por dentro de um switch P4",
+      labSub: "O que a minha pesquisa programa: o caminho de um pacote dentro de um equipamento de rede.",
       firewall: "Firewall", tituloFirewall: "Seja o firewall",
       firewallSub: "Um jogo de um minuto para entender o que eu pesquiso.",
       habilidades: "Habilidades", tituloHabilidades: "O que eu uso",
@@ -129,6 +131,8 @@
       formMensagem: "Write your message…", formEnviar: "Send", formEnviando: "Sending…",
       formOk: "Message received. I'll reply soon 🙂",
       formErro: (email) => `Couldn't send it right now. Try e-mail: ${email}?`,
+      laboratorio: "P4 lab", tituloLab: "Inside a P4 switch",
+      labSub: "What my research programs: the path a packet takes inside a network device.",
       firewall: "Firewall", tituloFirewall: "Be the firewall",
       firewallSub: "A one-minute game to understand what I research.",
       habilidades: "Skills", tituloHabilidades: "What I use",
@@ -600,6 +604,19 @@
   }
 
   // O jogo fica em js/firewall.js; aqui só o lugar dele na página
+  function secaoLaboratorio() {
+    if (D.laboratorio === false) return "";
+    const u = UI[idioma];
+    return `
+      <section class="secao secao-lab" id="laboratorio">
+        <div class="container">
+          <h2 class="titulo-secao revelar">${u.tituloLab}</h2>
+          <p class="secao-sub revelar">${u.labSub}</p>
+          <div id="labP4"></div>
+        </div>
+      </section>`;
+  }
+
   function secaoFirewall() {
     if (D.firewall === false) return "";
     const u = UI[idioma];
@@ -1514,6 +1531,7 @@
       { id: "sobre", menu: true, html: secaoSobre() },
       { id: "terminal", html: secaoTerminal() },
       { id: "pesquisa", menu: true, html: secaoPesquisa() },
+      { id: "laboratorio", html: secaoLaboratorio() },
       { id: "firewall", html: secaoFirewall() },
       { id: "publicacoes", menu: true, html: secaoPublicacoes() },
       { id: "projetos", menu: true, html: secaoProjetos() },
@@ -1582,6 +1600,7 @@
     if (naInicial) {
       prepararLivro();
       window.JogoFirewall?.montar($("#jogoFirewall"), { idioma, registrarEvento });
+      window.LabP4?.montar($("#labP4"), { idioma, registrarEvento });
     }
     jaRenderizou = true;
   }

@@ -86,7 +86,7 @@
   function lerCores() {
     const cs = getComputedStyle(raiz);
     const ler = (v, reserva) => cs.getPropertyValue(v).trim() || reserva;
-    cores = { linha: ler("--texto", "#f3efe6"), acento: ler("--acento", "#9d9bff"), coral: ler("--coral", "#ff7a59") };
+    cores = { linha: ler("--texto", "#f3efe6"), acento: ler("--acento", "#9d9bff"), coral: ler("--perigo", "#ff5f57") };
   }
   // Tema, paleta e modo hacker mudam atributos e variáveis no <html>
   // A classe "parado" vem do botão "Pausar animações" do rodapé
