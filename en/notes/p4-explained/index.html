@@ -41,12 +41,14 @@
   </script>
 
   <link rel="preload" href="../../../fontes/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../../css/estilo.css?v=20261016o">
+  <link rel="stylesheet" href="../../../css/estilo.css?v=20261016p">
   <script>
     document.documentElement.classList.add("js");
     try {
       var tema = localStorage.getItem("tema");
       if (tema) document.documentElement.dataset.theme = tema;
+      // Sem escolha salva: claro de dia e escuro de noite, pelo horário de Alegrete
+      else { var h = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: "America/Sao_Paulo" }).format(new Date())); document.documentElement.dataset.theme = h >= 7 && h < 19 ? "light" : "dark"; }
       if (localStorage.getItem("animacoes") === "paradas") document.documentElement.classList.add("parado");
     } catch (e) {}
   </script>
@@ -99,9 +101,9 @@
 
   <footer class="rodape" id="rodape"></footer>
 
-  <script src="../../../js/dados.js?v=20261016o"></script>
+  <script src="../../../js/dados.js?v=20261016p"></script>
 
-  <script src="../../../js/temas.js?v=20261016o"></script>
-  <script src="../../../js/app.js?v=20261016o"></script>
+  <script src="../../../js/temas.js?v=20261016p"></script>
+  <script src="../../../js/app.js?v=20261016p"></script>
 </body>
 </html>

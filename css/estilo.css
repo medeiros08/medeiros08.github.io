@@ -1870,3 +1870,17 @@ html.modo-hacker .p4-tabela tr.ruim-casou { color: #000; }
   #curriculo a { text-decoration: none; }
   #curriculo .cv-rodape { margin-top: 18pt; font-size: 8.5pt; color: #666 !important; }
 }
+
+/* ---------- Troca de tema: o tema novo se espalha num círculo que nasce no botão ---------- */
+html.trocando-tema::view-transition-old(root),
+html.trocando-tema::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+html.trocando-tema::view-transition-new(root) { animation: tema-circulo .65s cubic-bezier(.4, 0, .2, 1); }
+@keyframes tema-circulo {
+  from { clip-path: circle(0 at var(--vt-x, 90%) var(--vt-y, 40px)); }
+  to { clip-path: circle(150vmax at var(--vt-x, 90%) var(--vt-y, 40px)); }
+}
+
+/* ---------- Tema Wireshark: as abas do "Agora" dizem o protocolo da cor delas ---------- */
+html[data-estilo="wireshark"]:not(.modo-hacker) .cor-0 .aba::after { content: " · HTTP"; }
+html[data-estilo="wireshark"]:not(.modo-hacker) .cor-1 .aba::after { content: " · TCP"; }
+html[data-estilo="wireshark"]:not(.modo-hacker) .cor-2 .aba::after { content: " · UDP"; }
