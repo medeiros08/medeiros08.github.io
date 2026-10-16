@@ -1,0 +1,263 @@
+<!doctype html>
+<!-- Estudo de caso do GamificaPampa. Menu, rodapé e botões vêm do js/app.js; o texto fica aqui mesmo. -->
+<html lang="pt-BR" data-theme="dark" data-idioma="pt" data-raiz="../../" data-pagina="projeto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GamificaPampa · Estudo de caso · Arthur Medeiros</title>
+  <meta name="description" content="Estudo de caso do GamificaPampa: hub de extensão da UNIPAMPA que leva gamificação e IA a professores da Educação Básica, com jogos de programação para crianças de 6 a 14 anos e uma Oficina de Prompts. Por Arthur Medeiros.">
+  <meta name="author" content="Arthur Medeiros">
+  <meta name="theme-color" content="#1e1e1e">
+  <link rel="canonical" href="https://medeiros08.github.io/projetos/gamificapampa/">
+  <link rel="alternate" hreflang="pt-BR" href="https://medeiros08.github.io/projetos/gamificapampa/">
+  <link rel="alternate" hreflang="en" href="https://medeiros08.github.io/en/projects/gamificapampa/">
+  <link rel="alternate" hreflang="x-default" href="https://medeiros08.github.io/projetos/gamificapampa/">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../img/icone-180.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://medeiros08.github.io/projetos/gamificapampa/">
+  <meta property="og:title" content="GamificaPampa · Estudo de caso">
+  <meta property="og:description" content="Gamificação e IA para professores da Educação Básica, com jogos de programação para crianças e uma Oficina de Prompts.">
+  <meta property="og:image" content="https://medeiros08.github.io/img/gamificapampa/compartilhar.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="627">
+  <meta property="og:image:alt" content="Página inicial do GamificaPampa: Sua aula no modo jogo">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "GamificaPampa",
+    "url": "https://gamificapampa.github.io/",
+    "description": "Hub de extensão da UNIPAMPA que leva gamificação e inteligência artificial a professores da Educação Básica, com jogos de programação para crianças de 6 a 14 anos e uma Oficina de Prompts.",
+    "inLanguage": "pt-BR",
+    "creator": { "@type": "Person", "name": "Arthur Medeiros", "url": "https://medeiros08.github.io/" },
+    "audience": { "@type": "EducationalAudience", "educationalRole": "teacher" },
+    "isAccessibleForFree": true
+  }
+  </script>
+
+  <link rel="preload" href="../../fontes/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../css/estilo.css?v=20261016w">
+  <script>
+    document.documentElement.classList.add("js");
+    try {
+      var tema = localStorage.getItem("tema");
+      if (tema) document.documentElement.dataset.theme = tema;
+      // Sem escolha salva: claro de dia e escuro de noite, pelo horário de Alegrete
+      else { var h = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: "America/Sao_Paulo" }).format(new Date())); document.documentElement.dataset.theme = h >= 7 && h < 19 ? "light" : "dark"; }
+      if (localStorage.getItem("animacoes") === "paradas") document.documentElement.classList.add("parado");
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="nav" id="nav"></header>
+
+  <main id="conteudo" class="pagina">
+    <article class="estudo">
+      <header class="container">
+        <a class="voltar" href="../../#projetos">← Voltar aos projetos</a>
+        <div class="estudo-tags">
+          <span class="projeto-tag">Extensão e educação</span>
+          <span class="projeto-status">Em desenvolvimento</span>
+        </div>
+        <h1 class="estudo-titulo" style="view-transition-name: projeto-gamificapampa">GamificaPampa</h1>
+        <p class="estudo-lead">Gamificação e IA para professores da Educação Básica. Eu crio os jogos que apresentam a programação para crianças de 6 a 14 anos e a oficina que ensina professores a criar os próprios materiais com IA.</p>
+        <div class="hero-links">
+          <a class="botao principal" href="https://gamificapampa.github.io/" target="_blank" rel="noopener" data-evento="estudo-gp-site" data-evento-titulo="Estudo de caso: abrir o GamificaPampa">Abrir o GamificaPampa <span aria-hidden="true">↗</span><span class="so-leitor"> (abre em nova aba)</span></a>
+          <a class="botao" href="https://github.com/GamificaPampa/recursos-pedagogicos" target="_blank" rel="noopener" data-evento="estudo-gp-github" data-evento-titulo="Estudo de caso: código no GitHub">Código no GitHub <span aria-hidden="true">↗</span><span class="so-leitor"> (abre em nova aba)</span></a>
+        </div>
+      </header>
+
+      <figure class="container estudo-capa">
+        <div class="janela">
+          <div class="janela-barra" aria-hidden="true"><i></i><i></i><i></i><span>gamificapampa.github.io</span></div>
+          <img src="../../img/gamificapampa/home.webp" width="1024" height="640" alt="Página inicial do GamificaPampa: o título Sua aula no modo jogo, o subtítulo Gamificação e IA para professores e um painel de videogame com troféu, barra de XP e corações." fetchpriority="high">
+        </div>
+      </figure>
+
+      <div class="container">
+        <dl class="estudo-ficha">
+          <div><dt>Para quem</dt><dd>Professores da Educação Básica e crianças de 6 a 14 anos</dd></div>
+          <div><dt>Meu papel</dt><dd>Criação dos jogos e da Oficina de Prompts, e a mudança deles para a organização</dd></div>
+          <div><dt>Com quem</dt><dd>Projetos Educador 5.0 e GamificaEdu, UNIPAMPA, Campus Alegrete</dd></div>
+          <div><dt>Feito com</dt><dd>HTML, CSS e JavaScript, publicado no GitHub Pages</dd></div>
+        </dl>
+
+        <div class="estudo-numeros">
+          <div><b>7</b><span>jogos para a turma</span></div>
+          <div><b>2</b><span>projetos de extensão no hub</span></div>
+          <div><b>4</b><span>encontros na Oficina de Prompts</span></div>
+          <div><b>0</b><span>cadastros para jogar</span></div>
+        </div>
+      </div>
+
+      <section class="container estudo-bloco">
+        <h2>A ideia</h2>
+        <div class="estudo-texto">
+          <p>O GamificaPampa reúne projetos de extensão da UNIPAMPA, Campus Alegrete, que levam gamificação e inteligência artificial a professores da Educação Básica, em parceria com escolas públicas de Alegrete/RS. O site trata a formação como um jogo: o professor passa por três níveis, Descobrir, Criar e Aplicar, até ter uma aula gamificada pronta para a turma.</p>
+          <p>A minha parte são os recursos pedagógicos, o que chega na mão do professor e das crianças. Nos jogos, as crianças montam sequências de comandos, caçam bugs, programam em dupla e descobrem como um aplicativo conversa com um servidor e um banco de dados. Para os professores, a Oficina de Prompts mostra como usar o Gemini para criar atividades, histórias e até jogos para as próprias turmas, sem precisar saber programar.</p>
+        </div>
+      </section>
+
+      <section class="container estudo-bloco">
+        <h2>Um hub de projetos</h2>
+        <div class="estudo-cartoes">
+          <div class="estudo-cartao">
+            <h3>🤖 Educador 5.0</h3>
+            <ul>
+              <li>Capacitação de professores para usar IA na Educação Básica</li>
+              <li>Workshops, seminários e ações práticas presenciais</li>
+              <li>Planos de aula, questões automatizadas e feedbacks personalizados</li>
+              <li>Coordenação do Prof. Silvio Ereno Quincozes, até dez/2026</li>
+            </ul>
+          </div>
+          <div class="estudo-cartao">
+            <h3>🏆 GamificaEdu</h3>
+            <ul>
+              <li>Formação continuada em gamificação para professores</li>
+              <li>Oficinas nas escolas públicas parceiras</li>
+              <li>Pensado para a estrutura que a escola já tem e para recursos de baixo custo</li>
+              <li>Coordenação do Prof. Paulo Silas Severo de Souza, até out/2027</li>
+            </ul>
+          </div>
+          <div class="estudo-cartao">
+            <h3>🎮 Recursos pedagógicos</h3>
+            <ul>
+              <li>Os jogos para a turma e a aula de 50 minutos</li>
+              <li>A Oficina de Prompts para professores</li>
+              <li>Um modelo pronto para criar novos recursos</li>
+              <li>É aqui que entra o meu trabalho</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="container estudo-bloco">
+        <h2>O que tem dentro</h2>
+        <div class="estudo-cartoes">
+          <div class="estudo-cartao">
+            <h3>🎮 Jogos para a turma</h3>
+            <ul>
+              <li>Robô pega a estrela <small>6+</small></li>
+              <li>Ninja dos Bugs <small>6+</small></li>
+              <li>Programação em Dupla <small>7+</small></li>
+              <li>Conecta o Sistema <small>8+</small></li>
+              <li>Arcade do Código, com três jogos e placar</li>
+              <li>Caça aos Bugs!</li>
+              <li>Missão Dev, para feira de ciências</li>
+            </ul>
+          </div>
+          <div class="estudo-cartao">
+            <h3>📚 Materiais da aula</h3>
+            <ul>
+              <li>Slides para o projetor</li>
+              <li>Roteiro de 50 minutos</li>
+              <li>Folhas de atividades</li>
+              <li>Mapas das 15 fases da Programação em Dupla</li>
+              <li>Certificado para as crianças</li>
+              <li>Telas de estande para eventos</li>
+            </ul>
+          </div>
+          <div class="estudo-cartao">
+            <h3>✨ Oficina de Prompts</h3>
+            <ul>
+              <li>Formação em quatro encontros de cerca de 2 horas</li>
+              <li>Curso online com teste final</li>
+              <li>Jogo do Prompt e construtor de prompts</li>
+              <li>Biblioteca de prompts e Gems prontos</li>
+              <li>Guia do professor e galeria de jogos</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="container estudo-bloco">
+        <h2>Como foi pensado</h2>
+        <ol class="decisoes">
+          <li>
+            <h3>QR code para a turma</h3>
+            <p>O menu da turma tem um endereço curto para escrever no quadro, <b>gamificapampa.github.io/turma</b>, e um QR code grande para projetar. Os recursos têm o botão Compartilhar, que manda o link pelo WhatsApp ou pelo Google Classroom.</p>
+          </li>
+          <li>
+            <h3>Pronto para imprimir</h3>
+            <p>Roteiro, folhas de atividades, mapas das fases e certificados saem em PDF tamanho A4, gerados a partir das próprias páginas.</p>
+          </li>
+          <li>
+            <h3>Sem cadastro</h3>
+            <p>Nenhum jogo pede login, e o site não coleta dados das crianças. É abrir e jogar, no celular, no tablet ou no projetor.</p>
+          </li>
+          <li>
+            <h3>Acessível</h3>
+            <p>Cores com contraste conferido, zoom liberado e áreas de toque maiores nos jogos mais rápidos.</p>
+          </li>
+          <li>
+            <h3>Uma identidade só</h3>
+            <p>O Bit, o robô mascote, a fonte Fredoka e as cores ficam num repositório próprio. O hub, os jogos e os slides carregam os mesmos arquivos, então tudo tem a mesma cara.</p>
+          </li>
+          <li>
+            <h3>Fácil de crescer</h3>
+            <p>Sem frameworks e sem servidor. Um modelo pronto e um passo a passo para assistentes de IA deixam qualquer pessoa da equipe criar um recurso novo, do primeiro arquivo ao pull request.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="container estudo-bloco">
+        <h2>De projeto pessoal para a organização</h2>
+        <div class="estudo-texto">
+          <p>Os jogos e a Oficina nasceram num repositório meu, no meu GitHub. Quando viraram parte do GamificaPampa, passaram para a <a href="https://github.com/GamificaPampa" target="_blank" rel="noopener">organização GamificaPampa no GitHub</a>, cada coisa no repositório certo: o que professores e crianças usam ficou público em recursos-pedagogicos, e o kit de quem conduz a formação foi para um repositório privado da equipe.</p>
+          <p>A regra mais importante da mudança foi não quebrar nenhum endereço. Já havia QR codes impressos em estandes, slides, cartazes e convites, e links mandados por WhatsApp e Classroom. Por isso cada endereço antigo ganhou um destino novo numa tabela, um script confere todos eles, e o site antigo vira uma ponte que leva cada link para o lugar certo. A mudança é feita por pull requests, uma fase por vez, e cada fase só começa depois que a anterior está no ar.</p>
+        </div>
+      </section>
+
+      <section class="container estudo-bloco">
+        <h2>Por dentro</h2>
+        <div class="galeria">
+          <figure>
+            <div class="janela"><img src="../../img/gamificapampa/turma.webp" width="1024" height="640" loading="lazy" alt="Menu Jogos de Engenharia de Software: o robô Bit convida a turma a escolher um jogo, ao lado de um QR code com o endereço gamificapampa.github.io/turma."></div>
+            <figcaption><b>Menu da turma.</b> O professor projeta a página, e as crianças abrem os jogos no celular pelo QR code.</figcaption>
+          </figure>
+          <figure>
+            <div class="janela"><img src="../../img/gamificapampa/conecta.webp" width="1024" height="640" loading="lazy" alt="Jogo Conecta o Sistema: celular, servidor e banco de dados ligados por setas, com os níveis Fácil, Normal e Desafio."></div>
+            <figcaption><b>Conecta o Sistema.</b> Ligar o celular ao servidor e o servidor ao banco de dados, em três níveis de dificuldade.</figcaption>
+          </figure>
+          <figure>
+            <div class="janela"><img src="../../img/gamificapampa/oficina.webp" width="1024" height="640" loading="lazy" alt="Página da Oficina de Prompts para professores, com o robô Bit de capelo de formatura."></div>
+            <figcaption><b>Oficina de Prompts.</b> Quatro encontros para professores criarem materiais com o Gemini.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="container estudo-bloco">
+        <h2>Nas escolas e nos eventos</h2>
+        <div class="estudo-texto">
+          <p>Em 14 de outubro de 2026 o GamificaPampa foi apresentado em dois lugares: aos professores e à equipe gestora de uma escola de Alegrete, no Encontro Tancredo Neves, e ao Grupo de Pesquisa Diálogos do Pampa, na UNIPAMPA, Campus São Borja, na palestra "IA na Educação". Nas duas, os jogos e a Oficina de Prompts aparecem como o que o hub já tem no ar.</p>
+          <p>Para a escola, o caminho tem quatro passos: um diagnóstico com os professores e a infraestrutura, as oficinas, a aplicação em sala com acompanhamento da equipe e uma avaliação com relatório final.</p>
+        </div>
+      </section>
+
+      <section class="container estudo-bloco">
+        <h2>Meu papel</h2>
+        <div class="estudo-texto">
+          <p>Criei os jogos, os materiais da aula e a Oficina de Prompts, e preparo a mudança deles para a organização. O jogo Robô pega a estrela é de <a href="https://github.com/paulosevero/robo-estrela" target="_blank" rel="noopener">Paulo Severo</a>, e os outros jogos seguem o mesmo estilo. O hub e os projetos de extensão são coordenados pelos professores Paulo Silas Severo de Souza e Silvio Ereno Quincozes.</p>
+          <p>O GamificaPampa segue em desenvolvimento: novos jogos e materiais vão entrando, e o hub deve ganhar uma Fase 2 com novos projetos de IA e gamificação para professores.</p>
+        </div>
+        <div class="estudo-fim">
+          <a class="botao principal" href="https://gamificapampa.github.io/" target="_blank" rel="noopener" data-evento="estudo-gp-site-fim" data-evento-titulo="Estudo de caso: abrir o GamificaPampa (fim)">Abrir o GamificaPampa <span aria-hidden="true">↗</span><span class="so-leitor"> (abre em nova aba)</span></a>
+          <a class="botao" href="../../#projetos">← Ver os outros projetos</a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="rodape" id="rodape"></footer>
+
+  <script src="../../js/dados.js?v=20261016w"></script>
+
+  <script src="../../js/temas.js?v=20261016w"></script>
+  <script src="../../js/app.js?v=20261016w"></script>
+</body>
+</html>

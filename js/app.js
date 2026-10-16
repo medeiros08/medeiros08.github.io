@@ -67,7 +67,7 @@
       acoes: {
         tema: "Alternar tema claro/escuro", paleta: "Cores e temas do site", idioma: "Ler em inglês",
         hacker: "Modo hacker", terminal: "Abrir o terminal", firewall: "Jogar “Seja o firewall”",
-        ctf: "Desafio CTF", copiarEmail: "Copiar meu e-mail", codigoMirim: "Estudo de caso: Código Mirim",
+        ctf: "Desafio CTF", copiarEmail: "Copiar meu e-mail", gamificaPampa: "Estudo de caso: GamificaPampa",
       },
       emailCopiado: "E-mail copiado",
       somLigar: "Som: desligado", somDesligar: "Som: ligado", copiar: "copiar",
@@ -168,7 +168,7 @@
       acoes: {
         tema: "Toggle light/dark theme", paleta: "Site colors and themes", idioma: "Ler em português",
         hacker: "Hacker mode", terminal: "Open the terminal", firewall: "Play “Be the firewall”",
-        ctf: "CTF challenge", copiarEmail: "Copy my e-mail", codigoMirim: "Case study: Código Mirim",
+        ctf: "CTF challenge", copiarEmail: "Copy my e-mail", gamificaPampa: "Case study: GamificaPampa",
       },
       emailCopiado: "E-mail copied",
       somLigar: "Sound: off", somDesligar: "Sound: on", copiar: "copy",
@@ -1364,7 +1364,7 @@
       palavras: `${UI.pt[s.id] || ""} ${UI.en[s.id] || ""} ${s.id}`,
     }));
     (D.projetos || []).filter((p) => p.estudo).forEach((p) => itens.push({
-      grupo: g.paginas, titulo: `${u.acoes.codigoMirim.split(":")[0]}: ${t(p.titulo)}`, icone: "▣",
+      grupo: g.paginas, titulo: `${u.acoes.gamificaPampa.split(":")[0]}: ${t(p.titulo)}`, icone: "▣",
       href: caminhoLocal(t(p.estudo)), palavras: `projeto project ${simples(p.descricao)}`,
     }));
     (D.notas || []).forEach((n) => itens.push({
@@ -1397,8 +1397,8 @@
       if (!url) return;
       itens.push({ grupo: g.links, titulo: t(l.rotulo) || t(ROTULOS_LINK[l.tipo]) || l.tipo, icone: "↗", href: url, externo: /^https?:/.test(url), palavras: `${l.tipo} ${url}` });
     });
-    const codigoMirim = (D.projetos || []).find((p) => p.url && p.estudo);
-    if (codigoMirim) itens.push({ grupo: g.links, titulo: t(codigoMirim.titulo), icone: "↗", href: codigoMirim.url, externo: true, palavras: "site jogos games" });
+    const gamificaPampa = (D.projetos || []).find((p) => p.url && p.estudo);
+    if (gamificaPampa) itens.push({ grupo: g.links, titulo: t(gamificaPampa.titulo), icone: "↗", href: gamificaPampa.url, externo: true, palavras: "site jogos games" });
     return itens;
   }
 
