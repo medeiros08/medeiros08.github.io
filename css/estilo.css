@@ -1448,6 +1448,51 @@ html.anima .pacotes { translate: 0 calc(var(--saida, 0) * -40px); }
 /* Faixa entorta com a velocidade da rolagem e volta com mola */
 html.anima .faixa-grupo { transform: skewX(var(--inclinacao, 0deg)); transition: transform .5s cubic-bezier(.3, 1.6, .5, 1); }
 
+/* Texto do "Sobre" acende palavra por palavra com a rolagem */
+html.anima .palavra { opacity: .18; transition: opacity .35s ease; }
+html.anima .palavra.acesa { opacity: 1; }
+
+/* Etiquetas em volta da foto: flutuam sozinhas, saltam em profundidade quando a foto inclina
+   e se espalham para fora quando o topo sai da tela */
+.hero-etiqueta {
+  position: absolute;
+  z-index: 2;
+  padding: 7px 12px;
+  background: var(--cartao);
+  color: var(--texto);
+  border: var(--borda) solid var(--contorno);
+  border-radius: var(--pilula);
+  box-shadow: calc(3 * var(--desloc)) calc(3 * var(--desloc)) 0 var(--sombra);
+  font-family: var(--fonte-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  translate: 0 0 var(--z, 40px);
+  transform: translate(calc(var(--saida, 0) * var(--dx, 0px)), calc(var(--saida, 0) * var(--dy, 0px)));
+}
+.hero-etiqueta.e1 { top: 8%; right: -34px; --z: 70px; --dx: 120px; --dy: -60px; rotate: 6deg; background: var(--acento); color: var(--sobre-acento); }
+.hero-etiqueta.e2 { top: 34%; left: -42px; --z: 50px; --dx: -140px; --dy: 10px; rotate: -5deg; }
+.hero-etiqueta.e3 { bottom: 26%; right: -28px; --z: 90px; --dx: 130px; --dy: 40px; rotate: -4deg; background: var(--coral); color: var(--tinta-fixa); }
+.hero-etiqueta.e4 { top: -16px; left: 18%; --z: 30px; --dx: -50px; --dy: -110px; rotate: -3deg; }
+html.anima .hero-etiqueta { animation: flutuar 5s ease-in-out infinite, entrar-etiqueta .6s cubic-bezier(.3, 1.6, .5, 1) backwards; }
+html.anima .hero-etiqueta.e1 { animation-delay: 0s, .9s; }
+html.anima .hero-etiqueta.e2 { animation-delay: -1.2s, 1.05s; animation-duration: 6s, .6s; }
+html.anima .hero-etiqueta.e3 { animation-delay: -2.5s, 1.2s; animation-duration: 4.5s, .6s; }
+html.anima .hero-etiqueta.e4 { animation-delay: -3.6s, 1.35s; animation-duration: 5.5s, .6s; }
+@keyframes flutuar { 50% { translate: 0 -10px var(--z, 40px); } }
+@keyframes entrar-etiqueta { from { opacity: 0; scale: .4; } }
+/* Com a foto embaixo do texto, ela só aparece depois de rolar: nada se espalha nem desce */
+@media (max-width: 960px) {
+  html.anima .hero-foto { translate: none; }
+  .hero-etiqueta { transform: none; }
+}
+@media (max-width: 560px) {
+  .hero-etiqueta { font-size: 11px; padding: 5px 9px; }
+  .hero-etiqueta.e1, .hero-etiqueta.e3 { right: -12px; }
+  .hero-etiqueta.e2 { left: -14px; }
+}
+
 /* Ímã: o botão vai um pouco na direção do mouse (translate não briga com o transform do hover) */
 html.anima :is(.botao, .botao-icone, .atalho, .contato-links a) {
   translate: var(--ima-x, 0) var(--ima-y, 0);
