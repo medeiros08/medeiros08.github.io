@@ -1911,3 +1911,25 @@ html.trocando-tema * { view-transition-name: none !important; }
 }
 @keyframes sair-topo-texto { from { translate: 0 0; opacity: 1; filter: blur(0); } to { translate: 0 -90px; opacity: 0; filter: blur(10px); } }
 @keyframes sair-topo-pacotes { to { translate: 0 -40px; } }
+
+/* E-mail do contato com um botão de copiar ao lado */
+.bolha-email { display: flex; align-items: center; gap: 8px; align-self: flex-end; max-width: 100%; }
+.bolha-email .bolha { max-width: none; }
+.contato-bloco.visivel .bolha-email .bolha, .contato-bloco.visivel .bolha-copiar { animation: brotar .5s .7s cubic-bezier(.3, 1.6, .5, 1) backwards; }
+.bolha-copiar {
+  padding: 8px 12px;
+  background: var(--tinta-fixa);
+  color: var(--papel-fixo);
+  border: var(--borda) solid var(--tinta-fixa);
+  border-radius: var(--pilula);
+  font: 700 13px var(--fonte-mono);
+  cursor: pointer;
+  transition: background-color .2s, color .2s, scale .2s cubic-bezier(.3, 1.8, .5, 1);
+}
+.bolha-copiar:hover { scale: 1.06; }
+.bolha-copiar.copiado { background: var(--papel-fixo); color: var(--tinta-fixa); }
+.bolha-copiar.copiado::after { content: " ✓"; }
+@media (max-width: 560px) { .bolha-email { flex-wrap: wrap; justify-content: flex-end; } }
+
+/* Botões de pausa e de som lado a lado no rodapé */
+.rodape-botoes { display: inline-flex; flex-wrap: wrap; gap: 4px 20px; }

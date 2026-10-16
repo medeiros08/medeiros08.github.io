@@ -70,6 +70,8 @@
         ctf: "Desafio CTF", copiarEmail: "Copiar meu e-mail", codigoMirim: "Estudo de caso: Código Mirim",
       },
       emailCopiado: "E-mail copiado",
+      somLigar: "Som: desligado", somDesligar: "Som: ligado", copiar: "copiar",
+      abaFora: "📡 Conexão perdida… volta?", abaVolta: "✅ Conexão restabelecida",
       t: {
         boasVindas: 'Olá! 👋 Este é o terminal do portfólio. Digite <span class="t-cmd">help</span> para ver o que dá pra fazer.',
         ajuda: [
@@ -78,7 +80,8 @@
           ["p4", "afinal, o que é P4?"], ["firewall", "joga o “Seja o firewall”"], ["notas", "meus textos mais recentes"],
           ["contato", "como falar comigo"], ["git log", "meus últimos commits no GitHub"], ["ls", "lista as seções do site"],
           ["cd <seção>", "vai até uma seção (ex.: cd projetos)"], ["ctf", "🚩 desafio: ache a flag escondida no site"],
-          ["musica", "o que toca enquanto eu programo"], ["cv", "abre o currículo para salvar em PDF"], ["clear", "limpa a tela"],
+          ["musica", "o que toca enquanto eu programo"], ["cv", "abre o currículo para salvar em PDF"],
+          ["nmap arthur", "as minhas portas abertas"], ["ping <host>", "mede o tempo até github ou unipampa"], ["clear", "limpa a tela"],
         ],
         musica: "🎵 tocando agora:",
         ctf: [
@@ -102,6 +105,12 @@
         gitAguarde: "ainda buscando os commits no GitHub, tente de novo em instantes.",
         naoEncontrado: (c) => `comando não encontrado: ${c}. Digite help.`,
         sudo: (u) => `${u} não está no arquivo sudoers. Este incidente será reportado. 😄`,
+        nmapUso: "uso: nmap arthur",
+        pingUso: "uso: ping github (ou ping unipampa)",
+        pingDesconhecido: (h) => `ping: ${h}: host desconhecido. Experimente github ou unipampa.`,
+        pingTimeout: (n) => `icmp_seq=${n} sem resposta (timeout)`,
+        pingResumo: (ok, total, media) => `${total} enviados, ${ok} recebidos${ok ? `, média ${media} ms` : ""}`,
+        pingNota: "(medido com uma requisição HTTPS: o navegador não manda ICMP de verdade)",
         p4: "Tudo o que circula na internet viaja em pequenos pedaços chamados pacotes, passando por equipamentos como roteadores. Normalmente, esses equipamentos já vêm de fábrica sabendo o que fazer. P4 é uma linguagem de programação que permite ensinar a eles regras novas: deixar o pacote seguir, mudar o caminho ou bloquear.\n\nÉ como um carteiro que pode ser treinado para conferir cada carta antes de entregar. Eu pesquiso como usar isso para deixar a comunicação mais segura.",
         semSecao: (s) => `seção não encontrada: ${s}. Use ls para ver as seções.`,
         indo: (s) => `indo para ${s}/…`,
@@ -162,6 +171,8 @@
         ctf: "CTF challenge", copiarEmail: "Copy my e-mail", codigoMirim: "Case study: Código Mirim",
       },
       emailCopiado: "E-mail copied",
+      somLigar: "Sound: off", somDesligar: "Sound: on", copiar: "copy",
+      abaFora: "📡 Connection lost… come back?", abaVolta: "✅ Connection restored",
       t: {
         boasVindas: 'Hi! 👋 This is the portfolio terminal. Type <span class="t-cmd">help</span> to see what you can do.',
         ajuda: [
@@ -170,7 +181,8 @@
           ["p4", "so, what is P4?"], ["firewall", "plays “Be the firewall”"], ["notes", "my latest writing"],
           ["contact", "how to reach me"], ["git log", "my latest commits on GitHub"], ["ls", "lists the site sections"],
           ["cd <section>", "jumps to a section (e.g. cd projects)"], ["ctf", "🚩 challenge: find the flag hidden on the site"],
-          ["music", "what plays while I code"], ["clear", "clears the screen"],
+          ["music", "what plays while I code"], ["cv", "opens the résumé to save as PDF"],
+          ["nmap arthur", "my open ports"], ["ping <host>", "times the trip to github or unipampa"], ["clear", "clears the screen"],
         ],
         musica: "🎵 now playing:",
         ctf: [
@@ -194,6 +206,12 @@
         gitAguarde: "still fetching commits from GitHub, try again in a moment.",
         naoEncontrado: (c) => `command not found: ${c}. Type help.`,
         sudo: (u) => `${u} is not in the sudoers file. This incident will be reported. 😄`,
+        nmapUso: "usage: nmap arthur",
+        pingUso: "usage: ping github (or ping unipampa)",
+        pingDesconhecido: (h) => `ping: ${h}: unknown host. Try github or unipampa.`,
+        pingTimeout: (n) => `icmp_seq=${n} no reply (timeout)`,
+        pingResumo: (ok, total, media) => `${total} sent, ${ok} received${ok ? `, average ${media} ms` : ""}`,
+        pingNota: "(measured with an HTTPS request: browsers can't send real ICMP)",
         p4: "Everything on the internet travels in small pieces called packets, passing through devices such as routers. Normally these devices come from the factory already knowing what to do. P4 is a programming language that lets you teach them new rules: let a packet through, change its route or block it.\n\nIt's like a mail carrier who can be trained to check every letter before delivering it. I research how to use this to make communication more secure.",
         semSecao: (s) => `section not found: ${s}. Use ls to see the sections.`,
         indo: (s) => `going to ${s}/…`,
@@ -1028,7 +1046,7 @@
             <h2 class="contato-titulo">${u.tituloContato}</h2>
             <div class="chat">
               ${u.chat.map((msg) => `<p class="bolha">${esc(msg)}</p>`).join("")}
-              ${emails.map((e) => `<a class="bolha bolha-eu" href="mailto:${esc(e)}" data-evento="email-chat" data-evento-titulo="Clique: e-mail no contato">${esc(e)}</a>`).join("")}
+              ${emails.map((e) => `<span class="bolha-email"><a class="bolha bolha-eu" href="mailto:${esc(e)}" data-evento="email-chat" data-evento-titulo="Clique: e-mail no contato">${esc(e)}</a><button class="bolha-copiar" type="button" data-copiar="${esc(e)}" aria-label="${u.copiar} ${esc(e)}">${u.copiar}</button></span>`).join("")}
             </div>
             ${formularioContato()}
             <div class="contato-links">${botoesLinks({ destacar: false, semEmail: true })}</div>
@@ -1059,6 +1077,7 @@
     clear: "limpar", limpar: "limpar", cls: "limpar",
     sudo: "sudo",
     cv: "cv", curriculo: "cv", "currículo": "cv", resume: "cv",
+    nmap: "nmap", ping: "ping",
     lattes: "link", github: "link", linkedin: "link", instagram: "link", orcid: "link", scholar: "link",
   };
 
@@ -1159,6 +1178,54 @@
     registrarEvento("curriculo-impresso", "Imprimiu ou salvou o currículo");
   });
   addEventListener("afterprint", () => raiz.classList.remove("imprimindo"));
+
+  /* ---------- Efeitos: sons (desligados até a pessoa ligar), vibração e título da aba ---------- */
+
+  const somLigado = () => memoria.ler("som") === "ligado";
+  let audio = null;
+  // Sons sintetizados na hora (Web Audio), nada para baixar
+  function bipe(freq, duracao, tipo = "sine", volume = 0.05) {
+    if (!somLigado()) return;
+    try {
+      audio ??= new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audio.createOscillator(), ganho = audio.createGain();
+      osc.type = tipo;
+      osc.frequency.value = freq;
+      ganho.gain.setValueAtTime(volume, audio.currentTime);
+      ganho.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + duracao);
+      osc.connect(ganho).connect(audio.destination);
+      osc.start();
+      osc.stop(audio.currentTime + duracao);
+    } catch (e) { /* sem áudio */ }
+  }
+  const vibrar = (ms) => { if (!matchMedia("(prefers-reduced-motion: reduce)").matches) navigator.vibrate?.(ms); };
+  // Usado pelo terminal, pelo jogo do firewall, pelo laboratório P4 e pelo formulário
+  window.EfeitosSite = {
+    tecla: () => bipe(1800 + Math.random() * 400, 0.025, "square", 0.012),
+    barrado: () => { bipe(170, 0.16, "square", 0.04); vibrar(70); },
+    passou: () => bipe(880, 0.08, "sine", 0.04),
+  };
+  function alternarSom() {
+    const ligado = !somLigado();
+    memoria.gravar("som", ligado ? "ligado" : "desligado");
+    const b = $('[data-acao="som"]');
+    if (b) { b.setAttribute("aria-pressed", String(ligado)); b.textContent = ligado ? UI[idioma].somDesligar : UI[idioma].somLigar; }
+    if (ligado) window.EfeitosSite.passou();
+  }
+
+  // Quem troca de aba vê "conexão perdida"; ao voltar, "restabelecida" por um instante
+  let tituloOriginal = "";
+  let voltaTimer;
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      tituloOriginal = document.title;
+      clearTimeout(voltaTimer);
+      document.title = UI[idioma].abaFora;
+    } else if (tituloOriginal) {
+      document.title = UI[idioma].abaVolta;
+      voltaTimer = setTimeout(() => { document.title = tituloOriginal; tituloOriginal = ""; }, 1600);
+    }
+  });
 
   /* ---------- Barra de status do rodapé ---------- */
 
@@ -1365,6 +1432,7 @@
     const entrada = $("#buscaEntrada");
     entrada.addEventListener("input", () => { buscaPos = 0; desenharBusca(); });
     entrada.addEventListener("keydown", (e) => {
+      if (e.key.length === 1 || e.key === "Enter" || e.key === "Backspace") window.EfeitosSite?.tecla();
       if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         e.preventDefault();
         if (!buscaVisiveis.length) return;
@@ -1616,6 +1684,54 @@
       case "sudo":
         imprimir(esc(T.sudo(usuario())), "t-erro");
         break;
+      case "nmap": {
+        // As "portas abertas" são os jeitos de me achar; as portas são as de verdade de cada serviço
+        if (!args[0]) { imprimir(esc(T.nmapUso), "t-erro"); break; }
+        const link = (tipo) => (D.links || []).find((l) => l.tipo === tipo && l.url)?.url;
+        const email = D.contato?.emails?.[0];
+        const portas = [
+          ["22/tcp", "filtered", "ssh", idioma === "pt" ? "só de dentro da rede 😉" : "inside the network only 😉"],
+          email && ["25/tcp", "open", "smtp", email, `mailto:${email}`],
+          link("site") && ["80/tcp", "open", "http", link("site"), link("site")],
+          link("linkedin") && ["443/tcp", "open", "https", "linkedin", link("linkedin")],
+          ["1883/tcp", "open", "mqtt", "TRAP-IoT"],
+          link("github") && ["9418/tcp", "open", "git", "github", link("github")],
+          ["9559/tcp", "open", "p4runtime", idioma === "pt" ? "pesquisa com P4" : "P4 research"],
+        ].filter(Boolean);
+        imprimir([
+          `Nmap scan report for ${esc(args[0])} (${esc(location.host)})`,
+          `<span class="t-cmd">PORT      STATE     SERVICE    INFO</span>`,
+          ...portas.map(([p, e, sv, info, url]) => `${esc(p.padEnd(10))}<span class="${e === "open" ? "t-destaque" : "t-erro"}">${esc(e.padEnd(10))}</span>${esc(sv.padEnd(11))}${url ? linkHtml(url, info) : esc(info)}`),
+        ].join("\n"));
+        break;
+      }
+      case "ping": {
+        // Mede de verdade: o tempo de uma requisição HTTPS até o host (o navegador não manda ICMP)
+        const HOSTS = { github: "https://api.github.com/zen", unipampa: "https://unipampa.edu.br/favicon.ico" };
+        const host = (args[0] || "").toLowerCase().replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\.(com|edu\.br|br)$/, "");
+        if (!args[0]) { imprimir(esc(T.pingUso), "t-erro"); break; }
+        if (!HOSTS[host]) { imprimir(esc(T.pingDesconhecido(args[0])), "t-erro"); break; }
+        (async () => {
+          const tempos = [];
+          imprimir(`PING ${esc(new URL(HOSTS[host]).host)}`);
+          for (let n = 1; n <= 4; n++) {
+            const inicio = performance.now();
+            try {
+              await fetch(`${HOSTS[host]}?ping=${Date.now()}`, { mode: "no-cors", cache: "no-store", signal: AbortSignal.timeout?.(4000) });
+              const ms = Math.round(performance.now() - inicio);
+              tempos.push(ms);
+              imprimir(`icmp_seq=${n} time=${ms} ms`);
+              window.EfeitosSite?.passou();
+            } catch (e) {
+              imprimir(esc(T.pingTimeout(n)), "t-erro");
+            }
+            await new Promise((r) => setTimeout(r, 400));
+          }
+          const media = tempos.length ? Math.round(tempos.reduce((a, b) => a + b, 0) / tempos.length) : 0;
+          imprimir(esc(T.pingResumo(tempos.length, 4, media)) + "\n" + `<span class="t-cmd">${esc(T.pingNota)}</span>`);
+        })();
+        break;
+      }
       case "cv":
         imprimir(esc(UI[idioma].curriculo) + " →");
         setTimeout(() => window.print(), 300);
@@ -1696,7 +1812,10 @@
         <p class="rodape-status" id="rodapeStatus" translate="no"></p>
         <div class="rodape-linha">
           <span>© ${new Date().getFullYear()} ${esc(D.nomeCompleto || nomeCompleto())}</span>
-          <button class="rodape-pausa" type="button" data-acao="pausar" aria-pressed="${parado}">${parado ? u.retomar : u.pausar}</button>
+          <span class="rodape-botoes">
+            <button class="rodape-pausa" type="button" data-acao="pausar" aria-pressed="${parado}">${parado ? u.retomar : u.pausar}</button>
+            <button class="rodape-pausa" type="button" data-acao="som" aria-pressed="${somLigado()}">${somLigado() ? u.somDesligar : u.somLigar}</button>
+          </span>
           <a href="${naInicial ? "#inicio" : "#"}">${u.voltarTopo} ↑</a>
         </div>
       </div>`;
@@ -2116,6 +2235,12 @@
 
     if (alvo.id === "terminalCorpo") {
       if (!window.getSelection()?.toString()) $("#terminalEntrada")?.focus();
+    } else if (alvo.dataset.copiar) {
+      copiarTexto(alvo.dataset.copiar);
+      alvo.classList.add("copiado");
+      setTimeout(() => alvo.classList.remove("copiado"), 1200);
+    } else if (alvo.dataset.acao === "som") {
+      alternarSom();
     } else if (alvo.dataset.acao === "curriculo") {
       window.print();
     } else if (alvo.dataset.acao === "pausar") {
