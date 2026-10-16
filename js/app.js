@@ -593,7 +593,7 @@
                     ${p.categoria ? `<span class="projeto-tag">${esc(t(p.categoria))}</span>` : ""}
                   </div>
                   <div class="projeto-corpo">
-                    <h3>${destino ? `<a href="${esc(destino)}"${linkExterno(destino)} data-evento="${evento}" data-evento-titulo="Projeto: ${titulo}">${titulo}${estudo ? "" : '<span aria-hidden="true">↗</span>'}</a>` : titulo}</h3>
+                    <h3${estudo ? ` style="view-transition-name: projeto-${esc(normalizar(t(p.titulo)))}"` : ""}>${destino ? `<a href="${esc(destino)}"${linkExterno(destino)} data-evento="${evento}" data-evento-titulo="Projeto: ${titulo}">${titulo}${estudo ? "" : '<span aria-hidden="true">↗</span>'}</a>` : titulo}</h3>
                     ${p.descricao ? `<p class="texto-rico">${rico(t(p.descricao))}</p>` : ""}
                     ${p.papel ? `<p class="texto-rico"><strong>${u.meuPapel}</strong> ${rico(t(p.papel))}</p>` : ""}
                     ${temItens(p.tecnologias) ? `<ul class="techs">${p.tecnologias.map((x) => `<li>${esc(t(x))}</li>`).join("")}</ul>` : ""}
@@ -679,7 +679,7 @@
     return notas.map((n) => `
       <a class="nota-cartao revelar" href="${esc(enderecoNota(n))}" data-evento="nota-${esc(t(n.slug))}" data-evento-titulo="Nota: ${esc(t(n.titulo))}">
         <span class="nota-meta"><time datetime="${esc(n.data)}">${esc(dataNota(n.data))}</time>${n.minutos ? ` · ${u.minutos(n.minutos)}` : ""}</span>
-        <h3>${esc(t(n.titulo))}</h3>
+        <h3 style="view-transition-name: nota-${esc(normalizar(t(n.slug)))}">${esc(t(n.titulo))}</h3>
         ${n.resumo ? `<p>${esc(t(n.resumo))}</p>` : ""}
         <span class="nota-ler">${u.ler}</span>
       </a>`).join("");
@@ -965,6 +965,30 @@
       </form>`;
   }
 
+  // A mensagem enviada vira um pacote que faz um arco do botão até o último nó da rota (o contato), e o nó pinga
+  function enviarPacote(origem) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches || !origem?.animate) return;
+    const destino = [...document.querySelectorAll("#rota .rota-no")].pop() || $("#nav");
+    const a = origem.getBoundingClientRect(), b = destino.getBoundingClientRect();
+    const [x0, y0, x1, y1] = [a.left + a.width / 2, a.top + a.height / 2, b.left + b.width / 2, b.top + b.height / 2];
+    const pacote = document.createElement("b");
+    pacote.className = "pacote-voo";
+    pacote.setAttribute("aria-hidden", "true");
+    document.body.append(pacote);
+    pacote.animate([
+      { transform: `translate(${x0}px, ${y0}px) scale(.4) rotate(0deg)`, opacity: 0 },
+      { transform: `translate(${x0}px, ${y0 - 30}px) scale(1.2) rotate(0deg)`, opacity: 1, offset: 0.15 },
+      { transform: `translate(${(x0 + x1) / 2}px, ${Math.min(y0, y1) - 140}px) scale(1) rotate(200deg)`, offset: 0.55 },
+      { transform: `translate(${x1}px, ${y1}px) scale(.5) rotate(360deg)`, opacity: 1 },
+    ], { duration: 1100, easing: "cubic-bezier(.45, 0, .25, 1)" }).finished.then(() => {
+      pacote.remove();
+      destino.classList.remove("pingou");
+      void destino.offsetWidth;
+      destino.classList.add("pingou");
+      window.EfeitosSite?.passou();
+    });
+  }
+
   async function enviarFormulario(form) {
     if (!form.reportValidity()) return;
     const u = UI[idioma];
@@ -983,6 +1007,7 @@
       respostas.insertAdjacentHTML("beforeend",
         `<p class="bolha bolha-eu">${esc(mensagem)}</p><p class="bolha">${esc(u.formOk)}</p>`);
       form.reset();
+      enviarPacote(botao);
       registrarEvento("formulario-enviado", "Enviou mensagem pelo formulário");
     } catch (e) {
       respostas.insertAdjacentHTML("beforeend", `<p class="bolha bolha-erro">${esc(u.formErro(D.contato?.emails?.[0] || ""))}</p>`);
