@@ -930,19 +930,29 @@ html[data-estilo="tech"] .sobre-texto p:first-child { font-weight: 500; }
 .traj-lista { margin-left: 8px; border-left: var(--borda) solid var(--contorno); }
 .traj-lista li { position: relative; padding: 0 0 32px 30px; }
 .traj-lista li:last-child { padding-bottom: 0; }
+/* Trajetória como traceroute: cada etapa é um salto numerado, o 1 é o mais antigo e o de cima é onde estou hoje */
+.traj-comando { margin: -24px 0 36px; font: 600 15px var(--fonte-mono); }
+.traj-comando span { color: var(--acento); }
+.traj-comando small { font-size: 13px; color: var(--suave); }
 .traj-lista li::before {
-  content: "";
+  content: attr(data-salto);
   position: absolute;
-  left: -9px;
-  top: 4px;
-  width: 16px;
-  height: 16px;
+  left: -15px;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
   background: var(--cartao);
   border: var(--borda) solid var(--contorno);
-  border-radius: calc(4 * var(--curva));
-  transform: rotate(45deg);
+  border-radius: calc(5 * var(--curva));
+  font: 700 13px var(--fonte-mono);
+  color: var(--texto);
 }
-.traj-lista li:first-child::before { background: var(--acento); }
+.traj-lista li { padding-left: 34px; }
+.traj-lista li:first-child::before { background: var(--acento); color: var(--sobre-acento); animation: pulsar-salto 2.4s ease-out infinite; }
+@keyframes pulsar-salto { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--acento) 60%, transparent); } 70%, 100% { box-shadow: 0 0 0 10px transparent; } }
+html.parado .traj-lista li:first-child::before { animation-play-state: paused; }
 .traj-periodo { display: inline-block; margin-bottom: 6px; font-family: var(--fonte-mono); font-size: 13px; font-weight: 600; color: var(--suave); }
 .traj-lista h4 { font-size: 20px; font-weight: 800; line-height: 1.25; letter-spacing: -.02em; }
 .traj-inst { margin-top: 2px; font-weight: 600; color: var(--acento); }
@@ -1065,6 +1075,13 @@ html.anima .rodape-nome.visivel { animation: none; }
 html.anima .rodape-nome.visivel:not(.passou) .letra { animation: subir-letra .9s calc(var(--i, 0) * 45ms + .1s) cubic-bezier(.16, 1, .3, 1) backwards; }
 @keyframes subir-letra { from { opacity: 0; translate: 0 .5em; filter: blur(8px); } }
 .rodape .container { container-type: inline-size; }
+/* Barra de status: hora em Alegrete, latência até o GitHub e tempo da visita */
+.rodape-status { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0 0 18px; padding: 10px 0; border-block: var(--borda) dashed var(--linha); font: 500 13px var(--fonte-mono); color: var(--suave); }
+.rodape-status:empty { display: none; }
+.rodape-status span { display: inline-flex; align-items: center; gap: 8px; }
+.status-ponto { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulsar 2s ease-out infinite; }
+.status-ponto.dormindo { background: var(--suave); animation: none; }
+html.parado .status-ponto { animation-play-state: paused; }
 .rodape-linha { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; }
 .rodape a:hover, .rodape-pausa:hover { color: var(--acento); }
 .rodape-pausa { padding: 4px 0; background: none; border: 0; color: inherit; font: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: var(--linha); cursor: pointer; }
@@ -1832,3 +1849,24 @@ html.anima :is(.botao, .botao-icone, .atalho, .contato-links a):not(:hover) { tr
   .p4-saida { bottom: 52px; }
 }
 html.modo-hacker .p4-tabela tr.ruim-casou { color: #000; }
+
+/* ---------- Currículo para imprimir ou salvar em PDF (montado pelo app.js na hora de imprimir) ---------- */
+#curriculo { display: none; }
+@media print {
+  @page { margin: 16mm 15mm; }
+  html.imprimindo body > :not(#curriculo) { display: none !important; }
+  html.imprimindo, html.imprimindo body { background: #fff !important; color: #111 !important; }
+  html.imprimindo #curriculo { display: block; font: 10.5pt/1.45 var(--fonte); color: #111; }
+  #curriculo * { color: #111 !important; animation: none !important; }
+  #curriculo h1 { font: 800 24pt/1 var(--fonte-titulo); letter-spacing: -.03em; }
+  #curriculo .cv-frase { margin-top: 6pt; font-size: 11.5pt; }
+  #curriculo .cv-contato { display: flex; flex-wrap: wrap; gap: 2pt 14pt; margin-top: 8pt; font-size: 9.5pt; }
+  #curriculo section { margin-top: 14pt; break-inside: avoid-page; }
+  #curriculo h2 { margin-bottom: 6pt; padding-bottom: 3pt; border-bottom: 1.5pt solid #111; font: 800 12pt var(--fonte-titulo); }
+  #curriculo p + p { margin-top: 4pt; }
+  #curriculo .cv-item { display: grid; grid-template-columns: 30mm 1fr; gap: 6mm; margin-top: 6pt; break-inside: avoid; }
+  #curriculo .cv-item > span { font-size: 9.5pt; color: #444 !important; }
+  #curriculo .cv-item p { margin-top: 2pt; }
+  #curriculo a { text-decoration: none; }
+  #curriculo .cv-rodape { margin-top: 18pt; font-size: 8.5pt; color: #666 !important; }
+}

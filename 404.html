@@ -23,7 +23,7 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="/fontes/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Caminhos absolutos: o GitHub Pages mostra esta página em qualquer endereço que não existe -->
-  <link rel="stylesheet" href="/css/estilo.css?v=20261016m">
+  <link rel="stylesheet" href="/css/estilo.css?v=20261016o">
   <script>
     try {
       var tema = localStorage.getItem("tema");
@@ -32,8 +32,8 @@
     } catch (e) {}
   </script>
   <!-- Mesmo visual do resto do site: o tema que o visitante escolheu, ou o "estilo" de dados.js -->
-  <script src="/js/dados.js?v=20261016m"></script>
-  <script src="/js/temas.js?v=20261016m"></script>
+  <script src="/js/dados.js?v=20261016o"></script>
+  <script src="/js/temas.js?v=20261016o"></script>
   <script>
     if (window.TEMAS_DO_SITE) {
       var guardado = null;
@@ -57,6 +57,10 @@
       100% { transform: translate(330px, 90px) rotate(170deg); opacity: 0; }
     }
     .erro-acoes { margin-top: 34px; }
+    /* Traceroute que não chega: os saltos aparecem um a um e os últimos ficam sem resposta */
+    #trace .t-linha { white-space: pre; animation: aparecer-salto .25s ease-out backwards; }
+    #trace .falhou { color: var(--perigo, #ff5f57); }
+    @keyframes aparecer-salto { from { opacity: 0; translate: -6px 0; } }
     /* Fontes dos temas são mais largas: menos aperto entre as letras */
     html[data-estilo] .erro-codigo, html[data-estilo] .erro h1 { letter-spacing: -.02em; }
   </style>
@@ -74,6 +78,7 @@
         <div class="terminal-barra" aria-hidden="true"><i></i><i></i><i></i><span>arthur@portfolio:~</span></div>
         <div class="terminal-corpo">
           <div class="t-linha t-eco"><span class="t-prompt">arthur@portfolio:~$</span> <span id="abrir">abrir</span> <span id="caminho"></span></div>
+          <div id="trace" translate="no"></div>
           <div class="t-linha t-erro"><span id="erro">erro 404: esta página não existe</span></div>
           <div class="t-linha"><span id="oQue">o que aconteceu: o pacote não achou um destino e foi descartado</span></div>
           <!-- 🚩 CTF 3/3 (rot13) -->
@@ -107,6 +112,36 @@
       document.title = "404 · Page not found · Arthur Medeiros";
       for (var id in textos) document.getElementById(id).textContent = textos[id];
     }
+
+    // Traceroute até o endereço pedido: os primeiros saltos respondem, depois só silêncio
+    (function () {
+      var en = idioma === "en";
+      var coluna = function (n, nome) { return " " + n + "  " + nome.padEnd(20); };
+      var saltos = [
+        [coluna(1, en ? "home-router" : "roteador-de-casa"), "2 ms"],
+        [coluna(2, en ? "your-isp" : "seu-provedor"), "14 ms"],
+        [coluna(3, "github-pages"), "31 ms"],
+        [" 4  * * *", ""],
+        [" 5  * * *  " + (en ? "destination unreachable" : "destino inalcançável"), ""],
+      ];
+      var alvo = document.getElementById("trace");
+      var linha = function (texto, classe) {
+        var d = document.createElement("div");
+        d.className = "t-linha" + (classe ? " " + classe : "");
+        d.textContent = texto;
+        alvo.appendChild(d);
+      };
+      linha("traceroute " + location.host + location.pathname);
+      var calmo = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      // As linhas de erro (e a do CTF) esperam o traceroute desistir
+      var depois = [].slice.call(alvo.parentNode.querySelectorAll("#trace ~ .t-linha"));
+      if (!calmo) depois.forEach(function (d) { d.style.visibility = "hidden"; });
+      saltos.forEach(function (s, i) {
+        var mostrar = function () { linha(s[0] + s[1], i >= 3 ? "falhou" : ""); };
+        if (calmo) mostrar(); else setTimeout(mostrar, 400 + i * 380);
+      });
+      if (!calmo) setTimeout(function () { depois.forEach(function (d) { d.style.visibility = ""; }); }, 400 + saltos.length * 380 + 200);
+    })();
   </script>
 </body>
 </html>

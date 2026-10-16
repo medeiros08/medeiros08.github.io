@@ -30,6 +30,10 @@
       meuPapel: "Meu papel:", maisProjetos: "Mais projetos no GitHub",
       formacao: "Formação", experiencia: "Experiência", tituloReconhecimentos: "Reconhecimentos e atuação",
       emAndamento: "em andamento", hoje: "hoje",
+      curriculo: "Currículo (PDF)",
+      cv: { contato: "Contato", sobre: "Sobre", experiencia: "Experiência", formacao: "Formação", projetos: "Projetos", habilidades: "Habilidades", publicacoes: "Publicações", gerado: "Gerado a partir de" },
+      trajComando: "rota até hoje, um salto por etapa (o 1 é o mais antigo)",
+      status: { local: "Alegrete", acordado: "acordado", dormindo: "dormindo", github: "GitHub", aqui: "você está aqui há" },
       chat: ["Oi! 👋", "Respondo por e-mail ou pelas redes aqui embaixo."],
       tema: "Alternar tema claro/escuro", idioma: "Read in English", menu: "Menu",
       paleta: "Trocar a cor do site", voltarTopo: "Voltar ao topo", pausar: "Pausar animações", retomar: "Retomar animações",
@@ -74,7 +78,7 @@
           ["p4", "afinal, o que é P4?"], ["firewall", "joga o “Seja o firewall”"], ["notas", "meus textos mais recentes"],
           ["contato", "como falar comigo"], ["git log", "meus últimos commits no GitHub"], ["ls", "lista as seções do site"],
           ["cd <seção>", "vai até uma seção (ex.: cd projetos)"], ["ctf", "🚩 desafio: ache a flag escondida no site"],
-          ["musica", "o que toca enquanto eu programo"], ["clear", "limpa a tela"],
+          ["musica", "o que toca enquanto eu programo"], ["cv", "abre o currículo para salvar em PDF"], ["clear", "limpa a tela"],
         ],
         musica: "🎵 tocando agora:",
         ctf: [
@@ -118,6 +122,10 @@
       meuPapel: "My role:", maisProjetos: "More projects on GitHub",
       formacao: "Education", experiencia: "Experience", tituloReconhecimentos: "Awards and service",
       emAndamento: "in progress", hoje: "present",
+      curriculo: "Résumé (PDF)",
+      cv: { contato: "Contact", sobre: "About", experiencia: "Experience", formacao: "Education", projetos: "Projects", habilidades: "Skills", publicacoes: "Publications", gerado: "Generated from" },
+      trajComando: "route to today, one hop per stage (1 is the oldest)",
+      status: { local: "Alegrete", acordado: "awake", dormindo: "asleep", github: "GitHub", aqui: "you've been here for" },
       chat: ["Hi! 👋", "I reply by e-mail or on the networks below."],
       tema: "Toggle light/dark theme", idioma: "Ler em português", menu: "Menu",
       paleta: "Change the site color", voltarTopo: "Back to top", pausar: "Pause animations", retomar: "Resume animations",
@@ -362,7 +370,7 @@
             ${D.topo?.frase ? `<p class="hero-frase texto-rico">${rico(t(D.topo.frase))}</p>` : ""}
             ${detalhes.length ? `<ul class="hero-chips">${detalhes.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>` : ""}
             <div class="hero-links">${botoesLinks({ soTexto: false })}</div>
-            <p class="hero-outros">${botoesLinks({ soTexto: true })}</p>
+            <p class="hero-outros">${botoesLinks({ soTexto: true })}<button class="link-texto" type="button" data-acao="curriculo" data-evento="curriculo-pdf" data-evento-titulo="Clique: currículo em PDF">${ICONES.cv || ICONES.site}<span>${UI[idioma].curriculo}</span></button></p>
           </div>
           ${foto}
         </div>
@@ -889,8 +897,8 @@
       <div class="revelar">
         <h3 class="traj-titulo">${titulo}</h3>
         <ol class="traj-lista">
-          ${itens.map((i) => `
-            <li>
+          ${itens.map((i, n) => `
+            <li data-salto="${itens.length - n}">
               <span class="traj-periodo">${esc(periodo(i))}</span>
               <h4>${esc(t(i.titulo))}</h4>
               ${i.instituicao ? `<p class="traj-inst">${esc(t(i.instituicao))}</p>` : ""}
@@ -907,6 +915,7 @@
       <section class="secao" id="trajetoria">
         <div class="container">
           <h2 class="titulo-secao revelar">${u.trajetoria}</h2>
+          <p class="traj-comando revelar" translate="no"><span aria-hidden="true">$</span> traceroute ${esc(normalizar(D.nome?.primeiro || "arthur"))} <small>· ${u.trajComando}</small></p>
           <div class="traj-grade">
             ${colunaTrajetoria(u.experiencia, D.experiencia)}
             ${colunaTrajetoria(u.formacao, D.formacao)}
@@ -1024,6 +1033,7 @@
     habilidades: "habilidades", skills: "habilidades",
     clear: "limpar", limpar: "limpar", cls: "limpar",
     sudo: "sudo",
+    cv: "cv", curriculo: "cv", "currículo": "cv", resume: "cv",
     lattes: "link", github: "link", linkedin: "link", instagram: "link", orcid: "link", scholar: "link",
   };
 
@@ -1091,6 +1101,68 @@
     atualizarTemaLivro();
     if (ligado) registrarEvento("modo-hacker", "Ativou o modo hacker");
   }
+
+  /* ---------- Currículo para imprimir ou salvar em PDF ---------- */
+
+  // Na hora de imprimir, a página vira um currículo limpo montado de dados.js; depois volta ao normal
+  function curriculoHtml() {
+    const c = UI[idioma].cv;
+    const bloco = (titulo, corpo) => (corpo ? `<section><h2>${titulo}</h2>${corpo}</section>` : "");
+    const itensTraj = (lista) => (lista || []).map((i) => `
+      <div class="cv-item"><span>${esc(periodo(i))}</span><div><b>${esc(t(i.titulo))}</b>${i.instituicao ? ` · ${esc(t(i.instituicao))}` : ""}${i.detalhe ? `<p>${rico(t(i.detalhe))}</p>` : ""}</div></div>`).join("");
+    const links = (D.links || []).filter((l) => l.url).map((l) => `<li>${esc(t(l.rotulo) || t(ROTULOS_LINK[l.tipo]) || l.tipo)}: ${esc(l.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))}</li>`);
+    const emails = (D.contato?.emails || []).map((e) => `<li>${esc(e)}</li>`);
+    return `
+      <header>
+        <h1>${esc(D.nomeCompleto || nomeCompleto())}</h1>
+        <p class="cv-frase">${esc(simples(D.topo?.chamada))}. ${esc(simples(D.topo?.frase))}</p>
+        <ul class="cv-contato">${[...emails, ...links, D.contato?.cidade ? `<li>${esc(t(D.contato.cidade))}</li>` : ""].join("")}</ul>
+      </header>
+      ${bloco(c.sobre, (D.sobre || []).slice(0, 2).map((p) => `<p>${rico(t(p))}</p>`).join(""))}
+      ${bloco(c.experiencia, itensTraj(D.experiencia))}
+      ${bloco(c.formacao, itensTraj(D.formacao))}
+      ${bloco(c.projetos, (D.projetos || []).map((p) => `<div class="cv-item"><span>${esc(t(p.categoria) || "")}</span><div><b>${esc(t(p.titulo))}</b><p>${rico(t(p.descricao))}</p></div></div>`).join(""))}
+      ${bloco(c.publicacoes, (D.publicacoes || []).map((p) => `<div class="cv-item"><span>${esc(p.ano ?? "")}</span><div><b>${esc(t(p.titulo))}</b><p>${esc(p.autores || "")}${p.local ? ` · ${esc(t(p.local))}` : ""}</p></div></div>`).join(""))}
+      ${bloco(c.habilidades, (D.habilidades || []).map((g) => `<p><b>${esc(t(g.grupo))}:</b> ${(g.itens || []).map((h) => esc(t(h.nome))).join(", ")}</p>`).join(""))}
+      <p class="cv-rodape">${c.gerado} ${esc(location.origin)}${esc(location.pathname.replace(/[^/]*$/, ""))}</p>`;
+  }
+  addEventListener("beforeprint", () => {
+    let el = document.getElementById("curriculo");
+    if (!el) { el = document.createElement("article"); el.id = "curriculo"; document.body.append(el); }
+    el.innerHTML = curriculoHtml();
+    raiz.classList.add("imprimindo");
+    registrarEvento("curriculo-impresso", "Imprimiu ou salvou o currículo");
+  });
+  addEventListener("afterprint", () => raiz.classList.remove("imprimindo"));
+
+  /* ---------- Barra de status do rodapé ---------- */
+
+  // Hora em Alegrete (e se estou acordado), a latência real da conversa com a API do GitHub
+  // (medida na própria requisição da seção GitHub, sem pedir nada a mais) e o tempo desta visita
+  const chegada = Date.now();
+  function latenciaGithub() {
+    // De outro domínio o navegador só informa a duração total da requisição, que é o que aparece aqui
+    const e = performance.getEntriesByType?.("resource").filter((r) => r.name.includes("api.github.com") && r.duration > 0).pop();
+    return e ? Math.round(e.duration) : null;
+  }
+  function desenharStatus() {
+    const el = document.getElementById("rodapeStatus");
+    if (!el) return;
+    const u = UI[idioma].status;
+    const agora = new Date();
+    const hora = new Intl.DateTimeFormat(idioma === "pt" ? "pt-BR" : "en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo" }).format(agora);
+    const h = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: "America/Sao_Paulo" }).format(agora));
+    const acordado = h >= 7 && h < 24;
+    const ms = latenciaGithub();
+    const seg = Math.floor((Date.now() - chegada) / 1000);
+    const tempo = seg < 60 ? `${seg} s` : `${Math.floor(seg / 60)} min ${String(seg % 60).padStart(2, "0")} s`;
+    el.innerHTML = [
+      `<span><i class="status-ponto${acordado ? "" : " dormindo"}"></i>${u.local} ${hora} · ${acordado ? u.acordado : u.dormindo}</span>`,
+      ms !== null ? `<span>${u.github} ${ms} ms</span>` : "",
+      `<span>${u.aqui} ${tempo}</span>`,
+    ].filter(Boolean).join("");
+  }
+  setInterval(() => { if (!document.hidden) desenharStatus(); }, 1000);
 
   // Pausa o que se move sozinho e sem parar (globo, faixa, etiquetas); a escolha fica salva
   function alternarPausa() {
@@ -1508,6 +1580,10 @@
       case "sudo":
         imprimir(esc(T.sudo(usuario())), "t-erro");
         break;
+      case "cv":
+        imprimir(esc(UI[idioma].curriculo) + " →");
+        setTimeout(() => window.print(), 300);
+        break;
       case "link": {
         const link = (D.links || []).find((l) => l.tipo === cmd.toLowerCase() && l.url);
         imprimir(link ? linkHtml(link.url, link.url) : esc(T.naoEncontrado(cmd)), link ? "" : "t-erro");
@@ -1581,6 +1657,7 @@
     $("#rodape").innerHTML = `
       <div class="container">
         <p class="rodape-nome revelar" aria-hidden="true" translate="no"><span>${letras(D.nome?.primeiro)}</span> <span>${letras(D.nome?.sobrenome)}</span></p>
+        <p class="rodape-status" id="rodapeStatus" translate="no"></p>
         <div class="rodape-linha">
           <span>© ${new Date().getFullYear()} ${esc(D.nomeCompleto || nomeCompleto())}</span>
           <button class="rodape-pausa" type="button" data-acao="pausar" aria-pressed="${parado}">${parado ? u.retomar : u.pausar}</button>
@@ -1588,6 +1665,7 @@
         </div>
       </div>`;
 
+    desenharStatus();
     // Cada letra do nome do rodapé sobe com um pequeno atraso em relação à anterior
     document.querySelectorAll(".rodape-nome .letra").forEach((l, i) => l.style.setProperty("--i", i));
     fecharMenu();
@@ -2002,6 +2080,8 @@
 
     if (alvo.id === "terminalCorpo") {
       if (!window.getSelection()?.toString()) $("#terminalEntrada")?.focus();
+    } else if (alvo.dataset.acao === "curriculo") {
+      window.print();
     } else if (alvo.dataset.acao === "pausar") {
       alternarPausa();
     } else if (alvo.dataset.acao === "tema") {
