@@ -1706,7 +1706,7 @@ html.anima :is(.botao, .botao-icone, .atalho, .contato-links a):not(:hover) { tr
 /* ---------- Laboratório P4 (js/p4.js) ---------- */
 
 /* A seção ganha um campo de cor próprio: quebra a sequência de seções escuras */
-.secao-lab { margin-top: 124px; padding: 110px 0 120px; background: color-mix(in srgb, var(--acento) 11%, var(--fundo)); }
+.secao-lab { margin-top: 124px; padding: 110px 0 120px; background: color-mix(in srgb, var(--acento) 11%, transparent); }
 
 /* História: a seção fica parada enquanto a rolagem empurra o pacote pelas três etapas */
 .p4-historia { position: relative; height: 260vh; }
