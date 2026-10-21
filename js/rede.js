@@ -123,7 +123,12 @@
   // Tema, paleta e modo hacker mudam atributos e variáveis no <html>
   // A classe "parado" vem do botão "Pausar animações" do rodapé
   const parado = () => movimentoReduzido.matches || raiz.classList.contains("parado");
-  new MutationObserver(() => { lerCores(); if (parado()) { rodando = false; desenhar(0); } else iniciar(); })
+  // A troca de cor do campo invertido é animada: relê as cores algumas vezes até ela terminar
+  new MutationObserver(() => {
+    lerCores();
+    [250, 500, 800].forEach((ms) => setTimeout(() => { lerCores(); if (parado()) desenhar(0); }, ms));
+    if (parado()) { rodando = false; desenhar(0); } else iniciar();
+  })
     .observe(raiz, { attributes: true, attributeFilter: ["data-theme", "data-estilo", "class", "style"] });
 
   /* ---------- Tamanho, mouse e rolagem ---------- */

@@ -78,7 +78,7 @@
     // Forma sem deslocamento de sombra: sem cor de sombra também (nada de sombra de tamanho zero nos botões)
     const semSombra = (e.forma || {}).desloc === "0px";
     const modo = (m, escuro) => `
-      --fundo: ${m.fundo}; --cartao: ${m.cartao}; --texto: ${m.texto}; --suave: ${m.suave};
+      --fundo: ${m.fundo}; --cartao: ${m.cartao}; --texto: ${m.texto}; --suave: ${m.suave}; --acento: ${m.acento};
       --tinta: ${m.texto}; --linha: ${m.texto}2e; --grade: ${m.texto}${escuro ? "0f" : "14"};
       --contorno: ${contorno < 1 ? m.texto + alfa : m.texto};
       --sombra: ${semSombra ? "transparent" : escuro ? m.acento : m.texto}; --sobre-acento: ${m.sobre || (escuro ? m.fundo : "#ffffff")};`;
@@ -91,7 +91,10 @@
       }
       ${(e.capas || []).map((c, i) => `html:not(.modo-hacker) .projeto:nth-child(${e.capas.length}n + ${i + 1}) .projeto-capa:not(.com-imagem) { background-color: ${c}; }`).join("\n")}
       html:not(.modo-hacker)[data-theme="light"] {${modo(e.claro, false)} }
-      html:not(.modo-hacker)[data-theme="dark"] {${modo(e.escuro, true)} }`;
+      html:not(.modo-hacker)[data-theme="dark"] {${modo(e.escuro, true)} }
+      /* Seções de "campo invertido" (Sobre, Laboratório P4): a página inteira troca para o modo oposto */
+      html:not(.modo-hacker)[data-theme="light"].campo-inverso {${modo(e.escuro, true)} }
+      html:not(.modo-hacker)[data-theme="dark"].campo-inverso {${modo(e.claro, false)} }`;
   }
 
   window.TEMAS_DO_SITE = { PALETAS, TEMAS, ESTILOS, indiceInicial, aplicar };
