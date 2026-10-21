@@ -64,6 +64,19 @@ window.DADOS = {
   // "Agora": o que você está fazendo no momento (até 3 colunas).
   agora: [
     {
+      rotulo: { pt: "Desenvolvendo", en: "Building" },
+      itens: [
+        {
+          titulo: "GamificaPampa",
+          selo: { pt: "Extensão", en: "Outreach" },
+          texto: {
+            pt: "Jogos que apresentam a programação para crianças de 6 a 14 anos e uma Oficina de Prompts para professores, no hub de gamificação e IA da UNIPAMPA.",
+            en: "Games that introduce programming to kids aged 6 to 14 and a Prompt Workshop for teachers, in UNIPAMPA's gamification and AI hub.",
+          },
+        },
+      ],
+    },
+    {
       rotulo: { pt: "Pesquisa atual", en: "Current research" },
       itens: [
         {
@@ -90,19 +103,6 @@ window.DADOS = {
           texto: {
             pt: "Laboratório de IA e Engenharia de Software da UNIPAMPA.",
             en: "UNIPAMPA's AI and Software Engineering lab.",
-          },
-        },
-      ],
-    },
-    {
-      rotulo: { pt: "Desenvolvendo", en: "Building" },
-      itens: [
-        {
-          titulo: "GamificaPampa",
-          selo: { pt: "Extensão", en: "Outreach" },
-          texto: {
-            pt: "Jogos que apresentam a programação para crianças de 6 a 14 anos e uma Oficina de Prompts para professores, no hub de gamificação e IA da UNIPAMPA.",
-            en: "Games that introduce programming to kids aged 6 to 14 and a Prompt Workshop for teachers, in UNIPAMPA's gamification and AI hub.",
           },
         },
       ],
@@ -156,6 +156,25 @@ window.DADOS = {
   // vermelho, rosa. Também aceita "imagem": "img/projeto.jpg".
   projetos: [
     {
+      categoria: { pt: "Extensão e educação", en: "Outreach and education" },
+      status: { pt: "Em desenvolvimento", en: "In progress" },
+      titulo: "GamificaPampa",
+      descricao: {
+        pt: "Hub de extensão da UNIPAMPA que leva gamificação e IA a professores da Educação Básica de Alegrete. Criei os recursos pedagógicos: sete jogos que apresentam a programação para crianças de 6 a 14 anos (guiar um robô até a estrela, caçar bugs, programar em dupla, ligar celular, servidor e banco de dados), uma aula de 50 minutos com slides e atividades, e uma Oficina de Prompts que ensina professores a criar materiais com o Gemini.",
+        en: "A UNIPAMPA outreach hub that brings gamification and AI to K-12 teachers in Alegrete. I built its teaching resources: seven games that introduce programming to kids aged 6 to 14 (guiding a robot to a star, hunting bugs, pair programming, wiring a phone to a server and a database), a 50-minute lesson with slides and activities, and a Prompt Workshop that teaches teachers to create materials with Gemini.",
+      },
+      papel: {
+        pt: "crio os jogos e a oficina, e estou levando tudo para a organização do projeto no GitHub sem quebrar nenhum link ou QR code.",
+        en: "I build the games and the workshop, and I'm moving everything to the project's GitHub organization without breaking any link or QR code.",
+      },
+      tecnologias: ["HTML", "CSS", "JavaScript"],
+      cor: "verde",
+      imagem: "img/gamificapampa/home.webp",
+      url: "https://gamificapampa.github.io/",
+      // Página com o estudo de caso (o título do cartão leva para ela)
+      estudo: { pt: "projetos/gamificapampa/", en: "en/projects/gamificapampa/" },
+    },
+    {
       categoria: { pt: "Pesquisa em redes", en: "Networks research" },
       titulo: { pt: "Cibersegurança com P4", en: "Cybersecurity with P4" },
       descricao: {
@@ -192,25 +211,6 @@ window.DADOS = {
       ],
     },
     {
-      categoria: { pt: "Extensão e educação", en: "Outreach and education" },
-      status: { pt: "Em desenvolvimento", en: "In progress" },
-      titulo: "GamificaPampa",
-      descricao: {
-        pt: "Hub de extensão da UNIPAMPA que leva gamificação e IA a professores da Educação Básica de Alegrete. Criei os recursos pedagógicos: sete jogos que apresentam a programação para crianças de 6 a 14 anos (guiar um robô até a estrela, caçar bugs, programar em dupla, ligar celular, servidor e banco de dados), uma aula de 50 minutos com slides e atividades, e uma Oficina de Prompts que ensina professores a criar materiais com o Gemini.",
-        en: "A UNIPAMPA outreach hub that brings gamification and AI to K-12 teachers in Alegrete. I built its teaching resources: seven games that introduce programming to kids aged 6 to 14 (guiding a robot to a star, hunting bugs, pair programming, wiring a phone to a server and a database), a 50-minute lesson with slides and activities, and a Prompt Workshop that teaches teachers to create materials with Gemini.",
-      },
-      papel: {
-        pt: "crio os jogos e a oficina, e estou levando tudo para a organização do projeto no GitHub sem quebrar nenhum link ou QR code.",
-        en: "I build the games and the workshop, and I'm moving everything to the project's GitHub organization without breaking any link or QR code.",
-      },
-      tecnologias: ["HTML", "CSS", "JavaScript"],
-      cor: "verde",
-      imagem: "img/gamificapampa/home.webp",
-      url: "https://gamificapampa.github.io/",
-      // Página com o estudo de caso (o título do cartão leva para ela)
-      estudo: { pt: "projetos/gamificapampa/", en: "en/projects/gamificapampa/" },
-    },
-    {
       categoria: { pt: "Web e design", en: "Web and design" },
       titulo: { pt: "Sites para pequenos negócios", en: "Websites for small businesses" },
       descricao: {
@@ -228,6 +228,26 @@ window.DADOS = {
   // "Na bancada": cada aba é um trabalho com o material de verdade (código, telas, números medidos).
   // Só entra o que é trabalho meu e o que está publicado. Lista vazia esconde a seção.
   casos: [
+    {
+      aba: "GamificaPampa",
+      resumo: { pt: "Extensão · jogos e oficina", en: "Outreach · games and workshop" },
+      titulo: { pt: "Programação na sala de aula, pelo celular", en: "Programming in the classroom, on a phone" },
+      texto: {
+        pt: "Os recursos pedagógicos que criei para o hub de gamificação e IA da UNIPAMPA: o professor projeta o menu da turma, as crianças abrem os jogos pelo QR code, e uma oficina ensina professores a criar materiais com o Gemini.",
+        en: "The teaching resources I built for UNIPAMPA's gamification and AI hub: the teacher projects the class menu, kids open the games through a QR code, and a workshop teaches teachers to create materials with Gemini.",
+      },
+      telas: [
+        { imagem: "img/gamificapampa/turma.webp", legenda: { pt: "Menu da turma, aberto pelo QR code", en: "Class menu, opened through a QR code" } },
+        { imagem: "img/gamificapampa/conecta.webp", legenda: { pt: "Conecta o Sistema: celular, servidor e banco de dados", en: "Connect the System: phone, server and database" } },
+        { imagem: "img/gamificapampa/oficina.webp", legenda: { pt: "Oficina de Prompts para professores", en: "Prompt Workshop for teachers" } },
+      ],
+      numeros: [
+        { valor: "7", rotulo: { pt: "jogos para crianças de 6 a 14 anos", en: "games for kids aged 6 to 14" } },
+        { valor: "50 min", rotulo: { pt: "de aula, com slides e atividades", en: "lesson, with slides and activities" } },
+        { valor: "4", rotulo: { pt: "encontros da Oficina de Prompts", en: "Prompt Workshop sessions" } },
+      ],
+      link: { url: { pt: "projetos/gamificapampa/", en: "en/projects/gamificapampa/" }, rotulo: { pt: "Ler o estudo de caso", en: "Read the case study" } },
+    },
     {
       aba: { pt: "Compilador Snort → P4", en: "Snort → P4 compiler" },
       resumo: { pt: "Pesquisa · artigo e código", en: "Research · paper and code" },
@@ -265,26 +285,6 @@ window.DADOS = {
         { valor: "0", rotulo: { pt: "violações em 1.000 regras testadas", en: "violations across 1,000 tested rules" } },
       ],
       link: { url: "https://github.com/medeiros08/Snort-p4", rotulo: { pt: "Repositório com artigo e artefatos", en: "Repository with paper and artifacts" } },
-    },
-    {
-      aba: "GamificaPampa",
-      resumo: { pt: "Extensão · jogos e oficina", en: "Outreach · games and workshop" },
-      titulo: { pt: "Programação na sala de aula, pelo celular", en: "Programming in the classroom, on a phone" },
-      texto: {
-        pt: "Os recursos pedagógicos que criei para o hub de gamificação e IA da UNIPAMPA: o professor projeta o menu da turma, as crianças abrem os jogos pelo QR code, e uma oficina ensina professores a criar materiais com o Gemini.",
-        en: "The teaching resources I built for UNIPAMPA's gamification and AI hub: the teacher projects the class menu, kids open the games through a QR code, and a workshop teaches teachers to create materials with Gemini.",
-      },
-      telas: [
-        { imagem: "img/gamificapampa/turma.webp", legenda: { pt: "Menu da turma, aberto pelo QR code", en: "Class menu, opened through a QR code" } },
-        { imagem: "img/gamificapampa/conecta.webp", legenda: { pt: "Conecta o Sistema: celular, servidor e banco de dados", en: "Connect the System: phone, server and database" } },
-        { imagem: "img/gamificapampa/oficina.webp", legenda: { pt: "Oficina de Prompts para professores", en: "Prompt Workshop for teachers" } },
-      ],
-      numeros: [
-        { valor: "7", rotulo: { pt: "jogos para crianças de 6 a 14 anos", en: "games for kids aged 6 to 14" } },
-        { valor: "50 min", rotulo: { pt: "de aula, com slides e atividades", en: "lesson, with slides and activities" } },
-        { valor: "4", rotulo: { pt: "encontros da Oficina de Prompts", en: "Prompt Workshop sessions" } },
-      ],
-      link: { url: { pt: "projetos/gamificapampa/", en: "en/projects/gamificapampa/" }, rotulo: { pt: "Ler o estudo de caso", en: "Read the case study" } },
     },
     {
       aba: { pt: "Sites para negócios", en: "Small business sites" },

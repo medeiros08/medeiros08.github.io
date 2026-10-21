@@ -1746,7 +1746,7 @@ html.anima :is(.botao, .botao-icone, .atalho, .contato-links a):not(:hover) { tr
 .secao-lab { margin-top: 124px; padding: 110px 0 120px; background: color-mix(in srgb, var(--acento) 11%, transparent); }
 
 /* História: a seção fica parada enquanto a rolagem empurra o pacote pelas três etapas */
-.p4-historia { position: relative; height: 260vh; }
+.p4-historia { position: relative; height: 170vh; }
 .p4-palco { position: sticky; top: 120px; display: grid; align-content: center; gap: 28px; min-height: calc(100vh - 170px); }
 .p4-pipeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px; }
 .p4-etapa {
@@ -1857,7 +1857,7 @@ html.anima :is(.botao, .botao-icone, .atalho, .contato-links a):not(:hover) { tr
   .p4-mesa { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  .p4-historia { height: 230vh; }
+  .p4-historia { height: 160vh; }
   .p4-palco { top: 100px; gap: 20px; }
   .p4-pipeline { gap: 18px; }
   .p4-etapa { padding: 12px 10px; }

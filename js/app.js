@@ -1830,15 +1830,16 @@
 
     // As seções são montadas mesmo nas páginas internas: o menu delas aponta para as mesmas seções
     secoesAtuais = [
+      // GamificaPampa em primeiro: Projetos e a bancada vêm logo depois do Sobre; a pesquisa com P4 vem depois
       { id: "agora", menu: true, html: secaoAgora() },
       { id: "sobre", menu: true, html: secaoSobre() },
+      { id: "projetos", menu: true, html: secaoProjetos() },
+      { id: "bancada", html: secaoBancada() },
       { id: "terminal", html: secaoTerminal() },
       { id: "pesquisa", menu: true, html: secaoPesquisa() },
       { id: "laboratorio", html: secaoLaboratorio() },
       { id: "firewall", html: secaoFirewall() },
       { id: "publicacoes", menu: true, html: secaoPublicacoes() },
-      { id: "projetos", menu: true, html: secaoProjetos() },
-      { id: "bancada", html: secaoBancada() },
       { id: "habilidades", html: secaoHabilidades() },
       { id: "github", html: secaoGithub() },
       { id: "trajetoria", menu: true, html: secaoTrajetoria() },
