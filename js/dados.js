@@ -33,10 +33,10 @@ window.DADOS = {
   estilo: "areais",
 
   topo: {
-    chamada: { pt: "Pesquisa em cibersegurança e P4", en: "Cybersecurity and P4 research" },
+    chamada: { pt: "Educação, jogos e cibersegurança", en: "Education, games and cybersecurity" },
     frase: {
-      pt: "Pesquiso como redes programáveis com P4 podem tornar a comunicação mais segura.",
-      en: "I research how programmable networks with P4 can make communication more secure.",
+      pt: "Crio jogos que ensinam programação a crianças no GamificaPampa e pesquiso como deixar as redes mais seguras.",
+      en: "I build games that teach kids to code at GamificaPampa and research how to make networks more secure.",
     },
     detalhes: [{ pt: "Ciência da Computação", en: "Computer Science" }, "UNIPAMPA", "AI Horizon Labs"],
     // Telas de verdade do meu trabalho, em leque atrás da foto (até 4). Cada uma leva ao projeto.
