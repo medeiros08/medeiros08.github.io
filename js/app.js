@@ -1825,6 +1825,7 @@
     document.querySelectorAll(".rodape-nome .letra").forEach((l, i) => l.style.setProperty("--i", i));
     fecharMenu();
     observarSecaoAtiva();
+    observarCampo();
     montarRota();
     prepararRevelar();
     if (naInicial) prepararPalavras();
@@ -2176,6 +2177,21 @@
       botao.append(onda);
       onda.addEventListener("animationend", () => onda.remove());
     });
+  }
+
+  // Quando uma seção de campo invertido cruza o meio da tela, a página inteira troca de cor (e volta depois)
+  const SECOES_INVERSO = ["sobre", "laboratorio"];
+  let obsCampo;
+  function observarCampo() {
+    obsCampo?.disconnect();
+    raiz.classList.remove("campo-inverso");
+    if (!naInicial || !("IntersectionObserver" in window)) return;
+    const dentro = new Set();
+    obsCampo = new IntersectionObserver((entradas) => {
+      for (const e of entradas) e.isIntersecting ? dentro.add(e.target.id) : dentro.delete(e.target.id);
+      raiz.classList.toggle("campo-inverso", dentro.size > 0);
+    }, { rootMargin: "-50% 0px -50% 0px" });
+    SECOES_INVERSO.forEach((id) => { const s = document.getElementById(id); if (s) obsCampo.observe(s); });
   }
 
   let obsSecao;

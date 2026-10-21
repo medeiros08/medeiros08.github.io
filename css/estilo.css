@@ -1973,3 +1973,20 @@ html[data-estilo="areais"]:not(.modo-hacker) .hero-foto img { filter: grayscale(
 /* O ponto verde de "disponível" vira o azul do tema */
 html[data-estilo="areais"]:not(.modo-hacker) :is(.hero-pill i, .status-ponto:not(.dormindo), .projeto-status::before) { background: var(--acento); animation-name: pulsar-acento; }
 @keyframes pulsar-acento { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--acento) 55%, transparent); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
+
+
+/* ---------- Campo invertido: a página troca de cor ao passar por Sobre e Laboratório P4 ----------
+   As cores são registradas como <color> para o navegador poder animar a troca (sem isso, mudaria de uma vez) */
+@property --fundo { syntax: "<color>"; inherits: true; initial-value: #e6dbc7; }
+@property --cartao { syntax: "<color>"; inherits: true; initial-value: #ddd0b9; }
+@property --texto { syntax: "<color>"; inherits: true; initial-value: #062b8a; }
+@property --suave { syntax: "<color>"; inherits: true; initial-value: #2f4f9e; }
+@property --acento { syntax: "<color>"; inherits: true; initial-value: #062b8a; }
+@property --sobre-acento { syntax: "<color>"; inherits: true; initial-value: #e6dbc7; }
+@property --linha { syntax: "<color>"; inherits: true; initial-value: #062b8a2e; }
+@property --contorno { syntax: "<color>"; inherits: true; initial-value: #062b8a; }
+@property --tinta { syntax: "<color>"; inherits: true; initial-value: #062b8a; }
+html { transition: --fundo .7s ease, --cartao .7s ease, --texto .7s ease, --suave .7s ease, --acento .7s ease, --sobre-acento .7s ease, --linha .7s ease, --contorno .7s ease, --tinta .7s ease; }
+body { transition: none; }
+/* Na troca de tema em círculo as cores mudam na hora: a transição de página faz a animação */
+html.trocando-tema { transition: none !important; }
