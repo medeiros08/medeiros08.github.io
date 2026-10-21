@@ -377,6 +377,17 @@
         </figure>`
       : "";
 
+    // Telas reais em leque atrás da foto; abrem mais conforme a rolagem tira o topo da tela
+    const telas = (D.topo?.telas || []).slice(0, 4).map((x, i) => {
+      const titulo = esc(t(x.titulo));
+      const url = caminhoLocal(t(x.url) || "");
+      return `<a class="tela t${i + 1}" href="${esc(url || "#")}"${linkExterno(url || "")} data-evento="tela-topo" data-evento-titulo="Clique: tela ${titulo}">
+          <span class="tela-barra" aria-hidden="true"><i></i><i></i><i></i><span>${titulo}</span></span>
+          <img src="${esc(caminhoLocal(x.imagem))}" alt="${titulo}" width="1024" height="640" loading="lazy" decoding="async">
+        </a>`;
+    }).join("");
+    const pilha = telas ? `<div class="hero-pilha">${telas}</div>` : "";
+
     return `
       <section class="hero" id="inicio">
         <div class="container hero-grade">
@@ -390,6 +401,7 @@
             <div class="hero-links">${botoesLinks({ soTexto: false })}</div>
             <p class="hero-outros">${botoesLinks({ soTexto: true })}<button class="link-texto" type="button" data-acao="curriculo" data-evento="curriculo-pdf" data-evento-titulo="Clique: currículo em PDF">${ICONES.cv || ICONES.site}<span>${UI[idioma].curriculo}</span></button></p>
           </div>
+          ${pilha}
           ${foto}
         </div>
         <div class="container">

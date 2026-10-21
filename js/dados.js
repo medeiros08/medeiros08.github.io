@@ -39,6 +39,12 @@ window.DADOS = {
       en: "I research how programmable networks with P4 can make communication more secure.",
     },
     detalhes: [{ pt: "Ciência da Computação", en: "Computer Science" }, "UNIPAMPA", "AI Horizon Labs"],
+    // Telas de verdade do meu trabalho, em leque atrás da foto (até 4). Cada uma leva ao projeto.
+    telas: [
+      { titulo: "Oficina de Prompts", imagem: "img/gamificapampa/oficina.webp", url: { pt: "projetos/gamificapampa/", en: "en/projects/gamificapampa/" } },
+      { titulo: "Conecta o Sistema", imagem: "img/gamificapampa/conecta.webp", url: { pt: "projetos/gamificapampa/", en: "en/projects/gamificapampa/" } },
+      { titulo: { pt: "Sites para negócios", en: "Small business sites" }, imagem: "img/sites/portfolio.webp", url: "https://medeiros08.github.io/portfolio/" },
+    ],
     // Etiquetas que flutuam em volta da foto (até 4)
     etiquetas: ["P4", "IoT", "CTF", "SYN → ACK"],
   },
