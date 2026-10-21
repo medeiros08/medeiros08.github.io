@@ -225,6 +225,85 @@ window.DADOS = {
       url: "https://medeiros08.github.io/portfolio/",
     },
   ],
+  // "Na bancada": cada aba é um trabalho com o material de verdade (código, telas, números medidos).
+  // Só entra o que é trabalho meu e o que está publicado. Lista vazia esconde a seção.
+  casos: [
+    {
+      aba: { pt: "Compilador Snort → P4", en: "Snort → P4 compiler" },
+      resumo: { pt: "Pesquisa · artigo e código", en: "Research · paper and code" },
+      titulo: { pt: "Regras do Snort 3 viram pré-filtros P4", en: "Snort 3 rules become P4 pre-filters" },
+      texto: {
+        pt: "Um compilador que traduz as condições de cabeçalho das regras do Snort 3 em entradas de tabela P4. O switch marca os pacotes candidatos e o Snort continua fazendo a detecção: a tradução pode ser mais permissiva, nunca mais restritiva. Com coautoria de Silvio E. Quincozes (FACOM/UFU).",
+        en: "A compiler that turns the header conditions of Snort 3 rules into P4 table entries. The switch flags candidate packets and Snort still does the detection: the translation may be more permissive, never more restrictive. Co-authored with Silvio E. Quincozes (FACOM/UFU).",
+      },
+      // Trechos reais do repositório: rules/test.rules e p4/ids_prefilter.p4 (sem os comentários)
+      codigo: {
+        entrada: { rotulo: { pt: "regra do Snort (rules/test.rules)", en: "Snort rule (rules/test.rules)" }, linhas: ["alert tcp any any -> 10.0.0.2 80 (flags:S; sid:1001;)"] },
+        saida: {
+          rotulo: { pt: "tabela no programa P4 (p4/ids_prefilter.p4)", en: "table in the P4 program (p4/ids_prefilter.p4)" },
+          linhas: [
+            "table ids_prefilter {",
+            "  key = {",
+            "    hdr.ipv4.protocol: ternary;",
+            "    hdr.ipv4.srcAddr:  ternary;",
+            "    hdr.ipv4.dstAddr:  ternary;",
+            "    meta.l4_src_port:  ternary;",
+            "    meta.l4_dst_port:  ternary;",
+            "    meta.tcp_flags:    ternary;",
+            "  }",
+            "  actions = { send_to_ids; no_prefilter_match; NoAction; }",
+            "  default_action = no_prefilter_match();",
+            "}",
+          ],
+        },
+        propriedade: "Snort(regra, pacote)  ⇒  P4_candidato(regra, pacote)",
+      },
+      // Números do README do repositório (Snort 3 Community Ruleset, BMv2, CICIDS2017)
+      numeros: [
+        { valor: "4.017", rotulo: { pt: "regras do Snort 3 analisadas (21 sem suporte)", en: "Snort 3 rules analyzed (21 unsupported)" } },
+        { valor: "235", rotulo: { pt: "entradas instaladas no BMv2", en: "entries installed on BMv2" } },
+        { valor: "0", rotulo: { pt: "violações em 1.000 regras testadas", en: "violations across 1,000 tested rules" } },
+      ],
+      link: { url: "https://github.com/medeiros08/Snort-p4", rotulo: { pt: "Repositório com artigo e artefatos", en: "Repository with paper and artifacts" } },
+    },
+    {
+      aba: "GamificaPampa",
+      resumo: { pt: "Extensão · jogos e oficina", en: "Outreach · games and workshop" },
+      titulo: { pt: "Programação na sala de aula, pelo celular", en: "Programming in the classroom, on a phone" },
+      texto: {
+        pt: "Os recursos pedagógicos que criei para o hub de gamificação e IA da UNIPAMPA: o professor projeta o menu da turma, as crianças abrem os jogos pelo QR code, e uma oficina ensina professores a criar materiais com o Gemini.",
+        en: "The teaching resources I built for UNIPAMPA's gamification and AI hub: the teacher projects the class menu, kids open the games through a QR code, and a workshop teaches teachers to create materials with Gemini.",
+      },
+      telas: [
+        { imagem: "img/gamificapampa/turma.webp", legenda: { pt: "Menu da turma, aberto pelo QR code", en: "Class menu, opened through a QR code" } },
+        { imagem: "img/gamificapampa/conecta.webp", legenda: { pt: "Conecta o Sistema: celular, servidor e banco de dados", en: "Connect the System: phone, server and database" } },
+        { imagem: "img/gamificapampa/oficina.webp", legenda: { pt: "Oficina de Prompts para professores", en: "Prompt Workshop for teachers" } },
+      ],
+      numeros: [
+        { valor: "7", rotulo: { pt: "jogos para crianças de 6 a 14 anos", en: "games for kids aged 6 to 14" } },
+        { valor: "50 min", rotulo: { pt: "de aula, com slides e atividades", en: "lesson, with slides and activities" } },
+        { valor: "4", rotulo: { pt: "encontros da Oficina de Prompts", en: "Prompt Workshop sessions" } },
+      ],
+      link: { url: { pt: "projetos/gamificapampa/", en: "en/projects/gamificapampa/" }, rotulo: { pt: "Ler o estudo de caso", en: "Read the case study" } },
+    },
+    {
+      aba: { pt: "Sites para negócios", en: "Small business sites" },
+      resumo: { pt: "Web · design e código", en: "Web · design and code" },
+      titulo: { pt: "Do rascunho ao site no ar", en: "From sketch to live site" },
+      texto: {
+        pt: "Trabalho anterior: desenho e programo cada página, sem template comprado nem construtor de arrastar. O portfólio reúne os estudos de caso de um consultório, um salão e um restaurante.",
+        en: "Earlier work: I design and code every page, with no bought template or drag-and-drop builder. The portfolio collects case studies for a dental office, a salon and a restaurant.",
+      },
+      telas: [
+        { imagem: "img/sites/portfolio.webp", legenda: { pt: "Página inicial do portfólio de sites", en: "Home page of the sites portfolio" } },
+      ],
+      numeros: [
+        { valor: "3", rotulo: { pt: "estudos de caso: consultório, salão e restaurante", en: "case studies: dental office, salon and restaurant" } },
+      ],
+      link: { url: "https://medeiros08.github.io/portfolio/", rotulo: { pt: "Abrir o portfólio de sites", en: "Open the sites portfolio" } },
+    },
+  ],
+
   maisProjetos: "https://github.com/medeiros08", // apague a linha para esconder
 
   // Habilidades, em grupos. "onde" diz onde você usou; aprendendo: true marca o que está aprendendo.

@@ -47,6 +47,8 @@
       formMensagem: "Escreva sua mensagem…", formEnviar: "Enviar", formEnviando: "Enviando…",
       formOk: "Mensagem recebida. Respondo em breve 🙂",
       formErro: (email) => `Não consegui enviar agora. Tenta pelo e-mail ${email}?`,
+      bancada: "Na bancada", tituloBancada: "Na bancada",
+      bancadaSub: "O material de verdade por trás de cada trabalho: código, telas e números medidos.",
       laboratorio: "Lab P4", tituloLab: "Por dentro de um switch P4",
       labSub: "O que a minha pesquisa programa: o caminho de um pacote dentro de um equipamento de rede.",
       firewall: "Firewall", tituloFirewall: "Seja o firewall",
@@ -148,6 +150,8 @@
       formMensagem: "Write your message…", formEnviar: "Send", formEnviando: "Sending…",
       formOk: "Message received. I'll reply soon 🙂",
       formErro: (email) => `Couldn't send it right now. Try e-mail: ${email}?`,
+      bancada: "On the bench", tituloBancada: "On the bench",
+      bancadaSub: "The real material behind each piece of work: code, screens and measured numbers.",
       laboratorio: "P4 lab", tituloLab: "Inside a P4 switch",
       labSub: "What my research programs: the path a packet takes inside a network device.",
       firewall: "Firewall", tituloFirewall: "Be the firewall",
@@ -642,6 +646,65 @@
   }
 
   // O jogo fica em js/firewall.js; aqui só o lugar dele na página
+  // "Na bancada": abas à esquerda, o material do caso escolhido à direita
+  function painelCaso(c, i) {
+    const linhas = (lista) => lista.map((l) => `<span>${esc(t(l))}</span>`).join("\n");
+    const codigo = c.codigo ? `
+      <div class="caso-codigo" data-ui>
+        <p class="caso-rotulo">${esc(t(c.codigo.entrada.rotulo))}</p>
+        <pre translate="no"><code>${linhas(c.codigo.entrada.linhas)}</code></pre>
+        <p class="caso-seta" aria-hidden="true">↓ ${idioma === "pt" ? "compila para" : "compiles to"}</p>
+        <p class="caso-rotulo">${esc(t(c.codigo.saida.rotulo))}</p>
+        <pre translate="no"><code>${linhas(c.codigo.saida.linhas)}</code></pre>
+        ${c.codigo.propriedade ? `<p class="caso-propriedade" translate="no">${esc(c.codigo.propriedade)}</p>` : ""}
+      </div>` : "";
+    const telas = temItens(c.telas) ? `
+      <div class="caso-telas n${Math.min(c.telas.length, 3)}">
+        ${c.telas.map((x) => `<figure><img src="${esc(caminhoLocal(x.imagem))}" alt="${esc(t(x.legenda))}" width="1024" height="640" loading="lazy" decoding="async"><figcaption>${esc(t(x.legenda))}</figcaption></figure>`).join("")}
+      </div>` : "";
+    const numeros = temItens(c.numeros) ? `<dl class="caso-numeros">${c.numeros.map((n) => `<div><dt>${esc(n.valor)}</dt><dd>${esc(t(n.rotulo))}</dd></div>`).join("")}</dl>` : "";
+    const url = c.link ? caminhoLocal(t(c.link.url)) : "";
+    return `
+      <div class="caso-painel" id="caso-painel-${i}" role="tabpanel" aria-labelledby="caso-aba-${i}" tabindex="0"${i ? " hidden" : ""}>
+        <h3>${esc(t(c.titulo))}</h3>
+        <p class="caso-texto">${esc(t(c.texto))}</p>
+        ${numeros}
+        ${codigo}${telas}
+        ${url ? `<a class="link-texto caso-link" href="${esc(url)}"${linkExterno(url)} data-evento="caso-${i}" data-evento-titulo="Caso: ${esc(t(c.aba))}"><span>${esc(t(c.link.rotulo))}</span> ${/^https?:/.test(url) ? "↗" : "→"}</a>` : ""}
+      </div>`;
+  }
+
+  function secaoBancada() {
+    if (!temItens(D.casos)) return "";
+    const u = UI[idioma];
+    return `
+      <section class="secao" id="bancada">
+        <div class="container">
+          <h2 class="titulo-secao revelar">${u.tituloBancada}</h2>
+          <p class="secao-sub revelar">${u.bancadaSub}</p>
+          <div class="bancada revelar">
+            <div class="bancada-abas" role="tablist" aria-label="${u.tituloBancada}">
+              ${D.casos.map((c, i) => `
+                <button class="caso-aba" id="caso-aba-${i}" role="tab" type="button" aria-selected="${i === 0}" aria-controls="caso-painel-${i}" tabindex="${i === 0 ? 0 : -1}">
+                  <b>${esc(t(c.aba))}</b><small>${esc(t(c.resumo))}</small>
+                </button>`).join("")}
+            </div>
+            <div class="bancada-paineis">${D.casos.map(painelCaso).join("")}</div>
+          </div>
+        </div>
+      </section>`;
+  }
+
+  // Abas: clique, setas, Home e End trocam o caso (padrão de abas do WAI-ARIA)
+  function escolherCaso(i, focar) {
+    const abas = [...document.querySelectorAll(".caso-aba")];
+    if (!abas.length) return;
+    i = (i + abas.length) % abas.length;
+    abas.forEach((a, j) => { a.setAttribute("aria-selected", String(j === i)); a.tabIndex = j === i ? 0 : -1; });
+    document.querySelectorAll(".caso-painel").forEach((p, j) => { p.hidden = j !== i; });
+    if (focar) abas[i].focus();
+  }
+
   function secaoLaboratorio() {
     if (D.laboratorio === false) return "";
     const u = UI[idioma];
@@ -1775,6 +1838,7 @@
       { id: "firewall", html: secaoFirewall() },
       { id: "publicacoes", menu: true, html: secaoPublicacoes() },
       { id: "projetos", menu: true, html: secaoProjetos() },
+      { id: "bancada", html: secaoBancada() },
       { id: "habilidades", html: secaoHabilidades() },
       { id: "github", html: secaoGithub() },
       { id: "trajetoria", menu: true, html: secaoTrajetoria() },
@@ -2271,6 +2335,9 @@
       alternarSom();
     } else if (alvo.dataset.acao === "curriculo") {
       window.print();
+    } else if (alvo.classList.contains("caso-aba")) {
+      escolherCaso(Number(alvo.id.split("-").pop()));
+      registrarEvento(`caso-aba-${alvo.id.split("-").pop()}`, `Abriu o caso: ${alvo.querySelector("b")?.textContent}`);
     } else if (alvo.dataset.acao === "pausar") {
       alternarPausa();
     } else if (alvo.dataset.acao === "tema") {
@@ -2315,6 +2382,14 @@
   });
 
   document.addEventListener("keydown", (e) => {
+    const aba = e.target instanceof Element && e.target.closest(".caso-aba");
+    if (aba && ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp", "Home", "End"].includes(e.key)) {
+      e.preventDefault();
+      const i = Number(aba.id.split("-").pop());
+      const total = document.querySelectorAll(".caso-aba").length;
+      escolherCaso({ ArrowRight: i + 1, ArrowDown: i + 1, ArrowLeft: i - 1, ArrowUp: i - 1, Home: 0, End: total - 1 }[e.key], true);
+      return;
+    }
     if (e.key === "Escape") { fecharMenu(true); fecharTemas(); }
 
     const digitando = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;

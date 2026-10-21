@@ -2033,3 +2033,55 @@ html[data-estilo="areais"]:not(.modo-hacker) .tela:hover img { filter: none; }
   .tela.t1 { --x: -120px; --y: -150px; } .tela.t2 { --x: -150px; } .tela.t3 { --x: -115px; --y: 150px; }
 }
 @media (max-width: 640px) { .hero-pilha { display: none; } }
+
+
+/* ---------- Na bancada: abas de casos com o material de verdade ---------- */
+.bancada { display: grid; grid-template-columns: minmax(220px, .8fr) minmax(0, 2.2fr); gap: 20px; align-items: start; }
+.bancada-abas { display: grid; gap: 10px; position: sticky; top: 140px; }
+.caso-aba {
+  display: grid;
+  gap: 4px;
+  padding: 16px 18px;
+  text-align: left;
+  color: var(--texto);
+  background: var(--cartao);
+  border: var(--borda) solid var(--contorno);
+  border-radius: var(--raio);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color .25s, color .25s, translate .3s cubic-bezier(.3, 1.6, .5, 1);
+}
+.caso-aba b { font-family: var(--fonte-titulo); font-size: clamp(1.1rem, 1.6vw, 1.35rem); font-weight: 500; line-height: 1.15; }
+.caso-aba small { font-size: 14px; color: var(--suave); }
+.caso-aba:hover { translate: 4px 0; }
+.caso-aba[aria-selected="true"] { background: var(--acento); color: var(--sobre-acento); }
+.caso-aba[aria-selected="true"] small { color: inherit; opacity: .8; }
+.bancada-paineis, .caso-painel, .caso-codigo { min-width: 0; }
+.caso-painel { padding: 26px 28px 28px; background: var(--cartao); border: var(--borda) solid var(--contorno); border-radius: var(--raio); }
+.caso-painel:not([hidden]) { animation: trocar-caso .45s cubic-bezier(.16, 1, .3, 1); }
+@keyframes trocar-caso { from { opacity: 0; translate: 0 14px; } }
+.caso-painel h3 { font-size: clamp(1.5rem, 2.8vw, 2.2rem); font-weight: 500; line-height: 1.05; letter-spacing: -.03em; }
+.caso-texto { max-width: 62ch; margin: 12px 0 0; color: var(--suave); }
+.caso-numeros { display: flex; flex-wrap: wrap; gap: 14px 34px; margin: 22px 0 0; }
+.caso-numeros div { display: grid; gap: 2px; }
+.caso-numeros dt { font-family: var(--fonte-titulo); font-size: clamp(1.8rem, 3.4vw, 2.6rem); line-height: 1; letter-spacing: -.03em; }
+.caso-numeros dd { margin: 0; max-width: 22ch; font-size: 14px; color: var(--suave); }
+.caso-codigo { margin-top: 24px; padding: 18px 20px; background: #0e1114; color: #cfd8dc; border: var(--borda) solid var(--contorno); border-radius: calc(8 * var(--curva)); }
+.caso-codigo pre { margin: 0; overflow-x: auto; font: 500 13.5px/1.6 var(--fonte-codigo); white-space: pre; }
+.caso-rotulo { margin: 0 0 6px; font: 600 13px var(--fonte-codigo); color: #8fa1ab; }
+.caso-seta { margin: 12px 0; font: 600 13px var(--fonte-codigo); color: color-mix(in srgb, var(--acento) 40%, #fff); }
+.caso-propriedade { margin: 16px 0 0; padding-top: 12px; border-top: 1px dashed #ffffff33; font: 600 14px var(--fonte-codigo); color: #fff; }
+.caso-telas { display: grid; gap: 14px; margin-top: 24px; }
+.caso-telas.n2, .caso-telas.n3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.caso-telas.n3 figure:first-child { grid-column: 1 / -1; }
+.caso-telas figure { margin: 0; }
+.caso-telas img { display: block; width: 100%; height: auto; aspect-ratio: 1024 / 640; object-fit: cover; border: var(--borda) solid var(--contorno); border-radius: calc(6 * var(--curva)); }
+.caso-telas figcaption { margin-top: 6px; font-size: 14px; color: var(--suave); }
+.caso-link { margin-top: 22px; }
+html[data-estilo="areais"]:not(.modo-hacker) .caso-telas img { filter: grayscale(.35) sepia(.08); }
+@media (max-width: 860px) {
+  .bancada { grid-template-columns: minmax(0, 1fr); }
+  .bancada-abas { position: static; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  .caso-painel { padding: 20px; }
+}
+@media (max-width: 560px) { .caso-telas.n2, .caso-telas.n3 { grid-template-columns: 1fr; } }
