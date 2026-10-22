@@ -2145,3 +2145,9 @@ html[data-estilo="areais"]:not(.modo-hacker) .caso-telas img { filter: grayscale
 .projeto, .projeto-janela, .projeto-capa, .projeto-corpo { min-width: 0; }
 .projeto-barra span { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 @media (max-width: 960px) { .projetos-grade { grid-template-columns: minmax(0, 1fr); } }
+
+/* Rolagem com inércia (Lenis): as regras que a biblioteca pede para funcionar junto com o CSS do site */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }

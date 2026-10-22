@@ -1305,6 +1305,22 @@
     }
   });
 
+  /* ---------- Rolagem com inércia (Lenis, em js/vendor) ---------- */
+
+  // A página desliza e desacelera ao rolar com a roda do mouse. Só com mouse (no toque a rolagem nativa
+  // já tem inércia) e nunca para quem prefere menos movimento. Caixas que rolam sozinhas ficam de fora.
+  function ligarRolagemSuave() {
+    if (!window.Lenis || !matchMedia("(hover: hover) and (pointer: fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const lenis = new window.Lenis({
+      lerp: 0.1,
+      anchors: true,
+      prevent: (no) => !!no.closest?.(".terminal-corpo, .busca, #temas, pre, .p4-log, .p4-tabelas figure, .caso-codigo, iframe"),
+    });
+    const quadro = (tempo) => { lenis.raf(tempo); requestAnimationFrame(quadro); };
+    requestAnimationFrame(quadro);
+  }
+  ligarRolagemSuave();
+
   /* ---------- Barra de status do rodapé ---------- */
 
   // Hora em Alegrete (e se estou acordado), a latência real da conversa com a API do GitHub
