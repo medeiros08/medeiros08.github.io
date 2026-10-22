@@ -220,8 +220,8 @@ window.DADOS = {
       papel: { pt: "design e código.", en: "design and code." },
       tecnologias: ["HTML", "CSS", "JavaScript"],
       cor: "laranja",
-      // Capa: uma janela de navegador com o endereço do portfólio de sites
-      navegador: { endereco: "medeiros08.github.io/portfolio", paginas: [{ pt: "Consultório", en: "Dental office" }, { pt: "Salão", en: "Salon" }, { pt: "Restaurante", en: "Restaurant" }] },
+      // Capa: a página do portfólio de sites, capturada do site publicado
+      imagem: "img/sites/portfolio.webp",
       url: "https://medeiros08.github.io/portfolio/",
     },
   ],
