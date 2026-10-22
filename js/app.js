@@ -74,6 +74,7 @@
       emailCopiado: "E-mail copiado",
       somLigar: "Som: desligado", somDesligar: "Som: ligado", copiar: "copiar",
       abaFora: "📡 Conexão perdida… volta?", abaVolta: "✅ Conexão restabelecida",
+      falar: "Fale comigo",
       t: {
         boasVindas: 'Olá! 👋 Este é o terminal do portfólio. Digite <span class="t-cmd">help</span> para ver o que dá pra fazer.',
         ajuda: [
@@ -177,6 +178,7 @@
       emailCopiado: "E-mail copied",
       somLigar: "Sound: off", somDesligar: "Sound: on", copiar: "copy",
       abaFora: "📡 Connection lost… come back?", abaVolta: "✅ Connection restored",
+      falar: "Get in touch",
       t: {
         boasVindas: 'Hi! 👋 This is the portfolio terminal. Type <span class="t-cmd">help</span> to see what you can do.',
         ajuda: [
@@ -1305,6 +1307,34 @@
     }
   });
 
+  /* ---------- Botão de contato flutuante ---------- */
+
+  // Fica no canto o tempo todo e leva ao contato; some no topo (onde já há e-mail e redes) e quando o
+  // contato está na tela. Com o mouse em cima, o rótulo abre ao lado do ícone.
+  function montarFlutuante() {
+    document.getElementById("falarComigo")?.remove();
+    if (!D.contato) return;
+    const a = document.createElement("a");
+    a.id = "falarComigo";
+    a.className = "falar-comigo";
+    a.href = linkSecao("contato");
+    a.dataset.evento = "botao-flutuante";
+    a.dataset.eventoTitulo = "Clique: botão flutuante de contato";
+    a.innerHTML = `${ICONES.email}<span>${UI[idioma].falar}</span>`;
+    a.setAttribute("aria-label", UI[idioma].falar);
+    document.body.append(a);
+    atualizarFlutuante();
+  }
+  function atualizarFlutuante() {
+    const a = document.getElementById("falarComigo");
+    if (!a) return;
+    const contato = document.getElementById("contato")?.getBoundingClientRect();
+    const noTopo = scrollY < innerHeight * 0.6;
+    const contatoNaTela = contato && contato.top < innerHeight * 0.85 && contato.bottom > 0;
+    a.classList.toggle("escondido", noTopo || Boolean(contatoNaTela));
+  }
+  addEventListener("scroll", () => requestAnimationFrame(atualizarFlutuante), { passive: true });
+
   /* ---------- Rolagem com inércia (Lenis, em js/vendor) ---------- */
 
   // A página desliza e desacelera ao rolar com a roda do mouse. Só com mouse (no toque a rolagem nativa
@@ -1922,6 +1952,7 @@
     fecharMenu();
     observarSecaoAtiva();
     observarCampo();
+    montarFlutuante();
     montarRota();
     prepararRevelar();
     if (naInicial) prepararPalavras();
