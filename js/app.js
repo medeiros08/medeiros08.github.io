@@ -2257,19 +2257,33 @@
   }
 
   // Quando uma seção de campo invertido cruza o meio da tela, a página inteira troca de cor (e volta depois)
+  // Conta feita a cada rolagem, pela posição das seções: uma faixa de observação de altura zero
+  // (IntersectionObserver com -50% em cima e embaixo) não dispara no Safari do celular
   const SECOES_INVERSO = ["sobre", "laboratorio"];
-  let obsCampo;
-  function observarCampo() {
-    obsCampo?.disconnect();
-    raiz.classList.remove("campo-inverso");
-    if (!naInicial || !("IntersectionObserver" in window)) return;
-    const dentro = new Set();
-    obsCampo = new IntersectionObserver((entradas) => {
-      for (const e of entradas) e.isIntersecting ? dentro.add(e.target.id) : dentro.delete(e.target.id);
-      raiz.classList.toggle("campo-inverso", dentro.size > 0);
-    }, { rootMargin: "-50% 0px -50% 0px" });
-    SECOES_INVERSO.forEach((id) => { const s = document.getElementById(id); if (s) obsCampo.observe(s); });
+  let secoesCampo = [];
+  let campoPendente = false;
+  function atualizarCampo() {
+    campoPendente = false;
+    const meio = (window.visualViewport?.height || innerHeight) / 2;
+    const dentro = secoesCampo.some((s) => { const r = s.getBoundingClientRect(); return r.top <= meio && r.bottom >= meio; });
+    if (dentro !== raiz.classList.contains("campo-inverso")) raiz.classList.toggle("campo-inverso", dentro);
   }
+  function pedirCampo() {
+    if (campoPendente) return;
+    campoPendente = true;
+    requestAnimationFrame(atualizarCampo);
+  }
+  function observarCampo() {
+    raiz.classList.remove("campo-inverso");
+    secoesCampo = naInicial ? SECOES_INVERSO.map((id) => document.getElementById(id)).filter(Boolean) : [];
+    atualizarCampo();
+  }
+  // Sem @property (Safari antigo) a troca de cor anima pelo CSS de antes (classe sem-property)
+  if (!window.CSS?.registerProperty) raiz.classList.add("sem-property");
+  addEventListener("scroll", pedirCampo, { passive: true });
+  addEventListener("resize", pedirCampo);
+  // No celular a barra de endereço some e aparece, mudando a altura da tela sem um "resize" comum
+  window.visualViewport?.addEventListener("resize", pedirCampo);
 
   let obsSecao;
   function observarSecaoAtiva() {

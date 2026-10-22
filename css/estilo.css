@@ -1988,6 +1988,12 @@ html[data-estilo="areais"]:not(.modo-hacker) :is(.hero-pill i, .status-ponto:not
 @property --tinta { syntax: "<color>"; inherits: true; initial-value: #062b8a; }
 html { transition: --fundo .7s ease, --cartao .7s ease, --texto .7s ease, --suave .7s ease, --acento .7s ease, --sobre-acento .7s ease, --linha .7s ease, --contorno .7s ease, --tinta .7s ease; }
 body { transition: none; }
+/* Navegador sem @property (Safari antigo): as cores trocariam de uma vez. Ali o fundo e o texto
+   animam pelo jeito antigo, com transition nas próprias propriedades */
+html.sem-property:not(.trocando-tema) body { transition: background-color .7s ease, color .7s ease; }
+/* O fundo vai no <html> também: no Safari do iPhone o fundo herdado do <body> nem sempre repinta
+   quando só a variável muda */
+html { background-color: var(--fundo); }
 /* Na troca de tema em círculo as cores mudam na hora: a transição de página faz a animação */
 html.trocando-tema { transition: none !important; }
 
