@@ -298,7 +298,8 @@
 
   // Escolha do visitante no menu de cores e temas. A chave antiga "paleta" é ignorada de propósito:
   // guardava a cor do botão antigo e fazia o site abrir no lilás em vez do visual padrão.
-  const estiloGuardado = String(memoria.ler("estilo") ?? "");
+  // Escolhas feitas antes do visual Marinho e creme (sem "estiloVersao") são ignoradas uma vez, para todos verem o visual novo
+  const estiloGuardado = memoria.ler("estiloVersao") === "2" ? String(memoria.ler("estilo") ?? "") : "";
   let paleta = window.TEMAS_DO_SITE.indiceInicial(estiloGuardado);
   let pubsAbertas = false;
   let jaRenderizou = false;
@@ -1419,6 +1420,7 @@
   function escolherEstilo(indice) {
     paleta = (indice + ESTILOS.length) % ESTILOS.length;
     memoria.gravar("estilo", ESTILOS[paleta].id);
+    memoria.gravar("estiloVersao", "2");
     aplicarCores();
     atualizarCorDoNavegador();
     registrarEvento(`estilo-${ESTILOS[paleta].id}`, `Trocou o visual para ${t(ESTILOS[paleta].nome)}`);

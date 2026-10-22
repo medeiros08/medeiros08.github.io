@@ -1965,13 +1965,13 @@ html body .p4-form :is(input, select) { font-family: var(--fonte-codigo); }
 
 /* ---------- Tema Areais de Alegrete ---------- */
 /* Títulos em peso regular: o tamanho faz o trabalho, não o negrito */
-html[data-estilo="areais"]:not(.modo-hacker) :is(h1, h2, .hero-nome, .titulo-secao, .contato-titulo, .rodape-nome, .nav-nome, .p4-sim-titulo, .erro-codigo) { font-weight: 400; letter-spacing: -.03em; }
-html[data-estilo="areais"]:not(.modo-hacker) :is(h3, h4, .p4-etapa b) { font-weight: 500; }
-html[data-estilo="areais"]:not(.modo-hacker) .hero-nome { line-height: .95; }
+html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) :is(h1, h2, .hero-nome, .titulo-secao, .contato-titulo, .rodape-nome, .nav-nome, .p4-sim-titulo, .erro-codigo) { font-weight: 400; letter-spacing: -.03em; }
+html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) :is(h3, h4, .p4-etapa b) { font-weight: 500; }
+html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .hero-nome { line-height: .95; }
 /* A foto entra na mesma paleta: quase sem cor, um pouco quente */
-html[data-estilo="areais"]:not(.modo-hacker) .hero-foto img { filter: grayscale(.85) sepia(.15); }
+html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .hero-foto img { filter: grayscale(.85) sepia(.15); }
 /* O ponto verde de "disponível" vira o azul do tema */
-html[data-estilo="areais"]:not(.modo-hacker) :is(.hero-pill i, .status-ponto:not(.dormindo), .projeto-status::before) { background: var(--acento); animation-name: pulsar-acento; }
+html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) :is(.hero-pill i, .status-ponto:not(.dormindo), .projeto-status::before) { background: var(--acento); animation-name: pulsar-acento; }
 @keyframes pulsar-acento { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--acento) 55%, transparent); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
 
 
@@ -2031,8 +2031,8 @@ html.anima .tela { animation: entrar-tela .9s cubic-bezier(.16, 1, .3, 1) backwa
 html.anima .tela.t1 { animation-delay: .45s; } html.anima .tela.t2 { animation-delay: .55s; } html.anima .tela.t3 { animation-delay: .65s; } html.anima .tela.t4 { animation-delay: .75s; }
 @keyframes entrar-tela { from { opacity: 0; transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(.8); } }
 /* Tema Areais: as telas entram na paleta como a foto */
-html[data-estilo="areais"]:not(.modo-hacker) .tela img { filter: grayscale(.6) sepia(.12); transition: filter .4s; }
-html[data-estilo="areais"]:not(.modo-hacker) .tela:hover img { filter: none; }
+html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .tela img { filter: grayscale(.6) sepia(.12); transition: filter .4s; }
+html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .tela:hover img { filter: none; }
 /* Com o topo empilhado (foto embaixo do texto), o leque fica menor; no celular some */
 @media (max-width: 960px) {
   .tela { width: 230px; }
@@ -2084,7 +2084,7 @@ html[data-estilo="areais"]:not(.modo-hacker) .tela:hover img { filter: none; }
 .caso-telas img { display: block; width: 100%; height: auto; aspect-ratio: 1024 / 640; object-fit: cover; border: var(--borda) solid var(--contorno); border-radius: calc(6 * var(--curva)); }
 .caso-telas figcaption { margin-top: 6px; font-size: 14px; color: var(--suave); }
 .caso-link { margin-top: 22px; }
-html[data-estilo="areais"]:not(.modo-hacker) .caso-telas img { filter: grayscale(.35) sepia(.08); }
+html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .caso-telas img { filter: grayscale(.35) sepia(.08); }
 @media (max-width: 860px) {
   .bancada { grid-template-columns: minmax(0, 1fr); }
   .bancada-abas { position: static; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
