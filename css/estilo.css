@@ -2091,3 +2091,18 @@ html[data-estilo="areais"]:not(.modo-hacker) .caso-telas img { filter: grayscale
   .caso-painel { padding: 20px; }
 }
 @media (max-width: 560px) { .caso-telas.n2, .caso-telas.n3 { grid-template-columns: 1fr; } }
+
+/* ---------- Ajustes do celular ---------- */
+/* Nós da rota: o quadrado continua pequeno, mas a área de toque cresce (sem invadir o vizinho) */
+.rota-no::after { content: ""; position: absolute; inset: -11px -5px; }
+@media (max-width: 640px) {
+  /* Menos espaço entre seções: no celular a página passava de 27 telas */
+  .secao { padding-top: 72px; }
+  .titulo-secao { margin-bottom: 28px; }
+  .secao-lab { margin-top: 72px; padding: 72px 0 80px; }
+  .rodape { margin-top: 96px; }
+  /* Tabelas do simulador P4: rolam dentro da caixa em vez de cortar a coluna "Ação" */
+  .p4-tabelas figure { overflow-x: auto; }
+  .p4-tabela { font-size: 13px; }
+  .p4-tabela :is(th, td) { padding: 8px 10px; white-space: nowrap; }
+}
