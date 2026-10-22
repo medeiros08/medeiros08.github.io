@@ -30,7 +30,7 @@ window.DADOS = {
   // Visual com que o site abre. Pode ser um tema do menu "Cores e temas" (oceano, sunset,
   // floresta, minimal, dourada, artico, deserto, tech, jardim, galaxia) ou "cor-0" para o original.
   // O visitante pode trocar no botão de paleta, e a escolha dele fica guardada no navegador.
-  estilo: "areais",
+  estilo: "marinho",
 
   topo: {
     chamada: { pt: "Educação, jogos e cibersegurança", en: "Education, games and cybersecurity" },

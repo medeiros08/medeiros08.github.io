@@ -29,6 +29,17 @@
   // "fixos" são o papel e a tinta que não mudam com o tema (moldura da foto, balões do contato).
   const TEMAS = [
     {
+      // Azul-marinho, creme e branco: fundo creme com todo o texto em marinho e cartões brancos.
+      // No escuro (e no campo invertido), o inverso: marinho de fundo, texto creme e destaques em branco.
+      id: "marinho", nome: { pt: "Marinho e creme", en: "Navy and cream" }, titulo: FONTES.archivo, corpo: FONTES.archivo,
+      claro: { fundo: "#f3ead8", cartao: "#fffdf8", texto: "#13234a", suave: "#4a5878", acento: "#13234a", sobre: "#fffdf8" },
+      escuro: { fundo: "#0f1c3f", cartao: "#172a56", texto: "#f3ead8", suave: "#c3bba9", acento: "#ffffff", sobre: "#0f1c3f" },
+      destaques: ["#ffffff", "#e9dec7", "#dfe4ef"],
+      fixos: { papel: "#ffffff", tinta: "#13234a" },
+      forma: FORMAS.areia,
+      capas: ["#13234a", "#22366a", "#13234a", "#2e4580"],
+    },
+    {
       // Os areais de Alegrete: areia de fundo e um único azul-cobalto fazendo tudo (texto, desenhos, a rede).
       // No escuro, o inverso: areia sobre cobalto. Títulos em peso regular, nunca negrito.
       id: "areais", nome: { pt: "Areais de Alegrete", en: "Alegrete sands" }, titulo: FONTES.archivo, corpo: FONTES.archivo,
@@ -57,7 +68,7 @@
   // Guardado como id ("cor-2", "oceano"); versões antigas guardavam só o número da cor.
   const acharEstilo = (id) => ESTILOS.findIndex((e) => e.id === id || e.id === `cor-${id}`);
   // Quem tinha guardado um visual que não existe mais cai no "estilo" de dados.js
-  const indiceInicial = (guardado) => [guardado, D.estilo, "areais"].map(acharEstilo).find((i) => i >= 0) ?? 0;
+  const indiceInicial = (guardado) => [guardado, D.estilo, "marinho"].map(acharEstilo).find((i) => i >= 0) ?? 0;
 
   function aplicar(indice) {
     const e = ESTILOS[indice] || ESTILOS[0];
