@@ -621,10 +621,13 @@
               const evento = `projeto-${esc(normalizar(p.titulo?.pt || p.titulo))}`;
               return `
                 <article class="projeto revelar">
-                  <div class="projeto-capa${p.imagem ? " com-imagem" : ""}${temItens(p.codigo) || p.navegador ? " com-miolo" : ""}" style="${estiloCapa(p)}">
-                    ${miolosCapa(p)}
-                    ${p.status ? `<span class="projeto-status">${esc(t(p.status))}</span>` : ""}
-                    ${p.categoria ? `<span class="projeto-tag">${esc(t(p.categoria))}</span>` : ""}
+                  <div class="projeto-janela">
+                    <span class="projeto-barra" aria-hidden="true"><i></i><i></i><i></i><span translate="no">${esc(normalizar(t(p.titulo) || ""))} / ${idioma === "pt" ? "projeto" : "project"}</span><b>↗</b></span>
+                    <div class="projeto-capa${p.imagem ? " com-imagem" : ""}${temItens(p.codigo) || p.navegador ? " com-miolo" : ""}" style="${estiloCapa(p)}">
+                      ${miolosCapa(p)}
+                      ${p.status ? `<span class="projeto-status">${esc(t(p.status))}</span>` : ""}
+                      ${p.categoria ? `<span class="projeto-tag">${esc(t(p.categoria))}</span>` : ""}
+                    </div>
                   </div>
                   <div class="projeto-corpo">
                     <h3${estudo ? ` style="view-transition-name: projeto-${esc(normalizar(t(p.titulo)))}"` : ""}>${destino ? `<a href="${esc(destino)}"${linkExterno(destino)} data-evento="${evento}" data-evento-titulo="Projeto: ${titulo}">${titulo}${estudo ? "" : '<span aria-hidden="true">↗</span>'}</a>` : titulo}</h3>
