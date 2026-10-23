@@ -2044,3 +2044,18 @@ html.lenis, html.lenis body { height: auto; }
   .hero-pilha:has(> .tela:nth-child(2):last-child) .t1 { --x: -170px; --y: -85px; }
   .hero-pilha:has(> .tela:nth-child(2):last-child) .t2 { --x: -150px; --y: 105px; }
 }
+
+/* Etiquetas com textos mais longos (GamificaPampa, IA na educação...): mais para fora da moldura,
+   para não cobrir o rosto; no celular ficam só as duas da borda de cima */
+.hero-etiqueta.e1 { right: -78px; top: 6%; }
+.hero-etiqueta.e2 { left: -96px; top: 40%; }
+.hero-etiqueta.e3 { right: -86px; bottom: 22%; }
+@media (max-width: 960px) {
+  .hero-etiqueta.e1 { right: -40px; }
+  .hero-etiqueta.e2 { left: -60px; }
+  .hero-etiqueta.e3 { right: -50px; }
+}
+@media (max-width: 560px) {
+  .hero-etiqueta.e2, .hero-etiqueta.e3 { display: none; }
+  .hero-etiqueta.e1 { right: -10px; top: auto; bottom: 64px; }
+}

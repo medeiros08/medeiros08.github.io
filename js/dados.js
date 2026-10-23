@@ -45,7 +45,7 @@ window.DADOS = {
       { titulo: { pt: "Sites para negócios", en: "Small business sites" }, imagem: "img/sites/portfolio.webp", url: "https://medeiros08.github.io/portfolio/" },
     ],
     // Etiquetas que flutuam em volta da foto (até 4)
-    etiquetas: ["P4", "IoT", "CTF", "SYN → ACK"],
+    etiquetas: ["GamificaPampa", { pt: "Gamificação", en: "Gamification" }, { pt: "IA na educação", en: "AI in education" }, { pt: "Cibersegurança", en: "Cybersecurity" }],
   },
 
   // Botões do topo. Tipos com ícone: lattes, orcid, scholar, github, linkedin,
