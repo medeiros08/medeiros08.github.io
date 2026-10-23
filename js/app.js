@@ -49,8 +49,6 @@
       formErro: (email) => `Não consegui enviar agora. Tenta pelo e-mail ${email}?`,
       bancada: "Na bancada", tituloBancada: "Na bancada",
       bancadaSub: "O material de verdade por trás de cada trabalho: código, telas e números medidos.",
-      laboratorio: "Lab P4", tituloLab: "Por dentro de um switch P4",
-      labSub: "O que a minha pesquisa programa: o caminho de um pacote dentro de um equipamento de rede.",
       firewall: "Firewall", tituloFirewall: "Seja o firewall",
       firewallSub: "Um jogo de um minuto para entender o que eu pesquiso.",
       habilidades: "Habilidades", tituloHabilidades: "O que eu uso",
@@ -153,8 +151,6 @@
       formErro: (email) => `Couldn't send it right now. Try e-mail: ${email}?`,
       bancada: "On the bench", tituloBancada: "On the bench",
       bancadaSub: "The real material behind each piece of work: code, screens and measured numbers.",
-      laboratorio: "P4 lab", tituloLab: "Inside a P4 switch",
-      labSub: "What my research programs: the path a packet takes inside a network device.",
       firewall: "Firewall", tituloFirewall: "Be the firewall",
       firewallSub: "A one-minute game to understand what I research.",
       habilidades: "Skills", tituloHabilidades: "What I use",
@@ -709,19 +705,6 @@
     abas.forEach((a, j) => { a.setAttribute("aria-selected", String(j === i)); a.tabIndex = j === i ? 0 : -1; });
     document.querySelectorAll(".caso-painel").forEach((p, j) => { p.hidden = j !== i; });
     if (focar) abas[i].focus();
-  }
-
-  function secaoLaboratorio() {
-    if (D.laboratorio === false) return "";
-    const u = UI[idioma];
-    return `
-      <section class="secao secao-lab" id="laboratorio">
-        <div class="container">
-          <h2 class="titulo-secao revelar">${u.tituloLab}</h2>
-          <p class="secao-sub revelar">${u.labSub}</p>
-          <div id="labP4"></div>
-        </div>
-      </section>`;
   }
 
   function secaoFirewall() {
@@ -1345,7 +1328,7 @@
     const lenis = new window.Lenis({
       lerp: 0.1,
       anchors: true,
-      prevent: (no) => !!no.closest?.(".terminal-corpo, .busca, #temas, pre, .p4-log, .p4-tabelas figure, .caso-codigo, iframe"),
+      prevent: (no) => !!no.closest?.(".terminal-corpo, .busca, #temas, pre, .caso-codigo, iframe"),
     });
     const quadro = (tempo) => { lenis.raf(tempo); requestAnimationFrame(quadro); };
     requestAnimationFrame(quadro);
@@ -1881,14 +1864,13 @@
 
     // As seções são montadas mesmo nas páginas internas: o menu delas aponta para as mesmas seções
     secoesAtuais = [
-      // GamificaPampa em primeiro: Projetos e a bancada vêm logo depois do Sobre; a pesquisa com P4 vem depois
+      // GamificaPampa em primeiro: Projetos e a bancada vêm logo depois do Sobre; a pesquisa vem depois
       { id: "agora", menu: true, html: secaoAgora() },
       { id: "sobre", menu: true, html: secaoSobre() },
       { id: "projetos", menu: true, html: secaoProjetos() },
       { id: "bancada", html: secaoBancada() },
       { id: "terminal", html: secaoTerminal() },
       { id: "pesquisa", menu: true, html: secaoPesquisa() },
-      { id: "laboratorio", html: secaoLaboratorio() },
       { id: "firewall", html: secaoFirewall() },
       { id: "publicacoes", menu: true, html: secaoPublicacoes() },
       { id: "habilidades", html: secaoHabilidades() },
@@ -1963,7 +1945,6 @@
     if (naInicial) {
       prepararLivro();
       window.JogoFirewall?.montar($("#jogoFirewall"), { idioma, registrarEvento });
-      window.LabP4?.montar($("#labP4"), { idioma, registrarEvento });
     }
     jaRenderizou = true;
   }
@@ -2311,7 +2292,7 @@
   // Quando uma seção de campo invertido cruza o meio da tela, a página inteira troca de cor (e volta depois)
   // Conta feita a cada rolagem, pela posição das seções: uma faixa de observação de altura zero
   // (IntersectionObserver com -50% em cima e embaixo) não dispara no Safari do celular
-  const SECOES_INVERSO = ["sobre", "laboratorio"];
+  const SECOES_INVERSO = ["sobre"];
   let secoesCampo = [];
   let campoPendente = false;
   function atualizarCampo() {

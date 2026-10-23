@@ -1740,136 +1740,6 @@ html.anima :is(.botao, .botao-icone, .atalho, .contato-links a):not(:hover) { tr
   .busca-rodape { display: none; }
 }
 
-/* ---------- Laboratório P4 (js/p4.js) ---------- */
-
-/* A seção ganha um campo de cor próprio: quebra a sequência de seções escuras */
-.secao-lab { margin-top: 124px; padding: 110px 0 120px; background: color-mix(in srgb, var(--acento) 11%, transparent); }
-
-/* História: a seção fica parada enquanto a rolagem empurra o pacote pelas três etapas */
-.p4-historia { position: relative; height: 170vh; }
-.p4-palco { position: sticky; top: 120px; display: grid; align-content: center; gap: 28px; min-height: calc(100vh - 170px); }
-.p4-pipeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px; }
-.p4-etapa {
-  position: relative;
-  display: grid;
-  gap: 4px;
-  padding: 20px 18px;
-  background: var(--cartao);
-  border: var(--borda) solid var(--contorno);
-  border-radius: var(--raio);
-  transition: background-color .35s, color .35s, translate .35s cubic-bezier(.3, 1.6, .5, 1);
-}
-.p4-etapa b { font-family: var(--fonte-titulo); font-size: clamp(1.1rem, 2vw, 1.5rem); }
-.p4-etapa small { font-size: 14px; color: var(--suave); transition: color .35s; }
-.p4-etapa:not([data-n="2"])::after { content: "→"; position: absolute; top: 50%; right: -34px; translate: 0 -50%; font-size: 22px; color: var(--suave); }
-.p4-historia[data-etapa="0"] .p4-etapa[data-n="0"],
-.p4-historia[data-etapa="1"] .p4-etapa[data-n="1"],
-.p4-historia[data-etapa="2"] .p4-etapa[data-n="2"] { background: var(--acento); color: var(--sobre-acento); translate: 0 -6px; }
-.p4-historia[data-etapa="0"] .p4-etapa[data-n="0"] small,
-.p4-historia[data-etapa="1"] .p4-etapa[data-n="1"] small,
-.p4-historia[data-etapa="2"] .p4-etapa[data-n="2"] small { color: inherit; }
-.p4-trilho { position: relative; grid-column: 1 / -1; height: 52px; border-bottom: var(--borda) dashed var(--linha); }
-.p4-pacote {
-  position: absolute;
-  bottom: 10px;
-  left: calc(var(--p, 0) * (100% - 300px));
-  display: flex;
-  gap: 4px;
-  font: 700 13px var(--fonte-mono);
-  transition: gap .4s cubic-bezier(.3, 1.6, .5, 1);
-}
-.p4-pacote i { padding: 6px 9px; font-style: normal; background: var(--texto); color: var(--fundo); border-radius: calc(5 * var(--curva)); white-space: nowrap; transition: background-color .3s, color .3s; }
-/* No parser os cabeçalhos se separam; no match-action o IPv4 (o que a tabela consulta) acende */
-.p4-historia[data-etapa="0"] .p4-pacote { gap: 14px; }
-.p4-historia[data-etapa="1"] .p4-pacote i:nth-child(2) { background: var(--acento); color: var(--sobre-acento); }
-.p4-saida { position: absolute; right: 0; bottom: 14px; font: 700 13px var(--fonte-mono); color: var(--acento); opacity: 0; transition: opacity .3s; }
-.p4-historia[data-etapa="2"] .p4-saida { opacity: 1; }
-.p4-legendas { display: grid; max-width: 62ch; }
-.p4-legendas li { grid-area: 1 / 1; font-size: clamp(1.05rem, 1.6vw, 1.3rem); line-height: 1.5; opacity: 0; translate: 0 10px; transition: opacity .35s, translate .35s; }
-.p4-legendas li b { color: var(--acento); }
-.p4-historia[data-etapa="0"] .p4-legendas [data-n="0"],
-.p4-historia[data-etapa="1"] .p4-legendas [data-n="1"],
-.p4-historia[data-etapa="2"] .p4-legendas [data-n="2"] { opacity: 1; translate: 0 0; }
-.p4-rolar { font: 600 13px var(--fonte-mono); color: var(--suave); }
-.p4-historia[data-etapa="2"] .p4-rolar { visibility: hidden; }
-/* Sem animação: tudo de uma vez, sem prender a rolagem */
-.p4-historia.estatica { height: auto; }
-.p4-historia.estatica .p4-palco { position: static; min-height: 0; }
-.p4-historia.estatica .p4-legendas { gap: 12px; }
-.p4-historia.estatica .p4-legendas li { grid-area: auto; opacity: 1; translate: none; }
-.p4-historia.estatica .p4-rolar { display: none; }
-
-/* Simulador */
-.p4-sim { margin-top: 40px; }
-.p4-sim-titulo { font-size: clamp(1.6rem, 3.4vw, 2.4rem); line-height: 1.05; letter-spacing: -.03em; }
-.p4-sim-sub { max-width: 62ch; margin: 12px 0 24px; color: var(--suave); }
-.p4-form { display: grid; grid-template-columns: 1.2fr 1.2fr .8fr .7fr auto; gap: 12px; align-items: end; }
-.p4-form label { display: grid; gap: 6px; font-size: 14px; font-weight: 700; }
-.p4-form :is(input, select) {
-  width: 100%;
-  height: 48px;
-  padding: 0 12px;
-  background: var(--cartao);
-  color: var(--texto);
-  border: var(--borda) solid var(--contorno);
-  border-radius: calc(10 * var(--curva));
-  font: 600 15px var(--fonte-mono);
-}
-.p4-form :is(input, select):focus-visible { outline: 3px solid var(--acento); outline-offset: 2px; }
-.p4-exemplos { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0 26px; font-size: 15px; color: var(--suave); }
-.p4-mesa { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: start; }
-.p4-tabelas { display: grid; gap: 16px; }
-.p4-tabelas figure { margin: 0; background: var(--cartao); border: var(--borda) solid var(--contorno); border-radius: var(--raio); overflow: hidden; }
-.p4-tabelas figcaption { padding: 10px 14px; font: 700 13px var(--fonte-mono); border-bottom: var(--borda) solid var(--contorno); }
-.p4-tabela { width: 100%; border-collapse: collapse; font: 500 14px var(--fonte-mono); }
-.p4-tabela :is(th, td) { padding: 9px 14px; text-align: left; border-bottom: 1px solid var(--linha); }
-.p4-tabela th { font-size: 13px; color: var(--suave); }
-.p4-tabela td small { margin-left: 6px; color: var(--suave); }
-.p4-tabela .ruim { color: var(--perigo); font-weight: 700; }
-.p4-tabela tr { transition: background-color .3s, opacity .3s; }
-.p4-tabela tr.casou { background: color-mix(in srgb, var(--acento) 22%, transparent); }
-.p4-tabela tr.venceu { background: var(--acento); color: var(--sobre-acento); }
-.p4-tabela tr.venceu small { color: inherit; }
-.p4-tabela tr.perdeu { opacity: .55; text-decoration: line-through; }
-.p4-tabela tr.ruim-casou { background: var(--perigo); color: #fff; }
-.p4-tabela tr.ruim-casou .ruim { color: inherit; }
-.p4-log {
-  min-height: 11em;
-  margin: 0;
-  padding: 16px 18px;
-  overflow-x: auto;
-  background: #0e1114;
-  color: #cfd8dc;
-  border: var(--borda) solid var(--contorno);
-  border-radius: var(--raio);
-  font: 500 13.5px/1.7 var(--fonte-mono);
-  white-space: pre-wrap;
-  transition: box-shadow .3s;
-}
-.p4-log .ruim { color: #ff7b72; }
-.p4-log .bom { color: color-mix(in srgb, var(--acento) 55%, #fff); }
-.p4-mesa[data-resultado="encaminhado"] .p4-log { box-shadow: calc(5 * var(--desloc)) calc(5 * var(--desloc)) 0 var(--acento); }
-.p4-mesa[data-resultado="descartado"] .p4-log { box-shadow: calc(5 * var(--desloc)) calc(5 * var(--desloc)) 0 var(--perigo); }
-
-@media (max-width: 960px) {
-  .p4-form { grid-template-columns: 1fr 1fr; }
-  .p4-enviar { grid-column: 1 / -1; justify-content: center; }
-  .p4-mesa { grid-template-columns: 1fr; }
-}
-@media (max-width: 640px) {
-  .p4-historia { height: 160vh; }
-  .p4-palco { top: 100px; gap: 20px; }
-  .p4-pipeline { gap: 18px; }
-  .p4-etapa { padding: 12px 10px; }
-  .p4-etapa small { display: none; }
-  .p4-etapa:not([data-n="2"])::after { right: -15px; font-size: 15px; }
-  .p4-pacote { left: calc(var(--p, 0) * (100% - 220px)); font-size: 12px; }
-  .p4-pacote i { padding: 5px 6px; }
-  .p4-historia[data-etapa="0"] .p4-pacote { gap: 7px; }
-  .p4-saida { bottom: 52px; }
-}
-html.modo-hacker .p4-tabela tr.ruim-casou { color: #000; }
-
 /* ---------- Currículo para imprimir ou salvar em PDF (montado pelo app.js na hora de imprimir) ---------- */
 #curriculo { display: none; }
 @media print {
@@ -1959,23 +1829,20 @@ button.link-texto { background: none; border: 0; border-radius: 0; color: inheri
 
 
 /* ---------- Código continua em monoespaçada em qualquer tema ---------- */
-html body :is(.terminal, pre, code, kbd, .capa-codigo, .p4-log, .p4-tabela, .p4-pacote, .traj-comando, .repo-commit, .rodape-status, #trace),
-html body :is(.terminal, .capa-codigo, .p4-log, .p4-tabela, .p4-pacote) *,
-html body .p4-form :is(input, select) { font-family: var(--fonte-codigo); }
+html body :is(.terminal, pre, code, kbd, .capa-codigo, .traj-comando, .repo-commit, .rodape-status, #trace),
+html body :is(.terminal, .capa-codigo) * { font-family: var(--fonte-codigo); }
 
 /* ---------- Tema Areais de Alegrete ---------- */
 /* Títulos em peso regular: o tamanho faz o trabalho, não o negrito */
-html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) :is(h1, h2, .hero-nome, .titulo-secao, .contato-titulo, .rodape-nome, .nav-nome, .p4-sim-titulo, .erro-codigo) { font-weight: 400; letter-spacing: -.03em; }
-html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) :is(h3, h4, .p4-etapa b) { font-weight: 500; }
+html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) :is(h1, h2, .hero-nome, .titulo-secao, .contato-titulo, .rodape-nome, .nav-nome, .erro-codigo) { font-weight: 400; letter-spacing: -.03em; }
+html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) :is(h3, h4) { font-weight: 500; }
 html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .hero-nome { line-height: .95; }
-/* A foto entra na mesma paleta: quase sem cor, um pouco quente */
-html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .hero-foto img { filter: grayscale(.85) sepia(.15); }
 /* O ponto verde de "disponível" vira o azul do tema */
 html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) :is(.hero-pill i, .status-ponto:not(.dormindo), .projeto-status::before) { background: var(--acento); animation-name: pulsar-acento; }
 @keyframes pulsar-acento { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--acento) 55%, transparent); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
 
 
-/* ---------- Campo invertido: a página troca de cor ao passar por Sobre e Laboratório P4 ----------
+/* ---------- Campo invertido: a página troca de cor ao passar pelo Sobre ----------
    As cores são registradas como <color> para o navegador poder animar a troca (sem isso, mudaria de uma vez) */
 @property --fundo { syntax: "<color>"; inherits: true; initial-value: #e6dbc7; }
 @property --cartao { syntax: "<color>"; inherits: true; initial-value: #ddd0b9; }
@@ -2030,9 +1897,6 @@ html.trocando-tema { transition: none !important; }
 html.anima .tela { animation: entrar-tela .9s cubic-bezier(.16, 1, .3, 1) backwards; }
 html.anima .tela.t1 { animation-delay: .45s; } html.anima .tela.t2 { animation-delay: .55s; } html.anima .tela.t3 { animation-delay: .65s; } html.anima .tela.t4 { animation-delay: .75s; }
 @keyframes entrar-tela { from { opacity: 0; transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(.8); } }
-/* Tema Areais: as telas entram na paleta como a foto */
-html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .tela img { filter: grayscale(.6) sepia(.12); transition: filter .4s; }
-html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .tela:hover img { filter: none; }
 /* Com o topo empilhado (foto embaixo do texto), o leque fica menor; no celular some */
 @media (max-width: 960px) {
   .tela { width: 230px; }
@@ -2084,7 +1948,6 @@ html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .tela
 .caso-telas img { display: block; width: 100%; height: auto; aspect-ratio: 1024 / 640; object-fit: cover; border: var(--borda) solid var(--contorno); border-radius: calc(6 * var(--curva)); }
 .caso-telas figcaption { margin-top: 6px; font-size: 14px; color: var(--suave); }
 .caso-link { margin-top: 22px; }
-html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .caso-telas img { filter: grayscale(.35) sepia(.08); }
 @media (max-width: 860px) {
   .bancada { grid-template-columns: minmax(0, 1fr); }
   .bancada-abas { position: static; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
@@ -2099,12 +1962,7 @@ html:is([data-estilo="areais"], [data-estilo="marinho"]):not(.modo-hacker) .caso
   /* Menos espaço entre seções: no celular a página passava de 27 telas */
   .secao { padding-top: 72px; }
   .titulo-secao { margin-bottom: 28px; }
-  .secao-lab { margin-top: 72px; padding: 72px 0 80px; }
   .rodape { margin-top: 96px; }
-  /* Tabelas do simulador P4: rolam dentro da caixa em vez de cortar a coluna "Ação" */
-  .p4-tabelas figure { overflow-x: auto; }
-  .p4-tabela { font-size: 13px; }
-  .p4-tabela :is(th, td) { padding: 8px 10px; white-space: nowrap; }
 }
 
 

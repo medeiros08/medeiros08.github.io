@@ -20,12 +20,12 @@
   /* ---------- A rede: pontos espalhados por uma esfera (espiral de Fibonacci) ---------- */
 
   // A rede tem três formas e muda de uma para outra conforme a seção na tela:
-  // globo (o topo e quase tudo), pipeline (três colunas: parser, match-action, deparser, no laboratório P4)
+  // globo (o topo e quase tudo)
   // e estrela (todos os nós ligados a um só, você, no contato)
-  const FORMAS = ["globo", "pipeline", "estrela"];
+  const FORMAS = ["globo", "estrela"];
   let nos = [];
   let formas = {};
-  const peso = { globo: 1, pipeline: 0, estrela: 0 };
+  const peso = { globo: 1, estrela: 0 };
 
   function ligar(pares) {
     const vistos = new Set();
@@ -44,7 +44,6 @@
 
   function montarRede(qtd) {
     const ouro = Math.PI * (3 - Math.sqrt(5));
-    const porColuna = Math.ceil(qtd / 3);
     nos = Array.from({ length: qtd }, (_, i) => {
       const y = 1 - (i / (qtd - 1)) * 2;
       const r = Math.sqrt(1 - y * y);
@@ -52,11 +51,9 @@
       // Um pouco de irregularidade para não parecer uma bola perfeita
       const raio = 0.86 + Math.random() * 0.24;
       const globo = { x: Math.cos(a) * r * raio, y: y * raio, z: Math.sin(a) * r * raio };
-      const coluna = i % 3, k = Math.floor(i / 3);
-      const pipeline = { x: (coluna - 1) * 0.95 + (Math.random() - 0.5) * 0.14, y: -0.72 + (1.44 * k) / Math.max(1, porColuna - 1), z: (Math.random() - 0.5) * 0.4 };
       const ang = (i / (qtd - 1)) * Math.PI * 2, anel = 0.72 + (i % 3) * 0.14;
       const estrela = i === 0 ? { x: 0, y: 0, z: 0 } : { x: Math.cos(ang) * anel, y: Math.sin(ang) * anel, z: (i % 2 ? 0.12 : -0.12) };
-      return { alvo: { globo, pipeline, estrela }, ...globo, switch: i % 7 === 0, ping: 0, coluna, k };
+      return { alvo: { globo, estrela }, ...globo, switch: i % 7 === 0, ping: 0 };
     });
 
     const pertos = [];
@@ -68,15 +65,8 @@
         .slice(0, a.switch ? 5 : 3)
         .forEach(({ j }) => pertos.push([i, j]));
     });
-    // Pipeline: cada coluna é uma corrente, e alguns nós passam o pacote para a coluna seguinte
-    const cadeia = [];
-    nos.forEach((a, i) => {
-      if (i + 3 < qtd) cadeia.push([i, i + 3]);
-      if (a.coluna < 2 && a.k % 3 === 0 && i + 1 < qtd) cadeia.push([i, i + 1]);
-    });
     formas = {
       globo: ligar(pertos),
-      pipeline: ligar(cadeia),
       estrela: ligar(nos.map((_, i) => [0, i])),
     };
     nos[0].switch = true;
@@ -158,11 +148,8 @@
     raiz.addEventListener("mouseleave", () => { mola.alvoX = mola.alvoY = 0; mouse = null; });
   }
 
-  // Laboratório P4 no meio da tela: pipeline. Contato aparecendo: estrela. Fora disso: globo.
+  // Contato aparecendo: estrela. Fora disso: globo.
   function formaDaSecao() {
-    const meio = A / 2;
-    const lab = document.getElementById("laboratorio")?.getBoundingClientRect();
-    if (lab && lab.top < meio && lab.bottom > meio) return "pipeline";
     const contato = document.getElementById("contato")?.getBoundingClientRect();
     if (contato && contato.top < A * 0.7) return "estrela";
     return "globo";
@@ -193,9 +180,9 @@
     const alvo = formaDaSecao();
     const k = dt ? 1 - Math.exp(-dt * 2.6) : 1;
     for (const f of FORMAS) peso[f] += ((f === alvo ? 1 : 0) - peso[f]) * k;
-    const calma = Math.max(peso.pipeline, peso.estrela);
-    // O pipeline vem mais para o meio, para as três colunas caberem; a estrela fica com o centro (você) na margem direita
-    const cx = (cxSolto * peso.globo + (pequeno ? 0.5 : 0.8) * peso.pipeline + (pequeno ? 0.9 : 0.95) * peso.estrela) * L;
+    const calma = peso.estrela;
+    // A estrela fica com o centro (você) na margem direita
+    const cx = (cxSolto * peso.globo + (pequeno ? 0.9 : 0.95) * peso.estrela) * L;
     // Pipeline e estrela aparecem um pouco mais, para dar para ler a forma
     const opacidade = mistura(pequeno ? 0.5 : 0.75, pequeno ? 0.22 : 0.32, s) * (1 + calma * 0.45);
 
@@ -205,7 +192,7 @@
     }
 
     giro += dt * 0.12;
-    // Girando livre no globo; quase de frente no pipeline e na estrela (ângulo normalizado para não dar voltas)
+    // Girando livre no globo; quase de frente na estrela (ângulo normalizado para não dar voltas)
     const livre = Math.atan2(Math.sin(giro + scrollY * 0.0009), Math.cos(giro + scrollY * 0.0009));
     const ry = mistura(livre, 0, calma) + mola.x * 0.6;
     const rx = mistura(0.32, 0.1, calma) + mola.y * 0.45;
