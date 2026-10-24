@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Arthur Medeiros · Jogos e ferramentas de IA para a escola</title>
-  <meta name="description" id="metaDescricao" content="Estudante de Ciência da Computação na UNIPAMPA. Faço jogos e ferramentas de IA para as escolas públicas de Alegrete no GamificaPampa, e pesquiso segurança de redes.">
+  <title>Arthur Medeiros · Jogos e IA para a escola</title>
+  <meta name="description" id="metaDescricao" content="Estudante de Ciência da Computação na UNIPAMPA. Faço jogos e ferramentas de IA para as escolas públicas de Alegrete no GamificaPampa.">
   <meta name="author" content="Arthur Medeiros">
   <meta name="theme-color" content="#f3ead8">
   <link rel="canonical" href="https://medeiros08.github.io/">
@@ -18,12 +18,12 @@
   <!-- Prévia ao compartilhar o link (LinkedIn, WhatsApp...). Atualize junto com js/dados.js -->
   <meta property="og:type" content="profile">
   <meta property="og:url" content="https://medeiros08.github.io/">
-  <meta property="og:title" content="Arthur Medeiros · Jogos e ferramentas de IA para a escola">
-  <meta property="og:description" content="Estudante de Ciência da Computação na UNIPAMPA. Faço jogos e ferramentas de IA para as escolas públicas de Alegrete no GamificaPampa, e pesquiso segurança de redes.">
-  <meta property="og:image" content="https://medeiros08.github.io/img/compartilhar.jpg?v=9">
+  <meta property="og:title" content="Arthur Medeiros · Jogos e IA para a escola">
+  <meta property="og:description" content="Estudante de Ciência da Computação na UNIPAMPA. Faço jogos e ferramentas de IA para as escolas públicas de Alegrete no GamificaPampa.">
+  <meta property="og:image" content="https://medeiros08.github.io/img/compartilhar.jpg?v=10">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="627">
-  <meta property="og:image:alt" content="Arthur Medeiros: jogos e ferramentas de IA para a escola">
+  <meta property="og:image:alt" content="Arthur Medeiros: jogos e IA para a escola">
   <meta property="og:locale" content="pt_BR">
   <meta property="profile:first_name" content="Arthur">
   <meta property="profile:last_name" content="Medeiros">
@@ -38,7 +38,7 @@
     "alternateName": "Arthur De Freitas Medeiros",
     "url": "https://medeiros08.github.io/",
     "image": "https://medeiros08.github.io/img/foto.jpg",
-    "description": "Estudante de Ciência da Computação na UNIPAMPA. Faz jogos e ferramentas de IA para escolas públicas no GamificaPampa e é bolsista de pesquisa em segurança de redes e IoT no AI Horizon Labs.",
+    "description": "Estudante de Ciência da Computação na UNIPAMPA. Faz jogos e ferramentas de IA para escolas públicas no GamificaPampa e é bolsista de pesquisa em segurança de IoT no AI Horizon Labs.",
     "jobTitle": "Estudante de Ciência da Computação e bolsista de pesquisa",
     "affiliation": [
       { "@type": "CollegeOrUniversity", "name": "Universidade Federal do Pampa (UNIPAMPA)", "url": "https://unipampa.edu.br" },
@@ -56,8 +56,10 @@
     ]
   }
   </script>
-  <link rel="preload" href="fontes/schibsted-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=20261023r">
+
+  <link rel="preconnect" href="https://api.github.com" crossorigin>
+  <link rel="preload" href="fontes/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/estilo.css?v=20261024m">
 
   <!-- Aplica o tema salvo antes de desenhar a página, para não piscar -->
   <script>
@@ -80,17 +82,16 @@
       <h1>Arthur Medeiros</h1>
       <p>Arthur De Freitas Medeiros, estudante de Ciência da Computação na UNIPAMPA. Faço jogos e ferramentas de IA para as escolas públicas de Alegrete no GamificaPampa.</p>
       <p>
-        <a href="https://gamificapampa.github.io/">GamificaPampa</a> ·
-        <a href="projetos/gamificapampa/">Estudo de caso</a> ·
-        <a href="https://medeiros08.github.io/expresso-gaucho/">Expresso Gaúcho</a> ·
-        <a href="notas/p4-explicado/">P4 explicado</a> ·
-        <a href="notas/o-que-e-ctf/">O que é um CTF</a>
-      </p>
-      <p>
         <a href="https://github.com/medeiros08">GitHub</a> ·
         <a href="https://www.linkedin.com/in/arthur-medeiros-34a344356/">LinkedIn</a> ·
         <a href="http://lattes.cnpq.br/3699255553076395">Currículo Lattes</a> ·
+        <a href="https://orcid.org/0009-0000-8991-4068">ORCID</a> ·
         <a href="mailto:arthurfreitas.aluno@unipampa.edu.br">E-mail</a>
+      </p>
+      <p>
+        <a href="projetos/gamificapampa/">Estudo de caso: GamificaPampa</a> ·
+        <a href="notas/p4-explicado/">P4 explicado com uma agência dos correios</a> ·
+        <a href="notas/o-que-e-ctf/">O que é um CTF (e como começar)</a>
       </p>
     </div>
   </noscript>
@@ -100,7 +101,10 @@
   <footer class="rodape" id="rodape"></footer>
 
   <!-- Seus dados ficam em js/dados.js -->
-  <script src="js/dados.js?v=20261023r"></script>
-  <script src="js/site.js?v=20261023r"></script>
+  <script src="js/dados.js?v=20261024m"></script>
+  <script src="js/temas.js?v=20261024m"></script>
+  <script src="js/rede.js?v=20261024m"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/app.js?v=20261024m"></script>
 </body>
 </html>

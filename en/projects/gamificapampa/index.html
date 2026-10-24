@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- GamificaPampa case study (English). Menu and footer come from js/site.js; the text lives here. -->
+<!-- GamificaPampa case study (English). Menu, footer and buttons come from js/app.js; the text lives here. -->
 <html lang="en" data-theme="dark" data-idioma="en" data-raiz="../../../" data-pagina="projeto">
 <head>
   <meta charset="utf-8">
@@ -7,7 +7,7 @@
   <title>GamificaPampa · Case study · Arthur Medeiros</title>
   <meta name="description" content="Case study of GamificaPampa: 19 games, a 50-minute lesson, the Prompt Workshop and the Prompt Machine for public-school teachers in Alegrete, Brazil. By Arthur Medeiros.">
   <meta name="author" content="Arthur Medeiros">
-  <meta name="theme-color" content="#f3ead8">
+  <meta name="theme-color" content="#1e1e1e">
   <link rel="canonical" href="https://medeiros08.github.io/en/projects/gamificapampa/">
   <link rel="alternate" hreflang="pt-BR" href="https://medeiros08.github.io/projetos/gamificapampa/">
   <link rel="alternate" hreflang="en" href="https://medeiros08.github.io/en/projects/gamificapampa/">
@@ -19,7 +19,7 @@
   <meta property="og:url" content="https://medeiros08.github.io/en/projects/gamificapampa/">
   <meta property="og:title" content="GamificaPampa · Case study">
   <meta property="og:description" content="19 games and AI tools for public-school teachers in Alegrete, Brazil.">
-  <meta property="og:image" content="https://medeiros08.github.io/img/gamificapampa/compartilhar.jpg?v=2">
+  <meta property="og:image" content="https://medeiros08.github.io/img/gamificapampa/compartilhar.jpg?v=10">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="627">
   <meta property="og:image:alt" content="GamificaPampa home page: Your class at the next level">
@@ -40,8 +40,8 @@
   }
   </script>
 
-  <link rel="preload" href="../../../fontes/schibsted-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../../css/site.css?v=20261023r">
+  <link rel="preload" href="../../../fontes/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../css/estilo.css?v=20261024m">
   <script>
     document.documentElement.classList.add("js");
     try {
@@ -57,131 +57,164 @@
   <header class="nav" id="nav"></header>
 
   <main id="conteudo" class="pagina">
-    <article class="artigo estudo">
-      <a class="voltar" href="../../../en/#gamificapampa">← Back to home</a>
-      <header class="artigo-topo">
-        <p class="artigo-meta">Outreach · ongoing since 2026</p>
-        <h1 class="artigo-titulo">GamificaPampa</h1>
-        <p class="artigo-resumo">Games and AI tools for public-school teachers in Alegrete, Brazil. I make what reaches the classroom: 19 games, a 50-minute lesson, the Prompt Workshop and the Prompt Machine.</p>
-        <div class="artigo-acoes">
-          <a class="botao" href="https://gamificapampa.github.io/" target="_blank" rel="noopener">Open GamificaPampa<span class="so-leitor"> (opens in a new tab)</span></a>
-          <a href="https://github.com/GamificaPampa/recursos-pedagogicos" target="_blank" rel="noopener">Code on GitHub<span class="so-leitor"> (opens in a new tab)</span></a>
+    <article class="estudo">
+      <header class="container">
+        <a class="voltar" href="../../../en/#projetos">← Back to projects</a>
+        <div class="estudo-tags">
+          <span class="projeto-tag">Outreach and education</span>
+          <span class="projeto-status">In progress</span>
+        </div>
+        <h1 class="estudo-titulo" style="view-transition-name: projeto-gamificapampa">GamificaPampa</h1>
+        <p class="estudo-lead">AI and gamification for public-school teachers in Alegrete, Brazil. I make what reaches the classroom: 19 games, the 50-minute lesson, the Prompt Workshop and the Prompt Machine.</p>
+        <div class="hero-links">
+          <a class="botao principal" href="https://gamificapampa.github.io/" target="_blank" rel="noopener" data-evento="estudo-gp-site" data-evento-titulo="Estudo de caso: abrir o GamificaPampa">Open GamificaPampa <span aria-hidden="true">↗</span><span class="so-leitor"> (opens in a new tab)</span></a>
+          <a class="botao" href="https://github.com/GamificaPampa/recursos-pedagogicos" target="_blank" rel="noopener" data-evento="estudo-gp-github" data-evento-titulo="Estudo de caso: código no GitHub">Code on GitHub <span aria-hidden="true">↗</span><span class="so-leitor"> (opens in a new tab)</span></a>
         </div>
       </header>
 
-      <figure class="capa-estudo">
-        <img src="../../../img/gp/hub-grande.webp" width="1920" height="1200" fetchpriority="high" alt="GamificaPampa home page: Your class at the next level, AI and gamification for teachers, from preschool to high school.">
+      <figure class="container estudo-capa">
+        <div class="janela">
+          <div class="janela-barra" aria-hidden="true"><i></i><i></i><i></i><span>gamificapampa.github.io</span></div>
+          <img src="../../../img/gp/hub-grande.webp" width="1920" height="1200" alt="GamificaPampa home page: Your class at the next level, AI and gamification for teachers, from preschool to high school." fetchpriority="high">
+        </div>
       </figure>
 
-      <dl class="ficha">
-        <div><dt>For whom</dt><dd>K-12 teachers and their classes, ages 6 to 17</dd></div>
-        <div><dt>My role</dt><dd>Games, lesson, Workshop, Prompt Machine and much of the hub</dd></div>
-        <div><dt>With whom</dt><dd>Educador 5.0 and GamificaEdu projects, UNIPAMPA, Alegrete campus</dd></div>
-        <div><dt>Built with</dt><dd>HTML, CSS and JavaScript, on GitHub Pages</dd></div>
-      </dl>
-      <div class="numeros">
-        <div><b>19</b><span>games I made</span></div>
-        <div><b>11</b><span>subjects, from Programming to Biology</span></div>
-        <div><b>50</b><span>minutes of scripted lesson</span></div>
-        <div><b>4</b><span>Prompt Workshop sessions</span></div>
+      <div class="container">
+        <dl class="estudo-ficha">
+          <div><dt>For whom</dt><dd>K-12 teachers and their classes, ages 6 to 17</dd></div>
+          <div><dt>My role</dt><dd>Games, lesson, Prompt Workshop, Prompt Machine and much of the hub</dd></div>
+          <div><dt>With whom</dt><dd>Educador 5.0 and GamificaEdu projects, UNIPAMPA, Alegrete campus</dd></div>
+          <div><dt>Built with</dt><dd>HTML, CSS and JavaScript, published on GitHub Pages</dd></div>
+        </dl>
+
+        <div class="estudo-numeros">
+          <div><b>19</b><span>games I made</span></div>
+          <div><b>11</b><span>subjects, from Programming to Biology</span></div>
+          <div><b>50</b><span>minutes of scripted lesson</span></div>
+          <div><b>0</b><span>sign-ups to play</span></div>
+        </div>
       </div>
 
-      <div class="artigo-corpo">
+      <section class="container estudo-bloco">
         <h2>The idea</h2>
-        <p>GamificaPampa brings together outreach projects from UNIPAMPA (Alegrete campus) that take artificial intelligence and gamification to public-school teachers in Alegrete, Brazil: Educador 5.0, on AI, and GamificaEdu, on gamification. The site treats teacher training as a game in three levels: Discover, Create and Apply.</p>
-        <p>My part is what ends up in the hands of teachers and kids. I started with games that introduce programming and the Software Engineering degree; then came games for other subjects, made as examples of what a teacher can build after the Workshop.</p>
+        <div class="estudo-texto">
+          <p>GamificaPampa brings together outreach projects from UNIPAMPA (Alegrete campus) that take artificial intelligence and gamification to public-school teachers in Alegrete, Brazil: Educador 5.0, on AI, and GamificaEdu, on gamification. The site treats teacher training as a game in three levels: Discover, Create and Apply.</p>
+          <p>My part is what ends up in the hands of teachers and kids. I started with games that introduce programming and the Software Engineering degree; then came games for other subjects, made as examples of what a teacher can build after the Prompt Workshop.</p>
+        </div>
+      </section>
 
-        <h2>What I made</h2>
-        <h3>Six programming games</h3>
-        <p>Bug Ninja, Pair Programming, Connect the System, Code Arcade, Bug Hunt and Dev Mission. Kids hunt bugs, program in pairs (one drives, the other navigates) and wire a phone to a server and a database.</p>
-        <h3>Thirteen subject games</h3>
-        <p>From first grade to high school: Syllable Factory, Way to School, Colour Studio, Bit's Circuit, Fractions Pizzeria, Water Cycle, Timeline, English with Bit, Bit's Scale, News Detective, Bit's Line, Equation Lab and Bit's Genetics.</p>
-      </div>
+      <section class="container estudo-bloco">
+        <h2>What's inside</h2>
+        <div class="estudo-cartoes">
+          <div class="estudo-cartao">
+            <h3>Programming games</h3>
+            <ul>
+              <li>Bug Ninja <small>6+</small></li>
+              <li>Pair Programming <small>7+</small></li>
+              <li>Connect the System <small>8+</small></li>
+              <li>Code Arcade, three games with a scoreboard</li>
+              <li>Bug Hunt</li>
+              <li>Missão Dev</li>
+            </ul>
+          </div>
+          <div class="estudo-cartao">
+            <h3>Subject games</h3>
+            <ul>
+              <li>Syllable Factory and News Detective <small>Portuguese</small></li>
+              <li>Fractions Pizzeria, Bit's Scale and Bit's Line <small>Maths</small></li>
+              <li>Water Cycle <small>Science</small></li>
+              <li>Way to School and Timeline <small>Geography and History</small></li>
+              <li>Colour Studio and Bit's Circuit <small>Art and PE</small></li>
+              <li>English with Bit, Equation Lab and Bit's Genetics</li>
+            </ul>
+          </div>
+          <div class="estudo-cartao">
+            <h3>For teachers</h3>
+            <ul>
+              <li>50-minute lesson: script, slides, worksheet and certificate</li>
+              <li>Prompt Workshop: four sessions of about 2 hours</li>
+              <li>Online course, Prompt Game and prompt builder</li>
+              <li>Prompt Machine for every subject</li>
+              <li>Offline kit and printable medals</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-      <div class="telas telas-cel">
-          <figure>
-            <img src="../../../img/gp/pizzaria-das-fracoes.webp" width="390" height="760" loading="lazy" alt="The Fractions Pizzeria game on a phone">
-            <figcaption><b>Fractions Pizzeria</b><br>Maths, ages 9 and 10</figcaption>
-          </figure>
-          <figure>
-            <img src="../../../img/gp/conecta.webp" width="390" height="760" loading="lazy" alt="The Connect the System game on a phone">
-            <figcaption><b>Connect the System</b><br>Programming, ages 8 and up</figcaption>
-          </figure>
-          <figure>
-            <img src="../../../img/gp/detetive-da-noticia.webp" width="390" height="760" loading="lazy" alt="The News Detective game on a phone">
-            <figcaption><b>News Detective</b><br>Portuguese, ages 12 to 15</figcaption>
-          </figure>
-          <figure>
-            <img src="../../../img/gp/ciclo-da-agua.webp" width="390" height="760" loading="lazy" alt="The Water Cycle game on a phone">
-            <figcaption><b>Water Cycle</b><br>Science, ages 10 and 11</figcaption>
-          </figure>
-          <figure>
-            <img src="../../../img/gp/laboratorio-de-equacoes.webp" width="390" height="760" loading="lazy" alt="The Equation Lab game on a phone">
-            <figcaption><b>Equation Lab</b><br>Chemistry, first year of high school</figcaption>
-          </figure>
-          <figure>
-            <img src="../../../img/gp/fabrica-de-silabas.webp" width="390" height="760" loading="lazy" alt="The Syllable Factory game on a phone">
-            <figcaption><b>Syllable Factory</b><br>Portuguese, ages 6 and 7</figcaption>
-          </figure>
-      </div>
-
-      <div class="artigo-corpo">
-        <h3>For teachers</h3>
-        <ul>
-          <li><strong>Lesson with the games</strong>: 50 minutes on how a program gets made, for classes aged 6 to 14, with script, slides, worksheet and certificate.</li>
-          <li><strong>Prompt Workshop</strong>: four sessions on asking Gemini for lesson plans, activities, assessments and games, with the Prompt Game, a prompt builder and an online course for those who can't attend.</li>
-          <li><strong>Prompt Machine</strong>: the teacher picks the class, subject, topic and what to make, and copies a ready prompt for Gemini.</li>
-          <li><strong>Offline kit</strong> and <strong>printable medals</strong>.</li>
-        </ul>
-      </div>
-
-      <div class="telas telas-3">
-          <figure>
-            <img src="../../../img/gp/aula.webp" width="960" height="600" loading="lazy" alt="Lesson page: script, slides and worksheet">
-            <figcaption><b>Lesson with the games.</b> Script, slides, worksheet and certificate, for 50 minutes.</figcaption>
-          </figure>
-          <figure>
-            <img src="../../../img/gp/oficina.webp" width="960" height="600" loading="lazy" alt="Prompt Workshop page for teachers">
-            <figcaption><b>Prompt Workshop.</b> Four sessions of about 2 hours for teachers to create materials with Gemini.</figcaption>
-          </figure>
-          <figure>
-            <img src="../../../img/gp/maquina.webp" width="960" height="600" loading="lazy" alt="Prompt Machine: class and subject choices next to the finished prompt">
-            <figcaption><b>Prompt Machine.</b> Pick the class, the subject and what to make; it writes the prompt with Role, Task, Context and Format.</figcaption>
-          </figure>
-      </div>
-
-      <div class="artigo-corpo">
+      <section class="container estudo-bloco">
         <h2>How it was designed</h2>
-        <h3>QR codes and short links</h3>
-        <p>The teacher projects the class menu and kids open the game on their phones through a QR code. Every resource has a short link to write on the board and a button to send it over WhatsApp or Classroom.</p>
-        <h3>No sign-up</h3>
-        <p>No game asks for a login, and the site collects no data from kids. Open it and play, on a phone, a tablet or a projector.</p>
-        <h3>When the network drops</h3>
-        <p>The offline kit packs the class menu, the games and the lesson into one file that opens with a double click on the school laptop. A GitHub workflow rebuilds it on every change to the repository.</p>
-        <h3>Ready to print</h3>
-        <p>Script, worksheet, certificates and medals print on A4, straight from the pages themselves.</p>
+        <ol class="decisoes">
+          <li>
+            <h3>A QR code for the class</h3>
+            <p>The teacher projects the class menu and kids open the games on their phones through a QR code. Every resource has a short link to write on the board and a Share button that sends it over WhatsApp or Classroom.</p>
+          </li>
+          <li>
+            <h3>When the network drops</h3>
+            <p>The offline kit packs the class menu, the games and the lesson into one file that opens with a double click on the school laptop. A GitHub workflow rebuilds it on every change.</p>
+          </li>
+          <li>
+            <h3>No sign-up</h3>
+            <p>No game asks for a login, and the site collects no data from kids. Open it and play, on a phone, a tablet or a projector.</p>
+          </li>
+          <li>
+            <h3>Ready to print</h3>
+            <p>Script, worksheet, certificates and medals print on A4, straight from the pages themselves.</p>
+          </li>
+        </ol>
+      </section>
 
+      <section class="container estudo-bloco">
+        <h2>Inside</h2>
+        <div class="galeria">
+          <figure>
+            <div class="janela"><img src="../../../img/gp/maquina.webp" width="1024" height="640" loading="lazy" alt="Prompt Machine: class and subject choices next to the finished prompt."></div>
+            <figcaption><b>Prompt Machine.</b> The teacher picks class, subject and topic, and copies a ready prompt for Gemini.</figcaption>
+          </figure>
+          <figure>
+            <div class="janela"><img src="../../../img/gp/aula.webp" width="1024" height="640" loading="lazy" alt="Lesson page: script, slides and worksheet."></div>
+            <figcaption><b>Lesson with the games.</b> 50 minutes on how a program gets made, for classes aged 6 to 14.</figcaption>
+          </figure>
+          <figure>
+            <div class="janela"><img src="../../../img/gp/oficina.webp" width="1024" height="640" loading="lazy" alt="Prompt Workshop page for teachers."></div>
+            <figcaption><b>Prompt Workshop.</b> Four sessions for teachers to create materials with Gemini.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="container estudo-bloco">
         <h2>From a personal project to the organization</h2>
-        <p>The games and the Workshop started in a repository of mine, Código Mirim. When they became part of GamificaPampa, they moved to the <a href="https://github.com/GamificaPampa" target="_blank" rel="noopener">GitHub organization</a>: what teachers and kids use stayed public, and the facilitators' kit went to a private team repository.</p>
-        <p>The rule of the move was not to break a single address. There were already QR codes printed on booths, slides and invitations, so every old address got a new destination, and the old repository became a bridge that sends each link to the right place.</p>
+        <div class="estudo-texto">
+          <p>The games and the Workshop started in a repository of mine, Código Mirim. When they became part of GamificaPampa, they moved to the <a href="https://github.com/GamificaPampa" target="_blank" rel="noopener">GamificaPampa organization on GitHub</a>: what teachers and kids use stayed public, and the facilitators' kit went to a private team repository.</p>
+          <p>The rule of the move was not to break a single address. There were already QR codes printed on booths, slides and invitations, so every old address got a new destination, and the old repository became a bridge that sends each link to the right place.</p>
+        </div>
+      </section>
 
+      <section class="container estudo-bloco">
         <h2>In schools and at events</h2>
-        <p>On October 14, 2026, GamificaPampa was presented to the teachers and management team of Escola Tancredo Neves, in Alegrete, and to the Diálogos do Pampa research group at UNIPAMPA's São Borja campus, in the talk "AI in Education".</p>
+        <div class="estudo-texto">
+          <p>On October 14, 2026, GamificaPampa was presented to the teachers and management team of Escola Tancredo Neves, in Alegrete, and to the Diálogos do Pampa research group at UNIPAMPA's São Borja campus, in the talk "AI in Education".</p>
+        </div>
+      </section>
 
-        <h2>Credits</h2>
-        <p>The hub and the outreach projects are coordinated by professors Paulo Silas Severo de Souza and Silvio Ereno Quincozes. The first version of the site, the visual identity, the Bit mascot and the <a href="https://github.com/paulosevero/robo-estrela" target="_blank" rel="noopener">Robot Gets the Star</a> game are by Paulo Severo; the games and pages I made use that identity.</p>
-      </div>
-
-      <p class="artigo-acoes">
-        <a class="botao" href="https://gamificapampa.github.io/" target="_blank" rel="noopener">Open GamificaPampa<span class="so-leitor"> (opens in a new tab)</span></a>
-        <a class="link-forte" href="../../../en/#projetos">See the other projects</a>
-      </p>
+      <section class="container estudo-bloco">
+        <h2>My role and credits</h2>
+        <div class="estudo-texto">
+          <p>I made 19 of the 20 games, the lesson, the Prompt Workshop, the Prompt Machine, the offline kit and the medals, and I look after much of the hub. The first version of the site, the visual identity, the Bit mascot and the <a href="https://github.com/paulosevero/robo-estrela" target="_blank" rel="noopener">Robot Gets the Star</a> game are by Paulo Severo; the games and pages I made use that identity.</p>
+          <p>The hub and the outreach projects are coordinated by professors Paulo Silas Severo de Souza and Silvio Ereno Quincozes.</p>
+        </div>
+        <div class="estudo-fim">
+          <a class="botao principal" href="https://gamificapampa.github.io/" target="_blank" rel="noopener" data-evento="estudo-gp-site-fim" data-evento-titulo="Estudo de caso: abrir o GamificaPampa (fim)">Open GamificaPampa <span aria-hidden="true">↗</span><span class="so-leitor"> (opens in a new tab)</span></a>
+          <a class="botao" href="../../../en/#projetos">← See the other projects</a>
+        </div>
+      </section>
     </article>
   </main>
 
   <footer class="rodape" id="rodape"></footer>
 
-  <script src="../../../js/dados.js?v=20261023r"></script>
-  <script src="../../../js/site.js?v=20261023r"></script>
+  <script src="../../../js/dados.js?v=20261024m"></script>
+
+  <script src="../../../js/temas.js?v=20261024m"></script>
+  <script src="../../../js/app.js?v=20261024m"></script>
 </body>
 </html>

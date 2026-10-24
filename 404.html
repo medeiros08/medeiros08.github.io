@@ -26,9 +26,9 @@
     })();
   </script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="/fontes/schibsted-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fontes/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Caminhos absolutos: o GitHub Pages mostra esta página em qualquer endereço que não existe -->
-  <link rel="stylesheet" href="/css/site.css?v=20261023r">
+  <link rel="stylesheet" href="/css/estilo.css?v=20261024m">
   <script>
     try {
       var tema = localStorage.getItem("tema");
@@ -38,23 +38,38 @@
       if (localStorage.getItem("animacoes") === "paradas") document.documentElement.classList.add("parado");
     } catch (e) {}
   </script>
-  <style>
-    .erro { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; padding: 64px var(--margem); }
-    .erro > div { width: 100%; max-width: 980px; }
-    .erro-codigo { font-size: clamp(7rem, 26vw, 16rem); font-weight: 800; line-height: .8; letter-spacing: -.07em; }
-    .erro h1 { margin: 28px 0 14px; font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -.04em; }
-    .erro-texto { max-width: 46ch; margin-bottom: 34px; font-size: var(--destaque); line-height: 1.35; }
-    .erro .terminal { display: block; position: static; width: auto; max-width: 760px; height: auto; margin: 0; }
-    #trace .t-linha { white-space: pre; }
-    .t-linha { overflow-wrap: anywhere; }
-    .t-linha.falhou, .t-erro { color: #ffb4a6; }
-    .t-prompt { color: #9fb3e6; }
-    .t-destaque { color: #b9f2a8; }
-    .erro-acoes { margin-top: 34px; }
-    @media (prefers-reduced-motion: no-preference) {
-      #trace .t-linha { animation: aparecer-salto .25s ease-out backwards; }
+  <!-- Mesmo visual do resto do site: o tema que o visitante escolheu, ou o "estilo" de dados.js -->
+  <script src="/js/dados.js?v=20261024m"></script>
+  <script src="/js/temas.js?v=20261024m"></script>
+  <script>
+    if (window.TEMAS_DO_SITE) {
+      var guardado = null;
+      try { if (localStorage.getItem("estiloVersao") === "2") guardado = localStorage.getItem("estilo"); } catch (e) {}
+      TEMAS_DO_SITE.aplicar(TEMAS_DO_SITE.indiceInicial(guardado));
     }
-    @keyframes aparecer-salto { from { opacity: 0; transform: translateX(-6px); } }
+  </script>
+  <style>
+    .erro { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; padding: 64px 0; }
+    .erro-codigo { font-size: clamp(6rem, 22vw, 14rem); font-weight: 800; line-height: .8; letter-spacing: -.06em; color: var(--acento); }
+    .erro h1 { margin: 22px 0 14px; font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; line-height: 1; letter-spacing: -.04em; }
+    .erro-texto { max-width: 46ch; margin-bottom: 34px; font-size: 1.15rem; color: var(--suave); }
+    .erro .terminal { max-width: 720px; }
+    .erro .terminal-corpo { height: auto; }
+    .queda { position: relative; max-width: 560px; height: 64px; margin-bottom: 30px; border-top: 2px dashed var(--linha); }
+    .queda .pacote { position: absolute; top: -8px; left: 0; animation: descartar 3.4s ease-in infinite; }
+    .queda span { position: absolute; top: 12px; left: 52%; font-family: var(--fonte-mono); font-size: 13px; color: var(--suave); }
+    @keyframes descartar {
+      0% { transform: translate(0, 0); opacity: 1; }
+      55% { transform: translate(280px, 0); opacity: 1; }
+      100% { transform: translate(330px, 90px) rotate(170deg); opacity: 0; }
+    }
+    .erro-acoes { margin-top: 34px; }
+    /* Traceroute que não chega: os saltos aparecem um a um e os últimos ficam sem resposta */
+    #trace .t-linha { white-space: pre; animation: aparecer-salto .25s ease-out backwards; }
+    #trace .falhou { color: var(--perigo, #ff5f57); }
+    @keyframes aparecer-salto { from { opacity: 0; translate: -6px 0; } }
+    /* Fontes dos temas são mais largas: menos aperto entre as letras */
+    html[data-estilo] .erro-codigo, html[data-estilo] .erro h1 { letter-spacing: -.02em; }
   </style>
 </head>
 <body>
@@ -64,8 +79,10 @@
       <h1 id="titulo">Página não encontrada</h1>
       <p class="erro-texto" id="texto">O endereço que você tentou abrir não existe. Na internet, tudo viaja em pequenos pacotes de dados, e este aqui se perdeu no caminho.</p>
 
-      <div class="terminal" data-ui>
-        <div class="terminal-barra" aria-hidden="true"><span>arthur@portfolio:~</span></div>
+      <div class="queda" aria-hidden="true"><b class="pacote"></b><span id="perdido">perdido!</span></div>
+
+      <div class="terminal">
+        <div class="terminal-barra" aria-hidden="true"><i></i><i></i><i></i><span>arthur@portfolio:~</span></div>
         <div class="terminal-corpo">
           <div class="t-linha t-eco"><span class="t-prompt">arthur@portfolio:~$</span> <span id="abrir">abrir</span> <span id="caminho"></span></div>
           <div id="trace" translate="no"></div>
@@ -76,7 +93,7 @@
         </div>
       </div>
 
-      <p class="erro-acoes"><a class="botao" href="/" id="voltar">← Voltar para o início</a></p>
+      <p class="erro-acoes"><a class="botao principal" href="/" id="voltar">← Voltar para o início</a></p>
     </div>
   </main>
 
@@ -91,6 +108,7 @@
       var textos = {
         titulo: "Page not found",
         texto: "The address you tried to open doesn't exist. On the internet everything travels in small packets of data, and this one got lost on the way.",
+        perdido: "lost!",
         abrir: "open",
         erro: "error 404: this page doesn't exist",
         oQue: "what happened: the packet found no destination and was dropped",
