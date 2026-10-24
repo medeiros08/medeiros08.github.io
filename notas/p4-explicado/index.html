@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Nota. Menu, rodapé e "Outras notas" vêm do js/app.js; o texto fica aqui mesmo. A lista de notas fica em js/dados.js. -->
+<!-- Nota. Menu, rodapé e "Outras notas" vêm do js/site.js; o texto fica aqui mesmo. A lista de notas fica em js/dados.js. -->
 <html lang="pt-BR" data-theme="dark" data-idioma="pt" data-raiz="../../" data-pagina="nota">
 <head>
   <meta charset="utf-8">
@@ -7,7 +7,7 @@
   <title>P4 explicado com uma agência dos correios · Arthur Medeiros</title>
   <meta name="description" content="O que é a linguagem P4, sem jargão: pacotes, carteiros e regras novas para os equipamentos da rede. E como ela pode ajudar na segurança.">
   <meta name="author" content="Arthur Medeiros">
-  <meta name="theme-color" content="#1e1e1e">
+  <meta name="theme-color" content="#f3ead8">
   <link rel="canonical" href="https://medeiros08.github.io/notas/p4-explicado/">
   <link rel="alternate" hreflang="pt-BR" href="https://medeiros08.github.io/notas/p4-explicado/">
   <link rel="alternate" hreflang="en" href="https://medeiros08.github.io/en/notes/p4-explained/">
@@ -19,7 +19,7 @@
   <meta property="og:url" content="https://medeiros08.github.io/notas/p4-explicado/">
   <meta property="og:title" content="P4 explicado com uma agência dos correios">
   <meta property="og:description" content="O que é a linguagem P4, sem jargão: pacotes, carteiros e regras novas para os equipamentos da rede.">
-  <meta property="og:image" content="https://medeiros08.github.io/img/compartilhar.jpg?v=2">
+  <meta property="og:image" content="https://medeiros08.github.io/img/compartilhar.jpg?v=9">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="627">
   <meta property="og:locale" content="pt_BR">
@@ -40,8 +40,8 @@
   }
   </script>
 
-  <link rel="preload" href="../../fontes/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../css/estilo.css?v=20261023f">
+  <link rel="preload" href="../../fontes/schibsted-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../css/site.css?v=20261023r">
   <script>
     document.documentElement.classList.add("js");
     try {
@@ -57,15 +57,15 @@
   <header class="nav" id="nav"></header>
 
   <main id="conteudo" class="pagina">
-    <article class="container nota">
-      <a class="voltar" href="../../#notas">← Todas as notas</a>
-      <header class="nota-topo">
-        <span class="nota-meta"><time datetime="2026-10-12">12 de outubro de 2026</time> · 4 min de leitura</span>
-        <h1 class="nota-titulo" style="view-transition-name: nota-p4-explicado">P4 explicado com uma agência dos correios</h1>
-        <p class="nota-resumo">O que é a linguagem que eu pesquiso, sem jargão: pacotes, carteiros e regras novas para os equipamentos da rede.</p>
+    <article class="artigo">
+      <a class="voltar" href="../../#projetos">← Todas as notas</a>
+      <header class="artigo-topo">
+        <span class="artigo-meta"><time datetime="2026-10-12">12 de outubro de 2026</time> · 4 min de leitura</span>
+        <h1 class="artigo-titulo" style="view-transition-name: nota-p4-explicado">P4 explicado com uma agência dos correios</h1>
+        <p class="artigo-resumo">O que é a linguagem que eu pesquiso, sem jargão: pacotes, carteiros e regras novas para os equipamentos da rede.</p>
       </header>
 
-      <div class="nota-corpo">
+      <div class="artigo-corpo">
         <p>Quando você abre um site, manda uma mensagem ou assiste a um vídeo, nada viaja inteiro pela internet. Tudo é picado em pedaços pequenos, os <strong>pacotes</strong>, e cada pacote faz o próprio caminho até o destino, passando por vários equipamentos no meio do trajeto, como roteadores e switches.</p>
 
         <h2>Cada pacote é uma carta</h2>
@@ -90,20 +90,18 @@
         <p>É aí que entra a minha pesquisa, no AI Horizon Labs: estudo como usar o P4 para que a própria rede faça uma primeira triagem e separe os pacotes que merecem uma análise mais cuidadosa, sem deixar de fora nada que deveria ser analisado.</p>
         <blockquote>Em uma frase: o P4 permite programar o que a rede faz com cada pacote, e eu pesquiso como usar isso para deixar a comunicação mais segura.</blockquote>
 
-        <h2>Quer sentir na pele?</h2>
-        <p class="destaque-caixa">Na página inicial tem um jogo de um minuto, o <a href="../../#firewall">Seja o firewall</a>: você confere os pacotes que chegam numa casa e decide quem entra. É uma versão bem simplificada do que um equipamento programado com P4 faz.</p>
+        <h2>Quer ver o código?</h2>
+        <p class="caixa">O compilador da pesquisa, que transforma regras do Snort 3 em tabelas P4, está aberto no <a href="https://github.com/medeiros08/Snort-p4" target="_blank" rel="noopener">GitHub</a>, com o artigo e os artefatos dos experimentos.</p>
       </div>
 
-      <p class="nota-assinatura">Arthur Medeiros, estudante de Ciência da Computação na UNIPAMPA. Dúvidas ou sugestões? <a href="../../#contato">Fale comigo</a>.</p>
+      <p class="artigo-assinatura">Arthur Medeiros, estudante de Ciência da Computação na UNIPAMPA. Dúvidas ou sugestões? <a href="../../#contato">Fale comigo</a>.</p>
       <aside id="outrasNotas"></aside>
     </article>
   </main>
 
   <footer class="rodape" id="rodape"></footer>
 
-  <script src="../../js/dados.js?v=20261023f"></script>
-
-  <script src="../../js/temas.js?v=20261023f"></script>
-  <script src="../../js/app.js?v=20261023f"></script>
+  <script src="../../js/dados.js?v=20261023r"></script>
+  <script src="../../js/site.js?v=20261023r"></script>
 </body>
 </html>
