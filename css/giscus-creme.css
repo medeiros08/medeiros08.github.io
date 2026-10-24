@@ -1,0 +1,28 @@
+/* Tema do livro de visitas (giscus): o claro do giscus com creme no lugar do branco e marinho nos botões */
+@import url("https://giscus.app/themes/light.css");
+
+main {
+  --color-canvas-default: #f3ead8;
+  --color-canvas-overlay: #f3ead8;
+  --color-canvas-inset: #ebdfc7;
+  --color-canvas-subtle: #ebdfc7;
+  --color-fg-default: #13234a;
+  --color-fg-muted: #4a5878;
+  --color-border-default: #13234a59;
+  --color-border-muted: #13234a33;
+  --color-btn-text: #13234a;
+  --color-btn-bg: #ebdfc7;
+  --color-btn-hover-bg: #e4d5b8;
+  --color-btn-active-bg: #e0cfae;
+  --color-btn-selected-bg: #e4d5b8;
+  --color-btn-primary-text: #f3ead8;
+  --color-btn-primary-bg: #13234a;
+  --color-btn-primary-hover-bg: #22366a;
+  --color-btn-primary-selected-bg: #22366a;
+  --color-btn-primary-disabled-text: #f3ead8cc;
+  --color-btn-primary-disabled-bg: #4a5878;
+  --color-segmented-control-bg: #ebdfc7;
+  --color-segmented-control-button-bg: #f3ead8;
+  --color-accent-fg: #13234a;
+  --color-accent-emphasis: #13234a;
+}
