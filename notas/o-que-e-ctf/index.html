@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Nota. Menu, rodapé e "Outras notas" vêm do js/site.js; o texto fica aqui mesmo. A lista de notas fica em js/dados.js. -->
+<!-- Nota. Menu, rodapé e "Outras notas" vêm do js/app.js; o texto fica aqui mesmo. A lista de notas fica em js/dados.js. -->
 <html lang="pt-BR" data-theme="dark" data-idioma="pt" data-raiz="../../" data-pagina="nota">
 <head>
   <meta charset="utf-8">
@@ -7,7 +7,7 @@
   <title>O que é um CTF (e como começar) · Arthur Medeiros</title>
   <meta name="description" content="CTF são competições de segurança em que você procura bandeiras escondidas. Os formatos, as categorias e por onde começar sem se perder.">
   <meta name="author" content="Arthur Medeiros">
-  <meta name="theme-color" content="#f3ead8">
+  <meta name="theme-color" content="#1e1e1e">
   <link rel="canonical" href="https://medeiros08.github.io/notas/o-que-e-ctf/">
   <link rel="alternate" hreflang="pt-BR" href="https://medeiros08.github.io/notas/o-que-e-ctf/">
   <link rel="alternate" hreflang="en" href="https://medeiros08.github.io/en/notes/what-is-a-ctf/">
@@ -19,7 +19,7 @@
   <meta property="og:url" content="https://medeiros08.github.io/notas/o-que-e-ctf/">
   <meta property="og:title" content="O que é um CTF (e como começar)">
   <meta property="og:description" content="As competições de segurança em que você procura bandeiras escondidas, e por onde começar sem se perder.">
-  <meta property="og:image" content="https://medeiros08.github.io/img/compartilhar.jpg?v=9">
+  <meta property="og:image" content="https://medeiros08.github.io/img/compartilhar.jpg?v=10">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="627">
   <meta property="og:locale" content="pt_BR">
@@ -40,8 +40,8 @@
   }
   </script>
 
-  <link rel="preload" href="../../fontes/schibsted-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../css/site.css?v=20261023r">
+  <link rel="preload" href="../../fontes/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../css/estilo.css?v=20261024m">
   <script>
     document.documentElement.classList.add("js");
     try {
@@ -57,15 +57,15 @@
   <header class="nav" id="nav"></header>
 
   <main id="conteudo" class="pagina">
-    <article class="artigo">
-      <a class="voltar" href="../../#projetos">← Todas as notas</a>
-      <header class="artigo-topo">
-        <span class="artigo-meta"><time datetime="2026-10-12">12 de outubro de 2026</time> · 4 min de leitura</span>
-        <h1 class="artigo-titulo" style="view-transition-name: nota-o-que-e-ctf">O que é um CTF (e como começar)</h1>
-        <p class="artigo-resumo">As competições de segurança em que você procura bandeiras escondidas, e por onde começar sem se perder.</p>
+    <article class="container nota">
+      <a class="voltar" href="../../#notas">← Todas as notas</a>
+      <header class="nota-topo">
+        <span class="nota-meta"><time datetime="2026-10-12">12 de outubro de 2026</time> · 4 min de leitura</span>
+        <h1 class="nota-titulo" style="view-transition-name: nota-o-que-e-ctf">O que é um CTF (e como começar)</h1>
+        <p class="nota-resumo">As competições de segurança em que você procura bandeiras escondidas, e por onde começar sem se perder.</p>
       </header>
 
-      <div class="artigo-corpo">
+      <div class="nota-corpo">
         <p>CTF vem de <strong>Capture The Flag</strong>, "capture a bandeira". Em segurança da informação, é uma competição em que você resolve desafios para encontrar uma <strong>flag</strong>: um texto secreto, quase sempre num formato como <code>flag{...}</code>, escondido num site, num arquivo, num programa ou numa mensagem cifrada. Achou a flag e enviou, ganhou os pontos.</p>
 
         <h2>Os dois formatos mais comuns</h2>
@@ -98,17 +98,19 @@
         <p>Uma dica: anote o que você aprendeu em cada desafio. Muitos truques se repetem.</p>
 
         <h2>Tem um CTF neste site</h2>
-        <p class="caixa">Escondi um desafio pequeno aqui no portfólio, pensado para quem nunca jogou. A flag está dividida em três pedaços, cada um codificado de um jeito. Para começar, vá até o <a href="../../#terminal">terminal</a> da página inicial e digite <code>ctf</code>. Boa caça! 🚩</p>
+        <p class="destaque-caixa">Escondi um desafio pequeno aqui no portfólio, pensado para quem nunca jogou. A flag está dividida em três pedaços, cada um codificado de um jeito. Para começar, vá até o <a href="../../#terminal">terminal</a> da página inicial e digite <code>ctf</code>. Boa caça! 🚩</p>
       </div>
 
-      <p class="artigo-assinatura">Arthur Medeiros, estudante de Ciência da Computação na UNIPAMPA. Dúvidas ou sugestões? <a href="../../#contato">Fale comigo</a>.</p>
+      <p class="nota-assinatura">Arthur Medeiros, estudante de Ciência da Computação na UNIPAMPA. Dúvidas ou sugestões? <a href="../../#contato">Fale comigo</a>.</p>
       <aside id="outrasNotas"></aside>
     </article>
   </main>
 
   <footer class="rodape" id="rodape"></footer>
 
-  <script src="../../js/dados.js?v=20261023r"></script>
-  <script src="../../js/site.js?v=20261023r"></script>
+  <script src="../../js/dados.js?v=20261024m"></script>
+
+  <script src="../../js/temas.js?v=20261024m"></script>
+  <script src="../../js/app.js?v=20261024m"></script>
 </body>
 </html>
