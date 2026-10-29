@@ -801,7 +801,9 @@
   }
 
   // No claro, o tema creme do site (css/giscus-creme.css); o giscus precisa do endereço completo
-  const temaGiscus = () => (raiz.dataset.theme === "dark" || raiz.classList.contains("modo-hacker") ? "transparent_dark" : "https://medeiros08.github.io/css/giscus-creme.css");
+  // No site publicado usa o próprio endereço; testando no computador, o do site no ar
+  const temaGiscus = () => (raiz.dataset.theme === "dark" || raiz.classList.contains("modo-hacker") ? "transparent_dark"
+    : `${/^(localhost|127\.)/.test(location.hostname) ? "https://arthurmedeiros.dev" : location.origin}/css/giscus-creme.css`);
 
   // Só carrega o giscus quando o visitante chega perto da seção
   function prepararLivro() {
