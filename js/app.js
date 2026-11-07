@@ -1277,7 +1277,8 @@
   let voltaTimer;
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
-      tituloOriginal = document.title;
+      // Se sair de novo antes de o título voltar, guarda o original, não o "restabelecida"
+      if (!tituloOriginal) tituloOriginal = document.title;
       clearTimeout(voltaTimer);
       document.title = UI[idioma].abaFora;
     } else if (tituloOriginal) {
