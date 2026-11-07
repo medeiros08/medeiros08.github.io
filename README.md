@@ -52,6 +52,10 @@ e acesse http://localhost:8080.
 3. Em **Settings → Pages**, escolha a branch `main` e a pasta `/ (root)`.
 4. Em alguns minutos o site fica no ar em `https://SEU-USUARIO.github.io`.
 
+## Domínio próprio
+
+O site responde em **https://arthurmedeiros.dev**. O arquivo `CNAME` guarda esse domínio: não apague, senão o GitHub Pages volta para `medeiros08.github.io`. Os endereços do `sitemap.xml`, do `robots.txt` e das tags `<link rel="canonical">` usam o domínio próprio.
+
 ## Depois de mudar o CSS ou o JS
 
 Os arquivos são carregados com `?v=...` no fim do endereço (em todos os `.html`). Ao mudar `css/estilo.css` ou algum `js/*.js`, troque esse número em todos os `.html` para o navegador de quem já visitou baixar a versão nova.
