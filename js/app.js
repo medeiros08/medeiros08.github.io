@@ -1383,7 +1383,8 @@
     const novo = raiz.dataset.theme === "dark" ? "light" : "dark";
     raiz.dataset.theme = novo;
     memoria.gravar("tema", novo);
-    $('[data-acao="tema"]')?.setAttribute("aria-pressed", String(novo === "dark"));
+    // São dois botões de tema (barra e menu do celular): os dois mudam de estado
+    document.querySelectorAll('[data-acao="tema"]').forEach((b) => b.setAttribute("aria-pressed", String(novo === "dark")));
     atualizarCorDoNavegador();
     atualizarTemaLivro();
     registrarEvento(`tema-${novo}`, `Trocou para o tema ${novo === "dark" ? "escuro" : "claro"}`);
