@@ -69,8 +69,8 @@ window.DADOS = {
           titulo: "GamificaPampa",
           selo: { pt: "Extensão", en: "Outreach" },
           texto: {
-            pt: "19 jogos para turmas do 1º ano ao ensino médio, e a Oficina de Prompts e a Máquina de prompts para professores, no hub de IA e gamificação da UNIPAMPA.",
-            en: "19 games for classes from first grade to high school, plus the Prompt Workshop and the Prompt Machine for teachers, in UNIPAMPA's AI and gamification hub.",
+            pt: "30 jogos, da Educação Infantil ao ensino médio, duas aulas de 50 minutos, a Oficina de Prompts e a Máquina de prompts para professores, no hub de IA e gamificação da UNIPAMPA.",
+            en: "30 games, from preschool to high school, two 50-minute lessons, the Prompt Workshop and the Prompt Machine for teachers, in UNIPAMPA's AI and gamification hub.",
           },
         },
         {
@@ -159,12 +159,12 @@ window.DADOS = {
       status: { pt: "Em desenvolvimento", en: "In progress" },
       titulo: "GamificaPampa",
       descricao: {
-        pt: "Hub de extensão da UNIPAMPA que leva IA e gamificação a professores de escolas públicas de Alegrete. Fiz 19 dos 20 jogos (6 de programação e 13 por matéria, do 1º ano ao ensino médio), a aula de 50 minutos, a Oficina de Prompts e a Máquina de prompts.",
-        en: "A UNIPAMPA outreach hub that brings AI and gamification to public-school teachers in Alegrete. I made 19 of its 20 games (6 on programming and 13 across subjects, from first grade to high school), the 50-minute lesson, the Prompt Workshop and the Prompt Machine.",
+        pt: "Hub de extensão da UNIPAMPA que leva IA e gamificação a professores de escolas públicas de Alegrete. Fiz 30 dos 31 jogos (6 de programação e 24 por matéria, da Educação Infantil ao ensino médio), as aulas de 50 minutos sobre programação e sobre IA, a Oficina de Prompts e a Máquina de prompts.",
+        en: "A UNIPAMPA outreach hub that brings AI and gamification to public-school teachers in Alegrete. I made 30 of its 31 games (6 on programming and 24 across subjects, from preschool to high school), the 50-minute lessons on programming and on AI, the Prompt Workshop and the Prompt Machine.",
       },
       papel: {
-        pt: "jogos, aula, Oficina e Máquina de prompts. A identidade visual e o Robô pega a estrela são de Paulo Severo.",
-        en: "games, lesson, Workshop and Prompt Machine. The visual identity and Robot Gets the Star are by Paulo Severo.",
+        pt: "jogos, aulas, Oficina e Máquina de prompts. A identidade visual e o Robô pega a estrela são de Paulo Severo.",
+        en: "games, lessons, Workshop and Prompt Machine. The visual identity and Robot Gets the Star are by Paulo Severo.",
       },
       tecnologias: ["HTML", "CSS", "JavaScript"],
       cor: "verde",
@@ -227,8 +227,8 @@ window.DADOS = {
       resumo: { pt: "Extensão · jogos e ferramentas", en: "Outreach · games and tools" },
       titulo: { pt: "Da sala de aula ao celular das crianças", en: "From the classroom to the kids' phones" },
       texto: {
-        pt: "O professor projeta o menu da turma e as crianças abrem os jogos pelo QR code, sem cadastro. Para os professores, a Oficina de Prompts e a Máquina de prompts ensinam a pedir ao Gemini planos de aula, atividades e até jogos.",
-        en: "The teacher projects the class menu and kids open the games through a QR code, with no sign-up. For teachers, the Prompt Workshop and the Prompt Machine show how to ask Gemini for lesson plans, activities and even games.",
+        pt: "O professor projeta o menu da turma e as crianças abrem os jogos pelo QR code, sem cadastro. Para os professores, a Oficina de Prompts e a Máquina de prompts ensinam a pedir ao ChatGPT planos de aula, atividades e até jogos.",
+        en: "The teacher projects the class menu and kids open the games through a QR code, with no sign-up. For teachers, the Prompt Workshop and the Prompt Machine show how to ask ChatGPT for lesson plans, activities and even games.",
       },
       telas: [
         { imagem: "img/gp/maquina.webp", legenda: { pt: "Máquina de prompts: escolhe a turma e ela monta o pedido", en: "Prompt Machine: pick the class and it writes the prompt" } },
@@ -236,8 +236,8 @@ window.DADOS = {
         { imagem: "img/gp/oficina.webp", legenda: { pt: "Oficina de Prompts para professores", en: "Prompt Workshop for teachers" } },
       ],
       numeros: [
-        { valor: "19", rotulo: { pt: "jogos, do 1º ano ao ensino médio", en: "games, from first grade to high school" } },
-        { valor: "11", rotulo: { pt: "matérias, de Programação a Biologia", en: "subjects, from Programming to Biology" } },
+        { valor: "30", rotulo: { pt: "jogos, da Educação Infantil ao ensino médio", en: "games, from preschool to high school" } },
+        { valor: "16", rotulo: { pt: "matérias, de Programação a Filosofia", en: "subjects, from Programming to Philosophy" } },
         { valor: "50 min", rotulo: { pt: "de aula, com roteiro e certificado", en: "lesson, with script and certificate" } },
       ],
       link: { url: { pt: "projetos/gamificapampa/", en: "en/projects/gamificapampa/" }, rotulo: { pt: "Ler o estudo de caso", en: "Read the case study" } },
@@ -306,7 +306,7 @@ window.DADOS = {
       itens: [
         { nome: { pt: "Git e GitHub", en: "Git & GitHub" }, onde: { pt: "todos os projetos", en: "every project" } },
         { nome: "LaTeX", onde: { pt: "escrita de artigos", en: "writing papers" } },
-        { nome: { pt: "IA generativa (Claude e Gemini)", en: "Generative AI (Claude & Gemini)" }, onde: { pt: "desenvolvimento e Oficina de Prompts", en: "development and Prompt Workshop" } },
+        { nome: { pt: "IA generativa (Claude, ChatGPT e Gemini)", en: "Generative AI (Claude, ChatGPT & Gemini)" }, onde: { pt: "desenvolvimento e Oficina de Prompts", en: "development and Prompt Workshop" } },
         { nome: "GitHub Pages", onde: { pt: "publicação dos sites", en: "publishing websites" } },
       ],
     },
@@ -378,8 +378,8 @@ window.DADOS = {
       titulo: { pt: "Extensão: jogos e ferramentas de IA", en: "Outreach: games and AI tools" },
       instituicao: "GamificaPampa · UNIPAMPA",
       detalhe: {
-        pt: "19 jogos, a aula de 50 minutos, a Oficina de Prompts e a Máquina de prompts.",
-        en: "19 games, the 50-minute lesson, the Prompt Workshop and the Prompt Machine.",
+        pt: "30 jogos, duas aulas de 50 minutos, a Oficina de Prompts e a Máquina de prompts.",
+        en: "30 games, two 50-minute lessons, the Prompt Workshop and the Prompt Machine.",
       },
     },
     {
