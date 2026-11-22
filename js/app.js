@@ -39,7 +39,7 @@
       paleta: "Trocar a cor do site", abrirTerminal: "Abrir o terminal", voltarTopo: "Voltar ao topo", pausar: "Pausar animações", retomar: "Retomar animações",
       temasTitulo: "Cores e temas", temasCores: "Cores do site", temasTemas: "Temas (cores e fontes)", fechar: "Fechar",
       dica: "Experimente:", placeholder: "digite help",
-      atalhos: ["help", "whoami", "agora", "projetos", "p4", "contato", "ctf"],
+      atalhos: ["help", "whoami", "agora", "projetos", "xai", "contato", "ctf"],
       hackerLigado: "MODO HACKER ATIVADO", hackerDesligado: "modo hacker desligado",
       etapas: ["enviado", "verificado", "entregue"],
       trilha: "Trilha sonora", trilhaSub: "O que toca enquanto eu programo.",
@@ -76,7 +76,7 @@
         ajuda: [
           ["help", "mostra esta lista"], ["whoami", "quem sou eu"], ["agora", "no que estou trabalhando"],
           ["pesquisa", "meus interesses de pesquisa"], ["projetos", "lista os projetos"], ["habilidades", "linguagens e ferramentas"],
-          ["p4", "afinal, o que é P4?"], ["notas", "meus textos mais recentes"],
+          ["xai", "o que é IA explicável?"], ["p4", "o que é P4 (pesquisa antiga)"], ["notas", "meus textos mais recentes"],
           ["contato", "como falar comigo"], ["git log", "meus últimos commits no GitHub"], ["ls", "lista as seções do site"],
           ["cd <seção>", "vai até uma seção (ex.: cd projetos)"], ["ctf", "🚩 desafio: ache a flag escondida no site"],
           ["musica", "o que toca enquanto eu programo"], ["cv", "abre o currículo para salvar em PDF"],
@@ -111,6 +111,7 @@
         pingResumo: (ok, total, media) => `${total} enviados, ${ok} recebidos${ok ? `, média ${media} ms` : ""}`,
         pingNota: "(medido com uma requisição HTTPS: o navegador não manda ICMP de verdade)",
         p4: "Tudo o que circula na internet viaja em pequenos pedaços chamados pacotes, passando por equipamentos como roteadores. Normalmente, esses equipamentos já vêm de fábrica sabendo o que fazer. P4 é uma linguagem de programação que permite ensinar a eles regras novas: deixar o pacote seguir, mudar o caminho ou bloquear.\n\nÉ como um carteiro que pode ser treinado para conferir cada carta antes de entregar. Pesquisei como usar isso para deixar a comunicação mais segura. Hoje minha pesquisa é outra: detecção de intrusões com IA explicável, no XAIID.",
+        xai: "Um modelo de IA aprende com exemplos e procura padrões. Só que ele não sabe quais padrões são os de verdade: se houver um atalho nos dados, ele usa o atalho, como o cavalo Hans, que acertava contas lendo o rosto do dono.\n\nIA explicável (XAI) é perguntar ao modelo para onde ele está olhando. No XAIID eu uso isso em detecção de intrusões. Leia a nota: notas/ia-explicavel/",
         semSecao: (s) => `seção não encontrada: ${s}. Use ls para ver as seções.`,
         indo: (s) => `indo para ${s}/…`,
         nada: "nada por aqui ainda.",
@@ -139,7 +140,7 @@
       paleta: "Change the site color", abrirTerminal: "Open the terminal", voltarTopo: "Back to top", pausar: "Pause animations", retomar: "Resume animations",
       temasTitulo: "Colors and themes", temasCores: "Site colors", temasTemas: "Themes (colors and fonts)", fechar: "Close",
       dica: "Try:", placeholder: "type help",
-      atalhos: ["help", "whoami", "now", "projects", "p4", "contact", "ctf"],
+      atalhos: ["help", "whoami", "now", "projects", "xai", "contact", "ctf"],
       hackerLigado: "HACKER MODE ON", hackerDesligado: "hacker mode off",
       etapas: ["sent", "checked", "delivered"],
       trilha: "Soundtrack", trilhaSub: "What plays while I code.",
@@ -176,7 +177,7 @@
         ajuda: [
           ["help", "shows this list"], ["whoami", "who I am"], ["now", "what I'm working on"],
           ["research", "my research interests"], ["projects", "lists my projects"], ["skills", "languages and tools"],
-          ["p4", "so, what is P4?"], ["notes", "my latest writing"],
+          ["xai", "what is explainable AI?"], ["p4", "what is P4 (past research)"], ["notes", "my latest writing"],
           ["contact", "how to reach me"], ["git log", "my latest commits on GitHub"], ["ls", "lists the site sections"],
           ["cd <section>", "jumps to a section (e.g. cd projects)"], ["ctf", "🚩 challenge: find the flag hidden on the site"],
           ["music", "what plays while I code"], ["cv", "opens the résumé to save as PDF"],
@@ -211,6 +212,7 @@
         pingResumo: (ok, total, media) => `${total} sent, ${ok} received${ok ? `, average ${media} ms` : ""}`,
         pingNota: "(measured with an HTTPS request: browsers can't send real ICMP)",
         p4: "Everything on the internet travels in small pieces called packets, passing through devices such as routers. Normally these devices come from the factory already knowing what to do. P4 is a programming language that lets you teach them new rules: let a packet through, change its route or block it.\n\nIt's like a mail carrier who can be trained to check every letter before delivering it. I researched how to use this to make communication more secure. Today my research is different: intrusion detection with explainable AI, in XAIID.",
+        xai: "An AI model learns from examples and looks for patterns. But it cannot tell which patterns are real: if the data has a shortcut, it takes it, like Clever Hans, the horse who did arithmetic by reading his owner's face.\n\nExplainable AI (XAI) means asking the model where it is looking. In XAIID I use it for intrusion detection. Read the note: en/notes/explainable-ai/",
         semSecao: (s) => `section not found: ${s}. Use ls to see the sections.`,
         indo: (s) => `going to ${s}/…`,
         nada: "nothing here yet.",
@@ -661,10 +663,10 @@
       <div class="caso-codigo" data-ui>
         <p class="caso-rotulo">${esc(t(c.codigo.entrada.rotulo))}</p>
         <pre translate="no"><code>${linhas(c.codigo.entrada.linhas)}</code></pre>
-        <p class="caso-seta" aria-hidden="true">↓ ${idioma === "pt" ? "compila para" : "compiles to"}</p>
+        <p class="caso-seta" aria-hidden="true">↓ ${c.codigo.seta ? esc(t(c.codigo.seta)) : idioma === "pt" ? "compila para" : "compiles to"}</p>
         <p class="caso-rotulo">${esc(t(c.codigo.saida.rotulo))}</p>
         <pre translate="no"><code>${linhas(c.codigo.saida.linhas)}</code></pre>
-        ${c.codigo.propriedade ? `<p class="caso-propriedade" translate="no">${esc(c.codigo.propriedade)}</p>` : ""}
+        ${c.codigo.propriedade ? `<p class="caso-propriedade" translate="no">${esc(t(c.codigo.propriedade))}</p>` : ""}
       </div>` : "";
     const telas = temItens(c.telas) ? `
       <div class="caso-telas n${Math.min(c.telas.length, 3)}">
@@ -1125,6 +1127,7 @@
     pesquisa: "pesquisa", research: "pesquisa",
     projetos: "projetos", projects: "projetos",
     p4: "p4",
+    xai: "xai", xaiid: "xai",
     contato: "contato", contact: "contato",
     ls: "ls", cd: "cd", git: "git",
     ctf: "ctf", submit: "submit",
@@ -1702,6 +1705,9 @@
         break;
       case "p4":
         imprimir(esc(T.p4));
+        break;
+      case "xai":
+        imprimir(esc(T.xai));
         break;
       case "habilidades":
         imprimir((D.habilidades || []).map((g) =>

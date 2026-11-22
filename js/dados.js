@@ -33,10 +33,10 @@ window.DADOS = {
   estilo: "marinho",
 
   topo: {
-    chamada: { pt: "Jogos e IA para a escola", en: "Games and AI for schools" },
+    chamada: { pt: "IA que se explica, na pesquisa e na escola", en: "AI that explains itself, in research and in school" },
     frase: {
-      pt: "Faço jogos e ferramentas de IA para as escolas públicas de Alegrete, no GamificaPampa.",
-      en: "I make games and AI tools for the public schools of Alegrete, Brazil, at GamificaPampa.",
+      pt: "Pesquiso detecção de intrusões com IA explicável no XAIID e faço jogos e ferramentas de IA para as escolas públicas de Alegrete no GamificaPampa.",
+      en: "I research intrusion detection with explainable AI in XAIID, and I make games and AI tools for the public schools of Alegrete, Brazil, at GamificaPampa.",
     },
     detalhes: [{ pt: "Ciência da Computação", en: "Computer Science" }, "UNIPAMPA", "AI Horizon Labs"],
     // Telas de verdade do meu trabalho, em leque atrás da foto (até 4). Cada uma leva ao projeto.
@@ -45,7 +45,7 @@ window.DADOS = {
       { titulo: "Expresso Gaúcho", imagem: "img/expresso/mapa.webp", url: "https://medeiros08.github.io/expresso-gaucho/" },
     ],
     // Etiquetas que flutuam em volta da foto (até 4)
-    etiquetas: ["GamificaPampa", { pt: "Gamificação", en: "Gamification" }, { pt: "IA na educação", en: "AI in education" }, { pt: "Cibersegurança", en: "Cybersecurity" }],
+    etiquetas: ["XAIID", "GamificaPampa", { pt: "IA explicável", en: "Explainable AI" }, { pt: "IA na educação", en: "AI in education" }],
   },
 
   // Botões do topo. Tipos com ícone: lattes, orcid, scholar, github, linkedin,
@@ -204,8 +204,8 @@ window.DADOS = {
       categoria: { pt: "Pesquisa", en: "Research" },
       titulo: "XAIID",
       descricao: {
-        pt: "Detecção de intrusões em sistemas ciber-físicos com aprendizado de máquina e IA explicável, coordenado por Silvio E. Quincozes. Minha parte agora: descobrir quais características do tráfego mais ajudam a reconhecer cada tipo de ataque e comparar esses rankings entre o testbed físico e as emulações.",
-        en: "Intrusion detection in cyber-physical systems with machine learning and explainable AI, led by Silvio E. Quincozes. My part right now: finding which traffic features best recognize each kind of attack and comparing those rankings between the physical testbed and the emulations.",
+        pt: "Detecção de intrusões em sistemas ciber-físicos com aprendizado de máquina e IA explicável, coordenado por Silvio E. Quincozes. Minha parte agora: descobrir quais características do tráfego mais ajudam a reconhecer cada tipo de ataque e ver se esses rankings se mantêm de um cenário para outro.",
+        en: "Intrusion detection in cyber-physical systems with machine learning and explainable AI, led by Silvio E. Quincozes. My part right now: finding which traffic features best recognize each kind of attack and checking whether those rankings hold from one scenario to another.",
       },
       papel: { pt: "bolsista de pesquisa, desde novembro de 2026.", en: "research scholarship holder, since November 2026." },
       tecnologias: ["Python", "scikit-learn", { pt: "IA explicável", en: "Explainable AI" }],
@@ -214,8 +214,8 @@ window.DADOS = {
       codigo: [
         "mi   = mutual_info_classif(X, y == ataque)",
         "perm = permutation_importance(rf, X_val, y_val)",
-        "jaccard(top10[D1], top10[D2])",
-        "spearman(ranking[D1], ranking[D3])",
+        "jaccard(top10[A], top10[B])",
+        "spearman(ranking[A], ranking[B])",
       ],
     },
   ],
@@ -323,6 +323,16 @@ window.DADOS = {
   // Notas (mini-blog). Cada nota tem uma página em notas/<slug>/ e, em inglês, em en/notes/<slug>/.
   // A mais recente fica em primeiro.
   notas: [
+    {
+      slug: { pt: "ia-explicavel", en: "explainable-ai" },
+      data: "2026-11-21",
+      minutos: 4,
+      titulo: { pt: "IA explicável e o cavalo que sabia contar", en: "Explainable AI and the horse who could count" },
+      resumo: {
+        pt: "O que é IA explicável, sem jargão: um cavalo que acertava contas pelo motivo errado e o que isso tem a ver com detectar ataques.",
+        en: "Explainable AI without the jargon: a horse who did arithmetic for the wrong reason, and what that has to do with detecting attacks.",
+      },
+    },
     {
       slug: { pt: "p4-explicado", en: "p4-explained" },
       data: "2026-10-12",

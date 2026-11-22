@@ -1,0 +1,103 @@
+<!doctype html>
+<!-- Note (English). Menu, footer and "More notes" come from js/app.js; the text lives here. The list of notes is in js/dados.js. -->
+<html lang="en" data-theme="dark" data-idioma="en" data-raiz="../../../" data-pagina="nota">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Explainable AI and the horse who could count · Arthur Medeiros</title>
+  <meta name="description" content="What explainable AI is, without the jargon: Clever Hans, models that are right for the wrong reason, and why it matters for attack detection.">
+  <meta name="author" content="Arthur Medeiros">
+  <meta name="theme-color" content="#1e1e1e">
+  <link rel="canonical" href="https://arthurmedeiros.dev/en/notes/explainable-ai/">
+  <link rel="alternate" hreflang="pt-BR" href="https://arthurmedeiros.dev/notas/ia-explicavel/">
+  <link rel="alternate" hreflang="en" href="https://arthurmedeiros.dev/en/notes/explainable-ai/">
+  <link rel="alternate" hreflang="x-default" href="https://arthurmedeiros.dev/notas/ia-explicavel/">
+  <link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../img/icone-180.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://arthurmedeiros.dev/en/notes/explainable-ai/">
+  <meta property="og:title" content="Explainable AI and the horse who could count">
+  <meta property="og:description" content="Explainable AI without the jargon: a horse who did arithmetic for the wrong reason, and what that has to do with detecting attacks.">
+  <meta property="og:image" content="https://arthurmedeiros.dev/img/compartilhar-en.jpg?v=12">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="627">
+  <meta property="og:locale" content="en_US">
+  <meta property="article:published_time" content="2026-11-21">
+  <meta property="article:author" content="https://arthurmedeiros.dev/en/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Explainable AI and the horse who could count",
+    "description": "Explainable AI without the jargon: a horse who did arithmetic for the wrong reason, and what that has to do with detecting attacks.",
+    "datePublished": "2026-11-21",
+    "inLanguage": "en",
+    "url": "https://arthurmedeiros.dev/en/notes/explainable-ai/",
+    "author": { "@type": "Person", "name": "Arthur Medeiros", "url": "https://arthurmedeiros.dev/en/" }
+  }
+  </script>
+
+  <link rel="preload" href="../../../fontes/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../css/estilo.css?v=20261108a">
+  <script>
+    document.documentElement.classList.add("js");
+    try {
+      var tema = localStorage.getItem("tema");
+      if (tema) document.documentElement.dataset.theme = tema;
+      // Sem escolha salva: claro de dia e escuro de noite, pelo horário de Alegrete
+      else { var h = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: "America/Sao_Paulo" }).format(new Date())); document.documentElement.dataset.theme = h >= 7 && h < 19 ? "light" : "dark"; }
+      if (localStorage.getItem("animacoes") === "paradas") document.documentElement.classList.add("parado");
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="nav" id="nav"></header>
+
+  <main id="conteudo" class="pagina">
+    <article class="container nota">
+      <a class="voltar" href="../../#notas">← All notes</a>
+      <header class="nota-topo">
+        <span class="nota-meta"><time datetime="2026-11-21">November 21, 2026</time> · 4 min read</span>
+        <h1 class="nota-titulo" style="view-transition-name: nota-explainable-ai">Explainable AI and the horse who could count</h1>
+        <p class="nota-resumo">Explainable AI without the jargon: a horse who did arithmetic for the wrong reason, and what that has to do with detecting attacks.</p>
+      </header>
+
+      <div class="nota-corpo">
+        <p>In the early 20th century, a horse named <strong>Hans</strong> became famous in Germany for doing arithmetic. His owner would ask "what is 3 plus 2?" and Hans would tap his hoof five times. He was right almost every time, in front of crowds and even expert panels.</p>
+        <p>But Hans could not add. A psychologist noticed he only got it right when the person asking knew the answer and was in sight. The horse was reading tiny cues in people's faces and posture, like the tension when he reached the right number. He passed the test for the wrong reason.</p>
+
+        <h2>AI models do this too</h2>
+        <p>A machine learning model learns from examples. We show it thousands of cases with the right answer and it looks for patterns that separate one answer from another. The problem is that it cannot tell which patterns are the "real" ones. If the data has a shortcut, it takes the shortcut.</p>
+        <p>A well-known case is an image model that "recognized" wolves by looking at the snow in the background, not at the animal. It did fine in testing. Outside of it, a dog in the snow became a wolf.</p>
+
+        <h2>What explainable AI is</h2>
+        <p><strong>Explainable AI</strong> (XAI) is the set of techniques that help answer a simple question: <em>why did the model decide that?</em> Some show what weighed most in one specific decision. Others measure, overall, how much the model relies on each feature of the data.</p>
+        <p>One idea I use a lot is <strong>permutation importance</strong>: I shuffle the values of one feature and see how much worse the model gets. If it gets much worse, it relied on that feature. If nothing changes, the feature did not matter. It is like covering one of the horse's eyes at a time to find out where he was looking.</p>
+
+        <h2>Why it matters in security</h2>
+        <p>In <strong>XAIID</strong>, the project where I hold a research scholarship at UNIPAMPA, we use machine learning to detect attacks on <strong>cyber-physical systems</strong>: networks that control real-world things, such as power, industry and transport. A false alarm can stop production, and a missed attack can be worse. So it is not enough for the detector to do well in tests. We need to know what it is paying attention to.</p>
+
+        <h2>What I do in XAIID</h2>
+        <p>My part is finding which network traffic features help the model most to recognize each kind of attack, and checking whether that ranking holds when the scenario changes. If the "important" features shift a lot from one environment to another, the model may be looking at the environment, not at the attack. It is the same test that unmasked Hans: take the cue away and see if the right answers keep coming.</p>
+        <blockquote>In one sentence: explainable AI means asking the model where it is looking, before a shortcut in the data becomes a conclusion.</blockquote>
+
+        <h2>Want to see more?</h2>
+        <p class="destaque-caixa">XAIID is in the <a href="../../#projetos">projects section</a>, led by professor Silvio E. Quincozes. When the results are published, I will write about them here.</p>
+      </div>
+
+      <p class="nota-assinatura">Arthur Medeiros, Computer Science student at UNIPAMPA and XAIID scholarship holder. Questions or suggestions? <a href="../../#contato">Get in touch</a>.</p>
+      <aside id="outrasNotas"></aside>
+    </article>
+  </main>
+
+  <footer class="rodape" id="rodape"></footer>
+
+  <script src="../../../js/dados.js?v=20261122a"></script>
+
+  <script src="../../../js/temas.js?v=20261107a"></script>
+  <script src="../../../js/app.js?v=20261122a"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<!-- Nota. Menu, rodapé e "Outras notas" vêm do js/app.js; o texto fica aqui mesmo. A lista de notas fica em js/dados.js. -->
+<html lang="pt-BR" data-theme="dark" data-idioma="pt" data-raiz="../../" data-pagina="nota">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IA explicável e o cavalo que sabia contar · Arthur Medeiros</title>
+  <meta name="description" content="O que é IA explicável, sem jargão: o cavalo Hans, modelos que acertam pelo motivo errado e por que isso importa na detecção de ataques.">
+  <meta name="author" content="Arthur Medeiros">
+  <meta name="theme-color" content="#1e1e1e">
+  <link rel="canonical" href="https://arthurmedeiros.dev/notas/ia-explicavel/">
+  <link rel="alternate" hreflang="pt-BR" href="https://arthurmedeiros.dev/notas/ia-explicavel/">
+  <link rel="alternate" hreflang="en" href="https://arthurmedeiros.dev/en/notes/explainable-ai/">
+  <link rel="alternate" hreflang="x-default" href="https://arthurmedeiros.dev/notas/ia-explicavel/">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../img/icone-180.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://arthurmedeiros.dev/notas/ia-explicavel/">
+  <meta property="og:title" content="IA explicável e o cavalo que sabia contar">
+  <meta property="og:description" content="O que é IA explicável, sem jargão: um cavalo que acertava contas pelo motivo errado e o que isso tem a ver com detectar ataques.">
+  <meta property="og:image" content="https://arthurmedeiros.dev/img/compartilhar.jpg?v=12">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="627">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="article:published_time" content="2026-11-21">
+  <meta property="article:author" content="https://arthurmedeiros.dev/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "IA explicável e o cavalo que sabia contar",
+    "description": "O que é IA explicável, sem jargão: um cavalo que acertava contas pelo motivo errado e o que isso tem a ver com detectar ataques.",
+    "datePublished": "2026-11-21",
+    "inLanguage": "pt-BR",
+    "url": "https://arthurmedeiros.dev/notas/ia-explicavel/",
+    "author": { "@type": "Person", "name": "Arthur Medeiros", "url": "https://arthurmedeiros.dev/" }
+  }
+  </script>
+
+  <link rel="preload" href="../../fontes/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../css/estilo.css?v=20261108a">
+  <script>
+    document.documentElement.classList.add("js");
+    try {
+      var tema = localStorage.getItem("tema");
+      if (tema) document.documentElement.dataset.theme = tema;
+      // Sem escolha salva: claro de dia e escuro de noite, pelo horário de Alegrete
+      else { var h = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: "America/Sao_Paulo" }).format(new Date())); document.documentElement.dataset.theme = h >= 7 && h < 19 ? "light" : "dark"; }
+      if (localStorage.getItem("animacoes") === "paradas") document.documentElement.classList.add("parado");
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="nav" id="nav"></header>
+
+  <main id="conteudo" class="pagina">
+    <article class="container nota">
+      <a class="voltar" href="../../#notas">← Todas as notas</a>
+      <header class="nota-topo">
+        <span class="nota-meta"><time datetime="2026-11-21">21 de novembro de 2026</time> · 4 min de leitura</span>
+        <h1 class="nota-titulo" style="view-transition-name: nota-ia-explicavel">IA explicável e o cavalo que sabia contar</h1>
+        <p class="nota-resumo">O que é IA explicável, sem jargão: um cavalo que acertava contas pelo motivo errado e o que isso tem a ver com detectar ataques.</p>
+      </header>
+
+      <div class="nota-corpo">
+        <p>No começo do século 20, um cavalo chamado <strong>Hans</strong> ficou famoso na Alemanha por fazer contas. O dono perguntava "quanto é 3 mais 2?" e Hans batia a pata cinco vezes. Acertava quase sempre, na frente de plateias e até de comissões de especialistas.</p>
+        <p>Só que Hans não sabia somar. Um psicólogo percebeu que ele só acertava quando quem perguntava sabia a resposta e estava à vista. O cavalo lia sinais mínimos no rosto e na postura das pessoas, como a tensão quando ele chegava no número certo. Ele acertava a prova pelo motivo errado.</p>
+
+        <h2>Modelos de IA também fazem isso</h2>
+        <p>Um modelo de aprendizado de máquina aprende com exemplos. Mostramos milhares de casos com a resposta certa e ele procura padrões que separem uma resposta da outra. O problema é que ele não sabe quais padrões são os "de verdade". Se existir um atalho nos dados, ele usa o atalho.</p>
+        <p>Um caso conhecido é o de um modelo de imagens que "reconhecia" lobos olhando para a neve no fundo da foto, e não para o animal. Nos testes, ele acertava. Fora deles, um cachorro na neve virava lobo.</p>
+
+        <h2>O que é IA explicável</h2>
+        <p><strong>IA explicável</strong> (ou XAI, do inglês <em>explainable AI</em>) é o conjunto de técnicas que ajudam a responder uma pergunta simples: <em>por que o modelo decidiu isso?</em> Algumas mostram o que mais pesou numa decisão específica. Outras medem, no geral, o quanto o modelo depende de cada característica dos dados.</p>
+        <p>Uma ideia que eu uso bastante é a <strong>importância por permutação</strong>: embaralho os valores de uma característica e vejo o quanto o modelo piora. Se piorar muito, ele dependia dela. Se nada mudar, ela não fazia diferença. É como tapar um olho do cavalo de cada vez para descobrir para onde ele estava olhando.</p>
+
+        <h2>Por que isso importa em segurança</h2>
+        <p>No <strong>XAIID</strong>, projeto em que sou bolsista na UNIPAMPA, usamos aprendizado de máquina para detectar ataques em <strong>sistemas ciber-físicos</strong>: redes que controlam coisas do mundo real, como energia, indústria e transporte. Um alarme falso pode parar uma produção, e um ataque que passa despercebido pode ser pior. Por isso não basta o detector acertar nos testes. A gente precisa saber em que ele está prestando atenção.</p>
+
+        <h2>O que eu faço no XAIID</h2>
+        <p>A minha parte é descobrir quais características do tráfego de rede mais ajudam o modelo a reconhecer cada tipo de ataque, e conferir se esse ranking se mantém quando o cenário muda. Se as características "importantes" mudam muito de um ambiente para outro, pode ser que o modelo esteja olhando para o ambiente, e não para o ataque. É o mesmo teste que desmascarou o Hans: tirar a pista e ver se o acerto continua.</p>
+        <blockquote>Em uma frase: IA explicável é perguntar ao modelo para onde ele está olhando, antes que um atalho nos dados vire conclusão.</blockquote>
+
+        <h2>Quer ver mais?</h2>
+        <p class="destaque-caixa">O XAIID está na <a href="../../#projetos">seção de projetos</a> e é coordenado pelo professor Silvio E. Quincozes. Quando os resultados forem publicados, eu conto aqui.</p>
+      </div>
+
+      <p class="nota-assinatura">Arthur Medeiros, estudante de Ciência da Computação na UNIPAMPA e bolsista no XAIID. Dúvidas ou sugestões? <a href="../../#contato">Fale comigo</a>.</p>
+      <aside id="outrasNotas"></aside>
+    </article>
+  </main>
+
+  <footer class="rodape" id="rodape"></footer>
+
+  <script src="../../js/dados.js?v=20261122a"></script>
+
+  <script src="../../js/temas.js?v=20261107a"></script>
+  <script src="../../js/app.js?v=20261122a"></script>
+</body>
+</html>
