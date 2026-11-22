@@ -86,10 +86,11 @@ window.DADOS = {
       rotulo: { pt: "Pesquisa", en: "Research" },
       itens: [
         {
-          titulo: "TRAP-IoT",
+          titulo: "XAIID",
+          selo: { pt: "Bolsa", en: "Scholarship" },
           texto: {
-            pt: "Bolsista de pesquisa em segurança de protocolos IoT, desde 2026.",
-            en: "Research scholarship on IoT protocol security, since 2026.",
+            pt: "Bolsista desde novembro de 2026: detecção de intrusões em sistemas ciber-físicos com aprendizado de máquina e IA explicável.",
+            en: "Scholarship holder since November 2026: intrusion detection in cyber-physical systems with machine learning and explainable AI.",
           },
         },
       ],
@@ -115,8 +116,8 @@ window.DADOS = {
       en: "I study Computer Science at UNIPAMPA, in Alegrete, Brazil, and most of my time goes to GamificaPampa: I make the games kids open on their phones in class and the tools that help public-school teachers create materials with AI.",
     },
     {
-      pt: "Também faço parte do AI Horizon Labs, o laboratório de inteligência artificial e engenharia de software da universidade, onde sou bolsista no TRAP-IoT, sobre segurança em dispositivos conectados. Aprendo melhor testando e colocando a mão na massa.",
-      en: "I'm also part of AI Horizon Labs, the university's artificial intelligence and software engineering lab, where I hold a scholarship in TRAP-IoT, on connected-device security. I learn best by experimenting and getting my hands dirty.",
+      pt: "Também sou bolsista de pesquisa no XAIID, projeto da UNIPAMPA coordenado pelo professor Silvio E. Quincozes: uso aprendizado de máquina para detectar ataques em sistemas ciber-físicos e IA explicável para entender por que o modelo decidiu cada coisa. Faço parte do AI Horizon Labs, o laboratório de inteligência artificial e engenharia de software da universidade. Aprendo melhor testando e colocando a mão na massa.",
+      en: "I also hold a research scholarship in XAIID, a UNIPAMPA project led by professor Silvio E. Quincozes: I use machine learning to detect attacks on cyber-physical systems and explainable AI to understand why the model decided what it did. I'm part of AI Horizon Labs, the university's artificial intelligence and software engineering lab. I learn best by experimenting and getting my hands dirty.",
     },
     {
       pt: "Fora do teclado, curto música, esporte e viajar.",
@@ -129,11 +130,12 @@ window.DADOS = {
     linhas: [
       { pt: "Jogos na educação", en: "Games in education" },
       { pt: "IA na sala de aula", en: "AI in the classroom" },
-      { pt: "Cibersegurança", en: "Cybersecurity" },
+      { pt: "Detecção de intrusões", en: "Intrusion detection" },
+      { pt: "IA explicável", en: "Explainable AI" },
     ],
     interesses: [
+      { pt: "Cibersegurança", en: "Cybersecurity" },
       { pt: "Desenvolvimento web", en: "Web development" },
-      { pt: "Segurança em IoT", en: "IoT security" },
       { pt: "Redes de computadores", en: "Computer networks" },
       { pt: "Linguagem C", en: "C programming" },
     ],
@@ -200,21 +202,21 @@ window.DADOS = {
     },
     {
       categoria: { pt: "Pesquisa", en: "Research" },
-      titulo: { pt: "Segurança de redes e IoT", en: "Network and IoT security" },
+      titulo: "XAIID",
       descricao: {
-        pt: "Bolsista no AI Horizon Labs: no TRAP-IoT, segurança em protocolos de dispositivos conectados; e um compilador que transforma regras do Snort 3 em pré-filtros num switch de rede, com Silvio E. Quincozes.",
-        en: "Scholarship at AI Horizon Labs: in TRAP-IoT, security of connected-device protocols; and a compiler that turns Snort 3 rules into pre-filters in a network switch, with Silvio E. Quincozes.",
+        pt: "Detecção de intrusões em sistemas ciber-físicos com aprendizado de máquina e IA explicável, coordenado por Silvio E. Quincozes. Minha parte agora: descobrir quais características do tráfego mais ajudam a reconhecer cada tipo de ataque e comparar esses rankings entre o testbed físico e as emulações.",
+        en: "Intrusion detection in cyber-physical systems with machine learning and explainable AI, led by Silvio E. Quincozes. My part right now: finding which traffic features best recognize each kind of attack and comparing those rankings between the physical testbed and the emulations.",
       },
-      tecnologias: ["IoT", "Python", { pt: "Cibersegurança", en: "Cybersecurity" }],
+      papel: { pt: "bolsista de pesquisa, desde novembro de 2026.", en: "research scholarship holder, since November 2026." },
+      tecnologias: ["Python", "scikit-learn", { pt: "IA explicável", en: "Explainable AI" }],
       cor: "indigo",
-      // Ilustração: uma captura de mensagens MQTT, com a conexão suspeita barrada
+      // Ilustração: os passos da análise de importância das features por classe
       codigo: [
-        "sensor-07  CONNECT  ok",
-        "sensor-07  PUBLISH  casa/temp 23.4",
-        "10.0.0.66  CONNECT  sem senha ✗",
-        "broker     PUBLISH  casa/porta",
+        "mi   = mutual_info_classif(X, y == ataque)",
+        "perm = permutation_importance(rf, X_val, y_val)",
+        "jaccard(top10[D1], top10[D2])",
+        "spearman(ranking[D1], ranking[D3])",
       ],
-      url: "https://github.com/medeiros08/Snort-p4",
     },
   ],
   // "Na bancada": cada aba é um trabalho com o material de verdade (código, telas, números medidos).
@@ -285,18 +287,17 @@ window.DADOS = {
       itens: [
         { nome: "JavaScript", onde: { pt: "jogos do GamificaPampa e Expresso Gaúcho", en: "GamificaPampa games and Expresso Gaúcho" } },
         { nome: { pt: "HTML e CSS", en: "HTML & CSS" }, onde: { pt: "sites e materiais de aula", en: "websites and class materials" } },
-        { nome: "Python", onde: { pt: "pesquisa", en: "research" } },
-        { nome: "P4", onde: { pt: "pesquisa no AI Horizon Labs", en: "research at AI Horizon Labs" } },
+        { nome: "Python", onde: { pt: "pesquisa no XAIID", en: "research in XAIID" } },
         { nome: "Shell (Bash)", onde: { pt: "scripts dos experimentos", en: "experiment scripts" } },
         { nome: "C", onde: { pt: "fundamentos da computação", en: "computing fundamentals" }, aprendendo: true },
       ],
     },
     {
-      grupo: { pt: "Redes e segurança", en: "Networks and security" },
+      grupo: { pt: "Dados e segurança", en: "Data and security" },
       itens: [
+        { nome: "scikit-learn", onde: { pt: "modelos e importância de features no XAIID", en: "models and feature importance in XAIID" }, aprendendo: true },
+        { nome: { pt: "Notebooks no Kaggle", en: "Kaggle notebooks" }, onde: { pt: "experimentos do XAIID", en: "XAIID experiments" } },
         { nome: "Snort 3", onde: { pt: "detecção de intrusos", en: "intrusion detection" } },
-        { nome: "BMv2 e P4Runtime", onde: { pt: "switch P4 para testes", en: "P4 test switch" } },
-        { nome: "Scapy", onde: { pt: "leitura e envio de pacotes", en: "reading and crafting packets" } },
         { nome: "Linux", onde: { pt: "ambiente dos experimentos", en: "experiment environment" } },
       ],
     },
@@ -328,8 +329,8 @@ window.DADOS = {
       minutos: 4,
       titulo: { pt: "P4 explicado com uma agência dos correios", en: "P4 explained with a post office" },
       resumo: {
-        pt: "O que é a linguagem que eu pesquiso, sem jargão: pacotes, carteiros e regras novas para os equipamentos da rede.",
-        en: "The language I research, without the jargon: packets, mail carriers and new rules for network devices.",
+        pt: "O que é a linguagem que eu pesquisei, sem jargão: pacotes, carteiros e regras novas para os equipamentos da rede.",
+        en: "The language I researched, without the jargon: packets, mail carriers and new rules for network devices.",
       },
     },
     {
@@ -374,11 +375,21 @@ window.DADOS = {
     {
       de: 2026,
       ate: "hoje",
+      titulo: { pt: "Bolsista de pesquisa no XAIID", en: "Research scholarship holder, XAIID" },
+      instituicao: "UNIPAMPA",
+      detalhe: {
+        pt: "Desde novembro de 2026. Detecção de intrusões em sistemas ciber-físicos com aprendizado de máquina e IA explicável, com o professor Silvio E. Quincozes.",
+        en: "Since November 2026. Intrusion detection in cyber-physical systems with machine learning and explainable AI, with professor Silvio E. Quincozes.",
+      },
+    },
+    {
+      de: 2026,
+      ate: 2026,
       titulo: { pt: "Bolsista de pesquisa", en: "Research scholarship holder" },
       instituicao: "UNIPAMPA · AI Horizon Labs",
       detalhe: {
-        pt: "Projeto TRAP-IoT, sobre segurança em protocolos IoT, e pesquisa em segurança de redes.",
-        en: "The TRAP-IoT project, on IoT protocol security, and network security research.",
+        pt: "Projeto TRAP-IoT, sobre segurança em protocolos IoT, e um compilador de regras do Snort 3 para P4.",
+        en: "The TRAP-IoT project, on IoT protocol security, and a compiler from Snort 3 rules to P4.",
       },
     },
     {
